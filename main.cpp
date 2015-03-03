@@ -1,4 +1,5 @@
 #include <QtGui\qapplication.h>
+#include <MyGLWindow.h>
 
 int main(int argc, char* argv[])
 {
