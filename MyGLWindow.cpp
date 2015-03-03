@@ -58,7 +58,7 @@ void MyGLWindow::initializeGL(){
 }
 
 void MyGLWindow::paintGL(){
-	glClearColor(0.5, 0, 1, 1);
+	glClearColor(0.2, 0, 0.5, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
