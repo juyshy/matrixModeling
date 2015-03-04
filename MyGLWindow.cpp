@@ -129,15 +129,14 @@ void MyGLWindow::paintGL(){
 	glViewport(0, 0, width(), height());
 
 	
-	mat4 modelTransformMatrix = glm::translate(mat4(), vec3(0.0f, 0.0f, -3.0f));
-
+	mat4 translationMatrix = glm::translate(mat4(), vec3(0.0f, 0.0f, -3.0f));
+	mat4 rotationMatrix = glm::rotate(mat4(), 54.0f,vec3(1.0f, 0.0f, 0.0f));
 	mat4 projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
+	mat4 fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
 
-	GLint modelTransformMatrixUnifoLocation = glGetUniformLocation(programID, "modelTransformMatrix");
-	GLint projectionMatrixMatrixUnifoLocation = glGetUniformLocation(programID, "projectionMatrix");
-
-	glUniformMatrix4fv(modelTransformMatrixUnifoLocation, 1,GL_FALSE, &modelTransformMatrix[0][0]);
-	glUniformMatrix4fv(projectionMatrixMatrixUnifoLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
+	GLint fullTransformMatrixMatrixUnifoLocation = glGetUniformLocation(programID, "fullTransformMatrix");
+ 
+	glUniformMatrix4fv(fullTransformMatrixMatrixUnifoLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
  
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
 
