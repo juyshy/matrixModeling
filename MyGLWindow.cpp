@@ -6,6 +6,7 @@
 #include <Vertex.h>
 #include <ShapeGenerator.h>
 using namespace std;
+using glm::vec3;
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
 
@@ -17,7 +18,7 @@ const uint NUM_FLOATS_PER_VERTICE = 6;
 const uint TRIANGLE_BYTE_SIZE = NUM_VERTICES_PER_TRI* NUM_FLOATS_PER_VERTICE*sizeof(float);
 const uint VERTEX_BYTE_SIZE =   NUM_FLOATS_PER_VERTICE*sizeof(float);
 const uint MAX_TRIS = 20;
-
+GLuint programID;
 void sendDataToOpenGL() {
 	ShapeData tri = ShapeGenerator::makeTriangle();
 
@@ -98,7 +99,7 @@ void installShaders(){
 	if (!checkShaderStatus(vertexShaderID) || !checkShaderStatus(fragmentShaderID))
 		return;
 
-	GLuint programID = glCreateProgram();
+	 programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);
 	glLinkProgram(programID);
@@ -120,6 +121,11 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
+	vec3 dominatingColor(0.0f, 1.0f, 1.0f);
+	GLint dominatingColorUniformLocation = glGetUniformLocation(programID, "dominatingColor");
+	glUniform3fv(dominatingColorUniformLocation, 1, &dominatingColor[0]);
+
+
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 }
