@@ -1,6 +1,7 @@
 #include <gl\glew.h>
 #include "MyGLWindow.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
@@ -63,13 +64,29 @@ bool checkProgramStatus(GLuint programID){
 	return checkStatus(programID, glGetProgramiv, glGetProgramInfoLog, GL_LINK_STATUS);
 
 }
+string readShaderCode(const char* filename)
+{
+	ifstream myInput(filename);
+	if (!myInput.good())
+	{
+		cout << "File failled to load .. " << filename;
+		exit(1);
+	}
+	return std::string(
+		std::istreambuf_iterator<char>(myInput),
+		std::istreambuf_iterator<char>());
+
+ 
+}
 void installShaders(){
 	GLuint vertexShaderID= glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 	const char* adapter[1];
-	adapter[0] = vertexShaderCode;
+	string temp = readShaderCode("VertexShaderCode.glsl") ;
+	adapter[0] = temp.c_str();
 	glShaderSource(vertexShaderID, 1, adapter,0);
-	adapter[0] = fragmentShaderCode;
+	temp = readShaderCode("FragmentShaderCode.glsl");
+	adapter[0] = temp.c_str();
 	glShaderSource(fragmentShaderID, 1, adapter, 0);
 
 	glCompileShader(vertexShaderID);
