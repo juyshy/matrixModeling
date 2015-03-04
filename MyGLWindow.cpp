@@ -4,6 +4,7 @@
 #include <fstream>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtx\transform.hpp>
 #include <Vertex.h>
 #include <ShapeGenerator.h>
 using namespace std;
@@ -131,17 +132,27 @@ void MyGLWindow::paintGL(){
 	glClear(GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	mat4 projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
-	mat4 projectionTranslationMatrix = glm::translate(projectionMatrix, vec3(0.0f, 0.0f, -3.0f));
-	mat4 fullTransformMatrix = glm::rotate(projectionTranslationMatrix, 54.0f, vec3(1.0f, 0.0f, 0.0f));
- 
 	GLint fullTransformMatrixMatrixUnifoLocation = glGetUniformLocation(programID, "fullTransformMatrix");
- 
+
+	mat4 fullTransformMatrix;
+	mat4 projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
+	// cube 1
+	mat4 translationMatrix = glm::translate(   vec3(-1.0f, 0.0f, -3.0f));
+	mat4 rotationformMatrix = glm::rotate( 36.0f, vec3(1.0f, 0.0f, 0.0f));
+	rotationformMatrix = glm::rotate(rotationformMatrix, 36.0f, vec3(0.0f, 1.0f, 0.0f));
+	
+	fullTransformMatrix = projectionMatrix * translationMatrix * rotationformMatrix;	
 	glUniformMatrix4fv(fullTransformMatrixMatrixUnifoLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
- 
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
 
- 
+	// cube 2
+	 translationMatrix = glm::translate(vec3(1.5f, 0.0f, -3.0f));
+	rotationformMatrix = glm::rotate(36.0f, vec3(0.0f, 1.0f, 0.0f));
+
+	fullTransformMatrix = projectionMatrix * translationMatrix * rotationformMatrix;
+	glUniformMatrix4fv(fullTransformMatrixMatrixUnifoLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
+
 
 }
 
