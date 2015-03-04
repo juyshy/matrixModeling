@@ -47,11 +47,10 @@ void sendAnotherTriToOpengl()
 }
 void MyGLWindow::paintGL(){
 	glClearColor(0.2, 0, 0.5, 1);
-	glClear(GL_DEPTH_BUFFER_BIT);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 	sendAnotherTriToOpengl();
-	glDrawArrays(GL_TRIANGLES, 0, numTris*NUM_VERTICES_PER_TRI);
+	glDrawArrays(GL_TRIANGLES, (numTris-1)*NUM_VERTICES_PER_TRI, numTris*NUM_VERTICES_PER_TRI);
 	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 }
 
