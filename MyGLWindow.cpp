@@ -5,40 +5,56 @@
 using namespace std;
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
-
+const float X_DELTA = 0.1F;
+uint numTris = 0;
+const uint NUM_VERTICES_PER_TRI = 3;
+const uint NUM_FLOATS_PER_VERTICE = 6;
+const uint TRIANGLE_BYTE_SIZE = NUM_VERTICES_PER_TRI* NUM_FLOATS_PER_VERTICE*sizeof(float);
+const uint MAX_TRIS = 20;
 void sendDataToOpenGL() {
-	const float EKA_KOLMIO_Z = 0.5f;
-	const float TOKA_KOLMIO_Z = -0.5f;
-	GLfloat verts[] = {
-		0.0f, -1.0f, -1.0,
-		0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, EKA_KOLMIO_Z,
-		0.0f, 1.0f, 0.0f,
-		-1.0f, 1.0f, EKA_KOLMIO_Z,
-		0.0f, 1.0f, 1.0f,
-		0.0f, 1.0f, TOKA_KOLMIO_Z,
-		0.0f, 0.0f, 1.0f,
-		0.0f, -1.0f, TOKA_KOLMIO_Z,
-		1.0f, 0.0f, 1.0f,
-		1.0f, -1.0f, TOKA_KOLMIO_Z,
-		1.0f, 1.0f, 0.0f,
-	};
+	 
 	GLuint mybufferID;
 	glGenBuffers(1, &mybufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, mybufferID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, MAX_TRIS*TRIANGLE_BYTE_SIZE, NULL, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) *6, (char*)(sizeof(float) * 3));
 
-	GLushort indices[] = { 0, 1, 2, 3, 4 ,5};
-	GLuint indexBufferID;
-	glGenBuffers(1, &indexBufferID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
+ 
 }
+
+void sendAnotherTriToOpengl()
+{
+	if (numTris == MAX_TRIS)
+		return;
+	const GLfloat THIS_TRI_X = -1 + numTris * X_DELTA;
+	GLfloat thisTri[] =
+	{
+		THIS_TRI_X, 1.0f, 0.0f,
+		1.0f, 0.0f, 1.0f,
+
+		THIS_TRI_X + X_DELTA, 1.0f, 0.0f,
+		1.0f, 0.0f, 1.0f,
+
+		THIS_TRI_X, 0.0f, 0.0f,
+		1.0f, 0.0f, 1.0f,
+	};
+	glBufferSubData(GL_ARRAY_BUFFER, 
+		numTris*TRIANGLE_BYTE_SIZE, TRIANGLE_BYTE_SIZE, thisTri);
+	numTris++;
+}
+void MyGLWindow::paintGL(){
+	glClearColor(0.2, 0, 0.5, 1);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glViewport(0, 0, width(), height());
+	sendAnotherTriToOpengl();
+	glDrawArrays(GL_TRIANGLES, 0, numTris*NUM_VERTICES_PER_TRI);
+	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+}
+
 bool checkStatus(
 	GLuint objectID,
 	PFNGLGETSHADERIVPROC objectPropertyGetterFunc,
@@ -116,14 +132,6 @@ void MyGLWindow::initializeGL(){
 	installShaders();
 }
 
-void MyGLWindow::paintGL(){
-	glClearColor(0.2, 0, 0.5, 1);
-	glClear(GL_DEPTH_BUFFER_BIT);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glViewport(0, 0, width(), height());
-	//glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-}
 
 MyGLWindow::MyGLWindow()
 {
