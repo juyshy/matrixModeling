@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGLWindow.cpp" />
-    <ClCompile Include="MyShaderCode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGLWindow.h" />
