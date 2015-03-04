@@ -1,6 +1,7 @@
 #include <gl\glew.h>
 #include "MyGLWindow.h"
-
+#include <iostream>
+using namespace std;
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
 
@@ -33,6 +34,25 @@ void sendDataToOpenGL() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 }
+
+bool checkShaderStatus(GLuint shaderID){
+
+	GLint copileStatus;
+	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &copileStatus);
+	if (copileStatus != GL_TRUE){
+		GLint infoLength;
+		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &infoLength);
+		GLchar* buffer = new GLchar[infoLength];
+		GLsizei bufferSize;
+		glGetShaderInfoLog(shaderID, infoLength, &bufferSize, buffer);
+		cout << buffer << endl;
+		delete[] buffer;
+		return false;
+	}
+	return true;
+
+}
+
 void installShaders(){
 	GLuint vertexShaderID= glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -41,8 +61,12 @@ void installShaders(){
 	glShaderSource(vertexShaderID, 1, adapter,0);
 	adapter[0] = fragmentShaderCode;
 	glShaderSource(fragmentShaderID, 1, adapter, 0);
+
 	glCompileShader(vertexShaderID);
 	glCompileShader(fragmentShaderID);
+
+	if (!checkShaderStatus(vertexShaderID) || !checkShaderStatus(fragmentShaderID))
+		return;
 
 	GLuint programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
