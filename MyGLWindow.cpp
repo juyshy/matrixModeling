@@ -7,18 +7,20 @@ extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
 
 void sendDataToOpenGL() {
+	const float EKA_KOLMIO_Z = 0.5f;
+	const float TOKA_KOLMIO_Z = -0.5f;
 	GLfloat verts[] = {
-		0.0f, -1.0f,
+		0.0f, -1.0f, EKA_KOLMIO_Z,
 		0.0f, 0.0f, 1.0f,
-		1.0f, 1.0f,
+		1.0f, 1.0f, EKA_KOLMIO_Z,
 		0.0f, 1.0f, 0.0f,
-		-1.0f, 1.0f,
+		-1.0f, 1.0f, EKA_KOLMIO_Z,
 		0.0f, 1.0f, 1.0f,
-		0.0f, 1.0f,
+		0.0f, 1.0f, TOKA_KOLMIO_Z,
 		0.0f, 0.0f, 1.0f,
-		-1.0f, -1.0f,
+		-1.0f, -1.0f, TOKA_KOLMIO_Z,
 		1.0f, 0.0f, 1.0f,
-		1.0f, -1.0f,
+		1.0f, -1.0f, TOKA_KOLMIO_Z,
 		1.0f, 0.0f, 0.0f,
 	};
 	GLuint mybufferID;
@@ -26,9 +28,9 @@ void sendDataToOpenGL() {
 	glBindBuffer(GL_ARRAY_BUFFER, mybufferID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char*)(sizeof(float) * 2));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) *6, (char*)(sizeof(float) * 3));
 
 	GLushort indices[] = { 0, 1, 2, 3, 4 ,5};
 	GLuint indexBufferID;
@@ -109,12 +111,14 @@ void installShaders(){
 }
 void MyGLWindow::initializeGL(){
 	glewInit();
+	glEnable(GL_DEPTH_TEST);
 	sendDataToOpenGL();
 	installShaders();
 }
 
 void MyGLWindow::paintGL(){
 	glClearColor(0.2, 0, 0.5, 1);
+	glClear(GL_DEPTH_BUFFER_BIT);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
