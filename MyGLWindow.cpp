@@ -10,7 +10,7 @@ void sendDataToOpenGL() {
 	const float EKA_KOLMIO_Z = 0.5f;
 	const float TOKA_KOLMIO_Z = -0.5f;
 	GLfloat verts[] = {
-		0.0f, -1.0f, EKA_KOLMIO_Z,
+		0.0f, -1.0f, -1.0,
 		0.0f, 0.0f, 1.0f,
 		1.0f, 1.0f, EKA_KOLMIO_Z,
 		0.0f, 1.0f, 0.0f,
@@ -18,10 +18,10 @@ void sendDataToOpenGL() {
 		0.0f, 1.0f, 1.0f,
 		0.0f, 1.0f, TOKA_KOLMIO_Z,
 		0.0f, 0.0f, 1.0f,
-		-1.0f, -1.0f, TOKA_KOLMIO_Z,
+		0.0f, -1.0f, TOKA_KOLMIO_Z,
 		1.0f, 0.0f, 1.0f,
 		1.0f, -1.0f, TOKA_KOLMIO_Z,
-		1.0f, 0.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
 	};
 	GLuint mybufferID;
 	glGenBuffers(1, &mybufferID);
