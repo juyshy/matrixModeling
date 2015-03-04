@@ -112,6 +112,9 @@ void installShaders(){
 	if (!checkProgramStatus(programID))
 		return;
 
+	glDeleteShader(vertexShaderID);
+	glDeleteShader(fragmentShaderID);
+
 	glUseProgram(programID);
 
 }
@@ -146,7 +149,8 @@ MyGLWindow::MyGLWindow()
 {
 }
 
-
 MyGLWindow::~MyGLWindow()
 {
+	glUseProgram(0);
+	glDeleteProgram(programID);
 }
