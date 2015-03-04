@@ -3,12 +3,17 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGLWindow.cpp" />
+    <ClCompile Include="ShapeGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGLWindow.h" />
     <ClInclude Include="Vertex.h">
       <Filter>Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="ShapeData.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShaderCode.glsl" />

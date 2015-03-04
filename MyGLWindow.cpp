@@ -4,6 +4,7 @@
 #include <fstream>
 #include <glm\glm.hpp>
 #include <Vertex.h>
+#include <ShapeGenerator.h>
 using namespace std;
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
@@ -18,26 +19,12 @@ const uint VERTEX_BYTE_SIZE =   NUM_FLOATS_PER_VERTICE*sizeof(float);
 const uint MAX_TRIS = 20;
 
 void sendDataToOpenGL() {
-	const float EKA_KOLMIO_Z = 0.5f;
-	const float TOKA_KOLMIO_Z = -0.5f;
-	Vertex verts[] = {
-		glm::vec3(0.0f, -1.0f, -1.0),
-		glm::vec3(0.0f, 0.0f, 1.0f),
-		glm::vec3(1.0f, 1.0f, EKA_KOLMIO_Z),
-		glm::vec3(0.0f, 1.0f, 0.0f),
-		glm::vec3(-1.0f, 1.0f, EKA_KOLMIO_Z),
-		glm::vec3(0.0f, 1.0f, 1.0f),
-		glm::vec3(0.0f, 1.0f, TOKA_KOLMIO_Z),
-		glm::vec3(0.0f, 0.0f, 1.0f),
-		glm::vec3(0.0f, -1.0f, TOKA_KOLMIO_Z),
-		glm::vec3(1.0f, 0.0f, 1.0f),
-		glm::vec3(1.0f, -1.0f, TOKA_KOLMIO_Z),
-		glm::vec3(1.0f, 1.0f, 0.0f),
-	};
+	ShapeData tri = ShapeGenerator::makeTriangle();
+
 	GLuint mybufferID;
 	glGenBuffers(1, &mybufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, mybufferID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, tri.vertexBufferSize(), tri.vertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0);
 	glEnableVertexAttribArray(1);
@@ -47,8 +34,9 @@ void sendDataToOpenGL() {
 	GLuint indexBufferID;
 	glGenBuffers(1, &indexBufferID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,tri.indexBufferSize(), tri.indices, GL_STATIC_DRAW);
 
+	tri.cleanup();
 }
 bool checkStatus(
 	GLuint objectID,
