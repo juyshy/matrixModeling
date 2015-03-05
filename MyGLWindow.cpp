@@ -27,28 +27,52 @@ const uint VERTEX_BYTE_SIZE =   NUM_FLOATS_PER_VERTICE*sizeof(float);
 const uint MAX_TRIS = 20;
 GLuint programID;
 
-GLuint numIndices;
+GLuint cubeNumIndices;
+GLuint arrowNumIndices;
 Camera camera;
+GLuint cubeVertexbufferID;
+GLuint arrowVertexbufferID;
+GLuint cubeIndexBufferID;
+GLuint arrowIndexBufferID;
 
 void MyGLWindow::sendDataToOpenGL() {
-	ShapeData shape = ShapeGenerator::makeArrow();
+	ShapeData shape = ShapeGenerator::makeCube();
 
-	GLuint mybufferID;
-	glGenBuffers(1, &mybufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, mybufferID);
+	
+	glGenBuffers(1, &cubeVertexbufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, cubeVertexbufferID);
+	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0); // 0 = layoput location
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
+ 
+
+	glGenBuffers(1, &cubeIndexBufferID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndexBufferID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
+	cubeNumIndices = shape.numIndices;
+	shape.cleanup();
+
+	 shape = ShapeGenerator::makeArrow();
+
+ 
+	 glGenBuffers(1, &arrowVertexbufferID);
+	 glBindBuffer(GL_ARRAY_BUFFER, arrowVertexbufferID);
 	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0); // 0 = layoput location
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
- 
+
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
 
-	GLushort indices[] = { 0, 1, 2 };
-	GLuint indexBufferID;
-	glGenBuffers(1, &indexBufferID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
+ 
+ 
+	glGenBuffers(1, &arrowIndexBufferID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrowIndexBufferID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
-	numIndices = shape.numIndices;
+	arrowNumIndices = shape.numIndices;
 	shape.cleanup();
 
 	/*GLuint transformationMatrixBufferID;
@@ -165,12 +189,18 @@ void MyGLWindow::paintGL(){
 	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
 	mat4 worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;
 
+	// cube
+	glBindBuffer(GL_ARRAY_BUFFER, cubeVertexbufferID);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndexBufferID);
+
 	mat4 cube1ModelToWorldMatrix = glm::translate(vec3(-1.0f, 0.0f, -3.0f)) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
 	fullTransformMatrix = worldToProojectionMatrix * cube1ModelToWorldMatrix;
 
 	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
 
-	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
+	glDrawElements(GL_TRIANGLES, cubeNumIndices, GL_UNSIGNED_SHORT, 0);
 
 	
 	mat4 cube2ModelToWorldMatrix = glm::translate(vec3(1.5f, 0.0f, -3.0f)) *  glm::rotate(36.0f, vec3(0.0f, 1.0f, 0.0f));
@@ -178,7 +208,19 @@ void MyGLWindow::paintGL(){
 
 	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
 
-	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
+	glDrawElements(GL_TRIANGLES, cubeNumIndices, GL_UNSIGNED_SHORT, 0);
+
+	// arrow
+	glBindBuffer(GL_ARRAY_BUFFER, arrowVertexbufferID);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrowIndexBufferID);
+
+	mat4 arrowModelToWorldMatrix = glm::translate(0.0f, 0.0f, -5.0f);
+	fullTransformMatrix = worldToProojectionMatrix * arrowModelToWorldMatrix;
+	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+
+	glDrawElements(GL_TRIANGLES, arrowNumIndices, GL_UNSIGNED_SHORT, 0);
 
 }
 void MyGLWindow::mouseMoveEvent(QMouseEvent* e)
