@@ -16,6 +16,7 @@ class MyGLWindow : public QGLWidget
 	bool MyGLWindow::checkProgramStatus(GLuint programID);
 	std::string MyGLWindow::readShaderCode(const char* filename);
 	void MyGLWindow::installShaders();
+	void setupVertexArrays();
 protected:
 	void initializeGL();
 	void paintGL();
