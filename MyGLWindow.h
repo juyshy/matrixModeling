@@ -19,6 +19,7 @@ class MyGLWindow : public QGLWidget
 protected:
 	void initializeGL();
 	void paintGL();
+	void mouseMoveEvent(QMouseEvent* e);
 
 public:
 	MyGLWindow();
