@@ -58,7 +58,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	cubeNumIndices = shape.numIndices;
 	shape.cleanup();
 
-	 shape = ShapeGenerator::makeArrow();
+	 shape = ShapeGenerator::makePlane();
 
  
 	 glGenBuffers(1, &arrowVertexbufferID);
