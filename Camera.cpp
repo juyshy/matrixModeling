@@ -2,15 +2,20 @@
 #include <glm\gtx\transform.hpp>
 
 Camera::Camera() : viewDirection(0.0f,0.0f, -1.0f),
-UP(0.0f,1.0f, 0.0f)
+UP(0.0f, 1.0f, 0.0f) 
 {
 }
 
 void Camera::mouseUpdate(const glm::vec2 &newMousePosition)
 {	
 	glm::vec2 mouseDelta = newMousePosition - oldMousePosition;
+	if (glm::length(mouseDelta) > 40.0f)
+	{
+		oldMousePosition = newMousePosition;
+		return;
+	}
 	//mouseDelta.x
-	viewDirection = glm::mat3( glm::rotate(mouseDelta.x, UP)) * viewDirection;
+	viewDirection = glm::mat3( glm::rotate(-mouseDelta.x * 0.5f, UP)) * viewDirection;
 
 	oldMousePosition = newMousePosition;
 }
