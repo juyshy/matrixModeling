@@ -16,9 +16,12 @@ void Camera::mouseUpdate(const glm::vec2 &newMousePosition)
 	}
 	//mouseDelta.x
 	const float ROTATIONAL_SPEED = 0.5f;
-	viewDirection = glm::mat3(glm::rotate(-mouseDelta.x * ROTATIONAL_SPEED, UP)) * viewDirection;
 	glm::vec3 toRotateAround = glm::cross(viewDirection, UP);
-	viewDirection = glm::mat3(glm::rotate(-mouseDelta.y * ROTATIONAL_SPEED, toRotateAround)) * viewDirection;
+	glm::mat4 rotator =  
+		 glm::rotate(-mouseDelta.x * ROTATIONAL_SPEED, UP) * 
+		 glm::rotate(-mouseDelta.y * ROTATIONAL_SPEED, toRotateAround) ;
+	viewDirection = glm::mat3(rotator) * viewDirection;
+
 	oldMousePosition = newMousePosition;
 }
 
