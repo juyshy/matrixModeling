@@ -31,7 +31,7 @@ GLuint numIndices;
 Camera camera;
 
 void MyGLWindow::sendDataToOpenGL() {
-	ShapeData shape = ShapeGenerator::makeCube();
+	ShapeData shape = ShapeGenerator::makeArrow();
 
 	GLuint mybufferID;
 	glGenBuffers(1, &mybufferID);
@@ -39,6 +39,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0); // 0 = layoput location
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
+ 
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
 
