@@ -51,7 +51,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	numIndices = shape.numIndices;
 	shape.cleanup();
 
-	GLuint transformationMatrixBufferID;
+	/*GLuint transformationMatrixBufferID;
 	glGenBuffers(1, &transformationMatrixBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, transformationMatrixBufferID);
 
@@ -68,7 +68,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	glVertexAttribDivisor(2, 1);
 	glVertexAttribDivisor(3, 1);
 	glVertexAttribDivisor(4, 1);
-	glVertexAttribDivisor(5, 1);
+	glVertexAttribDivisor(5, 1);*/
 
 }
 bool MyGLWindow::checkStatus(
@@ -153,23 +153,32 @@ void MyGLWindow::initializeGL(){
 }
 
 void MyGLWindow::paintGL(){
-	mat4 projectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
-	//glm::lookAt
-	mat4 fulltransforms[] =
-	{
-		projectionMatrix * camera.getWorldToViewMatrix() * glm::translate(vec3(-1.0f, 0.0f, -3.0f)) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f)),
-		projectionMatrix * camera.getWorldToViewMatrix() * glm::translate(vec3(1.5f, 0.0f, -3.0f)) *  glm::rotate(36.0f, vec3(0.0f, 1.0f, 0.0f)),
-	};
-	glBufferData(GL_ARRAY_BUFFER, sizeof(fulltransforms), fulltransforms, GL_DYNAMIC_DRAW); 
 
+ 
 	glClearColor(0.2, 0, 0.5, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-//	glClear(GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
+	GLint fullTransformUniformLocation = glGetUniformLocation(programID, "fullTransformMatrix");
+
+	mat4 fullTransformMatrix;
+	mat4 viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
+	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
+	mat4 worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;
+
+	mat4 cube1ModelToWorldMatrix = glm::translate(vec3(-1.0f, 0.0f, -3.0f)) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
+	fullTransformMatrix = worldToProojectionMatrix * cube1ModelToWorldMatrix;
+
+	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+
+	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
 
 	
-	glDrawElementsInstanced(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0,2);
+	mat4 cube2ModelToWorldMatrix = glm::translate(vec3(1.5f, 0.0f, -3.0f)) *  glm::rotate(36.0f, vec3(0.0f, 1.0f, 0.0f));
+	fullTransformMatrix = worldToProojectionMatrix * cube2ModelToWorldMatrix;
 
+	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+
+	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
 
 }
 void MyGLWindow::mouseMoveEvent(QMouseEvent* e)
