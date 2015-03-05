@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <QtGui\qmouseevent>
+#include <QtGui\qkeyevent>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtx\transform.hpp>
@@ -173,6 +174,34 @@ void MyGLWindow::paintGL(){
 void MyGLWindow::mouseMoveEvent(QMouseEvent* e)
 {
 	camera.mouseUpdate(glm::vec2(e->x(), e->y()));
+	repaint();
+}
+
+void MyGLWindow::keyPressEvent(QKeyEvent* e)
+{
+	switch (e->key())
+	{
+	case Qt::Key::Key_W:
+		camera.moveForward();
+		break;
+	case Qt::Key::Key_S:
+		camera.moveBackwards();
+		break;
+	case Qt::Key::Key_A:
+		camera.strafeLeft();
+		break;
+	case Qt::Key::Key_D:
+		camera.strafeRight();
+		break;
+	case Qt::Key::Key_R:
+		camera.moveUp();
+		break;
+	case Qt::Key::Key_F:
+		camera.moveDown();
+		break;
+	default:
+		break;
+	}
 	repaint();
 }
 MyGLWindow::MyGLWindow()

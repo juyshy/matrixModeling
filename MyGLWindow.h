@@ -20,7 +20,7 @@ protected:
 	void initializeGL();
 	void paintGL();
 	void mouseMoveEvent(QMouseEvent* e);
-
+	void keyPressEvent(QKeyEvent* e);
 public:
 	MyGLWindow();
 	~MyGLWindow();
