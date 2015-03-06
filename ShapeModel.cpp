@@ -7,7 +7,7 @@ const uint NUM_FLOATS_PER_VERTICE = 9;
 const uint TRIANGLE_BYTE_SIZE = NUM_VERTICES_PER_TRI* NUM_FLOATS_PER_VERTICE*sizeof(float);
 const uint VERTEX_BYTE_SIZE = NUM_FLOATS_PER_VERTICE*sizeof(float);
 
-ShapeModel::ShapeModel()
+ShapeModel::ShapeModel()  
 {
 	//Init();
 }
@@ -27,22 +27,22 @@ void ShapeModel::Init() { //MyGLWindow * myGlWin
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
 	shapeNumIndices = shape.numIndices;
 	shape.cleanup();
-	//myGlWindow = myGlWin;
+ 
 
 }
 
-void ShapeModel::Draw() {
+void ShapeModel::Draw(const glm::mat4 * worldToProojectionMatrix, const GLint* fullTransformUniformLocation) {
 
 
 	glBindVertexArray(vertexArrayObjectID);
 	//position = theModel->sliderPosition; // vec3(-1.5f, 0.0f, -3.0f);
 	shapeModelToWorldMatrix = glm::translate(position) * glm::rotate(36.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	//fullTransformMatrix =  worldToProojectionMatrix * shapeModelToWorldMatrix;
+	fullTransformMatrix = *worldToProojectionMatrix * shapeModelToWorldMatrix;
 
-	/*glUniformMatrix4fv(myGlWindow->fullTransformUniformLocation, 1, GL_FALSE, &myGlWindow->fullTransformMatrix[0][0]);
+	glUniformMatrix4fv(*fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
 
 	glDrawElements(GL_TRIANGLES, shapeNumIndices, GL_UNSIGNED_SHORT, 0);
-*/
+
 }
 
 ShapeModel::~ShapeModel()

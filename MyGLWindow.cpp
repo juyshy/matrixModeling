@@ -164,14 +164,14 @@ void MyGLWindow::initializeGL(){
 	setMouseTracking(true);
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
-	sendDataToOpenGL();
+	
 	//setupVertexArrays();
 	installShaders();
 	fullTransformUniformLocation = glGetUniformLocation(programID, "fullTransformMatrix");
 	ambientLightUniformLocation = glGetUniformLocation(programID, "ambientLight");
 	ambientLight = vec3(0.9f, 0.9f, 0.9f);
 	glUniform3fv(ambientLightUniformLocation, 1, &ambientLight[0]);
-
+	sendDataToOpenGL();
 }
 
 void MyGLWindow::paintGL(){
@@ -188,15 +188,17 @@ void MyGLWindow::paintGL(){
 	// cube
 
 	cube1.position = theModel->sliderPosition;
-	cube1.Draw();
+	//cube1.worldToProjectionMatrix = worldToProojectionMatrix;
+	//cube1.fullTransformUniformLocation = &fullTransformUniformLocation;
+	cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 	//glBindVertexArray(cube1.vertexArrayObjectID);
 	//vec3 cube1pos = theModel->sliderPosition; // vec3(-1.5f, 0.0f, -3.0f);
 	//mat4 cube1ModelToWorldMatrix = glm::translate(cube1pos) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
-	fullTransformMatrix = worldToProojectionMatrix * cube1.shapeModelToWorldMatrix;
+	//fullTransformMatrix = worldToProojectionMatrix * cube1.shapeModelToWorldMatrix;
 
-	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+	//glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
 
-	glDrawElements(GL_TRIANGLES, cube1.shapeNumIndices, GL_UNSIGNED_SHORT, 0);
+	//glDrawElements(GL_TRIANGLES, cube1.shapeNumIndices, GL_UNSIGNED_SHORT, 0);
 
 	//
 	//mat4 cube2ModelToWorldMatrix = glm::translate(vec3(2.5f, 0.0f, -3.0f)) *  glm::rotate(36.0f, vec3(0.0f, 1.0f, 0.0f));
