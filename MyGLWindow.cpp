@@ -50,19 +50,19 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 }
 
 void MyGLWindow::sendDataToOpenGL() {
-	ShapeData shape = ShapeGenerator::makeCube();
+	glGenVertexArrays(1, &cubeVertexArrayObjectID);
+	glGenVertexArrays(1, &arrowVertexArrayObjectID);
+	glGenVertexArrays(1, &planeVertexArrayObjectID);
 
-	
+	ShapeData shape = ShapeGenerator::makeCube();
+	glBindVertexArray(cubeVertexArrayObjectID);
 	glGenBuffers(1, &cubeVertexbufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, cubeVertexbufferID);
 	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0); // 0 = layoput location
 	glEnableVertexAttribArray(1);
-
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
- 
-
 	glGenBuffers(1, &cubeIndexBufferID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndexBufferID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
@@ -70,39 +70,30 @@ void MyGLWindow::sendDataToOpenGL() {
 	shape.cleanup();
 
 	shape = ShapeGenerator::makeArrow();
-
- 
-	 glGenBuffers(1, &arrowVertexbufferID);
-	 glBindBuffer(GL_ARRAY_BUFFER, arrowVertexbufferID);
+	glBindVertexArray(arrowVertexArrayObjectID);
+	glGenBuffers(1, &arrowVertexbufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, arrowVertexbufferID);
 	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0); // 0 = layoput location
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
-
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
-
- 
- 
 	glGenBuffers(1, &arrowIndexBufferID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrowIndexBufferID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
 	arrowNumIndices = shape.numIndices;
 	shape.cleanup();
 
+
 	shape = ShapeGenerator::makePlane();
-
-
+	glBindVertexArray(planeVertexArrayObjectID);
 	glGenBuffers(1, &planeVertexbufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, planeVertexbufferID);
 	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0); // 0 = layoput location
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
-
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
-
-
-
 	glGenBuffers(1, &planeIndexBufferID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, planeIndexBufferID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
@@ -111,33 +102,7 @@ void MyGLWindow::sendDataToOpenGL() {
 }
 
 void MyGLWindow::setupVertexArrays(){
-	glGenVertexArrays(1, &cubeVertexArrayObjectID);
-	glGenVertexArrays(1, &arrowVertexArrayObjectID);
-	glGenVertexArrays(1, &planeVertexArrayObjectID);
-	
-	glBindVertexArray(cubeVertexArrayObjectID);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, cubeVertexbufferID);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndexBufferID);
-
-	glBindVertexArray(arrowVertexArrayObjectID);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, arrowVertexbufferID);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrowIndexBufferID);
-
-	glBindVertexArray(planeVertexArrayObjectID);
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, planeVertexbufferID);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, planeIndexBufferID);
+	 
 }
 bool MyGLWindow::checkStatus(
 	GLuint objectID,
@@ -218,7 +183,7 @@ void MyGLWindow::initializeGL(){
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
 	sendDataToOpenGL();
-	setupVertexArrays();
+	//setupVertexArrays();
 	installShaders();
 	  fullTransformUniformLocation = glGetUniformLocation(programID, "fullTransformMatrix");
 
