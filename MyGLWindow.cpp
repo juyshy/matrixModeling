@@ -188,13 +188,13 @@ void MyGLWindow::paintGL(){
 	//for (ShapeModel block : blocks)
 	//	block.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 
-	//for (uint i = 0; i < 100; i++){
-	//	for (uint j = 0; j < 50; j++){
-	//	
-	//		cube1.position = vec3(i * 2 - 100.0f, 0.5f, j * 2 - 100.0f);
-	//		cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
-	//	}
-	//}
+	for (uint i = 0; i < 100; i++){
+		for (uint j = 0; j < 50; j++){
+		
+			cube1.position = vec3(i * 2 - 100.0f, 0.5f, j * 2 - 100.0f);
+			cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
+		}
+	}
 
 }
 
