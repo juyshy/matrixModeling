@@ -8,7 +8,19 @@
 #include <MyGLWindow.h>
 #include <DebugSlider.h>
 #include <Qt\qtimer.h>
+#include <Qt\qdatetime.h>
 #include <string>
+#include <Utility.h>
+#include <boost\algorithm\string\replace.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include "boost/date_time/gregorian/gregorian.hpp"
+#include <iostream>
+#include <string>
+
+using namespace boost::posix_time;
+using namespace boost::gregorian;
+using namespace boost;
 MyWidget::MyWidget()
 {
 	//setFocusPolicy(Qt::StrongFocus);
@@ -39,6 +51,7 @@ MyWidget::MyWidget()
 	theModel.sliderPosition.y = lightYSlider->value();
 	theModel.sliderPosition.z = lightZSlider->value();
 
+	saved = false;
 	QTimer *timer = new QTimer(this);
 
 	etimer.start();
@@ -52,9 +65,29 @@ MyWidget::MyWidget()
 void MyWidget::animate(){
 	elapsed = etimer.elapsed(); //(elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100000;
 	double fps = 1000 / (elapsed - previousTime);
-	QLocale german(QLocale::German, QLocale::Germany);
-	QString fpsstr = "FPS:" + german.toString(fps, 'f', 1);
+	//QLocale german(QLocale::German, QLocale::Germany);
+	QString fpsstr = "FPS:" + QString::number(fps);// german.toString(fps, 'f', 1);
+	
+	
 	label->setText(fpsstr);
+	if (elapsed <10000) {
+		debugstr << elapsed << ":" << fps << "\n";
+	}
+	else if (!saved )
+	{
+		saved = true;
+		//QDateTime curtime ;
+		//QString now=  curtime.currentDateTime().toString();
+		date today = day_clock::local_day();
+		ptime now = second_clock::local_time();
+		std::string nowstr= to_simple_string(now);
+		//QString newTime = QDateTime::currentDateTime().toString("ddd MMMM d yy, hh:mm:ss");
+		//char currtimeStr2[] = newTime.toStdString(); // crashes: http://stackoverflow.com/questions/15610994/qstringtostdstring-crashes-on-stdstring-destructor
+		erase_all(nowstr, ":");
+		std::string filename = "tracing/fpstrace" + nowstr + ".txt";
+		Utility::SaveToFile(filename, debugstr.str());
+		 
+	}
 	previousTime = elapsed;
 	myGlWindow->update(elapsed);
 	myGlWindow->repaint();

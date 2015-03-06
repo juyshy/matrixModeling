@@ -3,6 +3,7 @@
 #include <Qt\qelapsedtimer.h>
 #include <QtGui\qlabel.h>
 #include <MyModel.h>
+#include <sstream>
 class DebugSlider;
 class MyGLWindow; // forward declare
 class MyWidget : public  QWidget
@@ -17,6 +18,10 @@ class MyWidget : public  QWidget
 	int elapsed;
 	QElapsedTimer etimer;
 	int previousTime;
+	std::ostringstream debugstr;
+	std::string currtimeStr;
+	
+	bool saved;
 	private slots:
 	void sliderValueChanged();
  
