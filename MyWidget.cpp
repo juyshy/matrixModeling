@@ -1,5 +1,6 @@
 #include "MyWidget.h"
 #include <Qt\qdebug.h>
+#include <Qt\qelapsedtimer.h>
 #include <QtGui\qvboxlayout>
 #include <QtGui\qhboxlayout>
 #include <QtGui\qkeyevent>
@@ -7,7 +8,7 @@
 #include <MyGLWindow.h>
 #include <DebugSlider.h>
 #include <Qt\qtimer.h>
-
+#include <string>
 MyWidget::MyWidget()
 {
 	//setFocusPolicy(Qt::StrongFocus);
@@ -16,7 +17,7 @@ MyWidget::MyWidget()
 	QVBoxLayout* controlsLayout;
 	QVBoxLayout* labelLayout;
  
-	QLabel *label;
+
 	label = new QLabel(tr("FPS:"));
 	mainLayout->addLayout(labelLayout = new QVBoxLayout);
 	labelLayout->addWidget (label);
@@ -39,17 +40,23 @@ MyWidget::MyWidget()
 	theModel.sliderPosition.z = lightZSlider->value();
 
 	QTimer *timer = new QTimer(this);
+
+	etimer.start();
 	//connect(timer, SIGNAL(timeout()), native, SLOT(animate()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
-	timer->start(20);
+	timer->start(1);
 	elapsed=0;
 	myGlWindow->repaint();
 }
 
 void MyWidget::animate(){
-		elapsed = (elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100000;
-		
-		myGlWindow->update(elapsed);
+	elapsed = etimer.elapsed(); //(elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100000;
+	double fps = 1000 / (elapsed - previousTime);
+	QLocale german(QLocale::German, QLocale::Germany);
+	QString fpsstr = "FPS:" + german.toString(fps, 'f', 1);
+	label->setText(fpsstr);
+	previousTime = elapsed;
+	myGlWindow->update(elapsed);
 	myGlWindow->repaint();
 }
 void MyWidget::sliderValueChanged()
