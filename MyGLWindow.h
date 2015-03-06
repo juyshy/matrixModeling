@@ -4,7 +4,9 @@
 #include <QtOpenGL\qglwidget>
 #include <string>
 #include "Camera.h"
+#include <ShapeModel.h>
 class MyModel;
+
 class MyGLWindow : public QGLWidget
 {
 	void MyGLWindow::sendDataToOpenGL();
@@ -22,8 +24,7 @@ class MyGLWindow : public QGLWidget
 	MyModel * theModel;
 	GLuint ambientLightUniformLocation;
 	glm::vec3 ambientLight;
-	glm::mat4 fullTransformMatrix;
-	glm::mat4 viewToProjectionMatrix;
+
 protected:
 	void initializeGL();
 	void paintGL();
@@ -36,6 +37,13 @@ public:
 	MyGLWindow(MyModel * theModel); 
  
 	~MyGLWindow();
+
+	GLint fullTransformUniformLocation;
+	glm::mat4 worldToProojectionMatrix;
+	glm::mat4 fullTransformMatrix;
+	glm::mat4 viewToProjectionMatrix;
+
+	ShapeModel cube1;
 };
 
 #endif

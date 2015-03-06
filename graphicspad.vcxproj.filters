@@ -9,6 +9,7 @@
     <ClCompile Include="DebugSlider.cpp" />
     <ClCompile Include="DebugSlider_moc.cpp" />
     <ClCompile Include="MyWidget_moc.cpp" />
+    <ClCompile Include="ShapeModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGLWindow.h" />
@@ -23,6 +24,7 @@
     <ClInclude Include="MyWidget.h" />
     <ClInclude Include="DebugSlider.h" />
     <ClInclude Include="MyModel.h" />
+    <ClInclude Include="ShapeModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShaderCode.glsl" />

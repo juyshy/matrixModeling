@@ -88,6 +88,7 @@
     <ClCompile Include="MyWidget.cpp" />
     <ClCompile Include="MyWidget_moc.cpp" />
     <ClCompile Include="ShapeGenerator.cpp" />
+    <ClCompile Include="ShapeModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -97,6 +98,7 @@
     <ClInclude Include="MyWidget.h" />
     <ClInclude Include="ShapeData.h" />
     <ClInclude Include="ShapeGenerator.h" />
+    <ClInclude Include="ShapeModel.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>

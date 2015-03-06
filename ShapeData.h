@@ -1,3 +1,5 @@
+#ifndef SHAPE_DATA
+#define SHAPE_DATA
 #include <GL\glew.h>
 #include <Vertex.h>
 class Vertex;
@@ -25,3 +27,4 @@ struct ShapeData
 		numIndices = numVertices = 0;
 	}
 };
+#endif
