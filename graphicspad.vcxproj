@@ -93,6 +93,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DebugSlider.h" />
     <ClInclude Include="MyGLWindow.h" />
+    <ClInclude Include="MyModel.h" />
     <ClInclude Include="MyWidget.h" />
     <ClInclude Include="ShapeData.h" />
     <ClInclude Include="ShapeGenerator.h" />

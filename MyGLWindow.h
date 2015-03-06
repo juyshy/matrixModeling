@@ -3,6 +3,7 @@
 #include <gl\glew.h>
 #include <QtOpenGL\qglwidget>
 #include <string>
+class MyModel;
 class MyGLWindow : public QGLWidget
 {
 	void MyGLWindow::sendDataToOpenGL();
@@ -17,13 +18,16 @@ class MyGLWindow : public QGLWidget
 	std::string MyGLWindow::readShaderCode(const char* filename);
 	void MyGLWindow::installShaders();
 	void setupVertexArrays();
+	MyModel * theModel;
 protected:
 	void initializeGL();
 	void paintGL();
 	void mouseMoveEvent(QMouseEvent* e);
 	void keyPressEvent(QKeyEvent* e);
 public:
-	MyGLWindow();
+
+	MyGLWindow(MyModel * theModel); 
+ 
 	~MyGLWindow();
 };
 

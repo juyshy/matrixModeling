@@ -22,6 +22,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="MyWidget.h" />
     <ClInclude Include="DebugSlider.h" />
+    <ClInclude Include="MyModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShaderCode.glsl" />

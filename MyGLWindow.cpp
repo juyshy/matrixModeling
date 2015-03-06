@@ -10,6 +10,7 @@
 #include <Vertex.h>
 #include <ShapeGenerator.h>
 #include "Camera.h"
+#include <MyModel.h>
 using namespace std;
 using glm::vec3;
 using glm::mat4;
@@ -41,6 +42,12 @@ GLuint cubeVertexArrayObjectID;
 GLuint arrowVertexArrayObjectID;
 GLuint planeVertexArrayObjectID;
 GLint fullTransformUniformLocation;
+
+
+MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
+{
+
+}
 
 void MyGLWindow::sendDataToOpenGL() {
 	ShapeData shape = ShapeGenerator::makeCube();
@@ -234,7 +241,8 @@ void MyGLWindow::paintGL(){
 	glUniform3fv(ambientLightUniformLocation, 1, &ambientLight[0]);
 	// cube
 	glBindVertexArray(cubeVertexArrayObjectID);
-	mat4 cube1ModelToWorldMatrix = glm::translate(vec3(-1.5f, 0.0f, -3.0f)) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
+	vec3 cube1pos = theModel->lightPosition; // vec3(-1.5f, 0.0f, -3.0f);
+	mat4 cube1ModelToWorldMatrix = glm::translate(cube1pos) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
 	fullTransformMatrix = worldToProojectionMatrix * cube1ModelToWorldMatrix;
 
 	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
@@ -300,9 +308,7 @@ void MyGLWindow::keyPressEvent(QKeyEvent* e)
 	}
 	repaint();
 }
-MyGLWindow::MyGLWindow()
-{
-}
+ 
 
 MyGLWindow::~MyGLWindow()
 {
