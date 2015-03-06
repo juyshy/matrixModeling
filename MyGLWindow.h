@@ -20,6 +20,10 @@ class MyGLWindow : public QGLWidget
 	void MyGLWindow::installShaders();
 	void setupVertexArrays();
 	MyModel * theModel;
+	GLuint ambientLightUniformLocation;
+	glm::vec3 ambientLight;
+	glm::mat4 fullTransformMatrix;
+	glm::mat4 viewToProjectionMatrix;
 protected:
 	void initializeGL();
 	void paintGL();

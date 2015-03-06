@@ -104,12 +104,7 @@ void MyGLWindow::sendDataToOpenGL() {
 void MyGLWindow::setupVertexArrays(){
 	 
 }
-bool MyGLWindow::checkStatus(
-	GLuint objectID,
-	PFNGLGETSHADERIVPROC objectPropertyGetterFunc,
-	PFNGLGETSHADERINFOLOGPROC getInfoLogFunc,
-	GLenum statusType
-	)
+bool MyGLWindow::checkStatus(	GLuint objectID,	PFNGLGETSHADERIVPROC objectPropertyGetterFunc,	PFNGLGETSHADERINFOLOGPROC getInfoLogFunc,	GLenum statusType	)
 {
 	GLint status;
 	objectPropertyGetterFunc(objectID, statusType, &status);
@@ -185,28 +180,26 @@ void MyGLWindow::initializeGL(){
 	sendDataToOpenGL();
 	//setupVertexArrays();
 	installShaders();
-	  fullTransformUniformLocation = glGetUniformLocation(programID, "fullTransformMatrix");
+	fullTransformUniformLocation = glGetUniformLocation(programID, "fullTransformMatrix");
+	ambientLightUniformLocation = glGetUniformLocation(programID, "ambientLight");
+	ambientLight = vec3(0.9f, 0.9f, 0.9f);
+	glUniform3fv(ambientLightUniformLocation, 1, &ambientLight[0]);
+	viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
 
 }
 
 void MyGLWindow::paintGL(){
 
- 
 	glClearColor(0.2, 0, 0.5, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	mat4 fullTransformMatrix;
-	mat4 viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
 	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
 	mat4 worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;
 
-	GLuint ambientLightUniformLocation = glGetUniformLocation(programID, "ambientLight");
-	vec3 ambientLight(0.9f, 0.9f, 0.9f);
-	glUniform3fv(ambientLightUniformLocation, 1, &ambientLight[0]);
 	// cube
 	glBindVertexArray(cubeVertexArrayObjectID);
-	vec3 cube1pos = theModel->lightPosition; // vec3(-1.5f, 0.0f, -3.0f);
+	vec3 cube1pos = theModel->sliderPosition; // vec3(-1.5f, 0.0f, -3.0f);
 	mat4 cube1ModelToWorldMatrix = glm::translate(cube1pos) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
 	fullTransformMatrix = worldToProojectionMatrix * cube1ModelToWorldMatrix;
 

@@ -19,21 +19,24 @@ MyWidget::MyWidget()
 	lightPositionLayout->addWidget(lightXSlider = new DebugSlider);
 	lightPositionLayout->addWidget(lightYSlider = new DebugSlider);
 	lightPositionLayout->addWidget(lightZSlider = new DebugSlider);
-	lightXSlider->setValue(0);
+	lightXSlider->setValue(-1.5f);
 	lightYSlider->setValue(0);
 	lightZSlider->setValue(0);
 	connect(lightXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(lightYSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(lightZSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
-
+	theModel.sliderPosition.x = lightXSlider->value();
+	theModel.sliderPosition.y = lightYSlider->value();
+	theModel.sliderPosition.z = lightZSlider->value();
+	myGlWindow->repaint();
 }
 
 void MyWidget::sliderValueChanged()
 {
 	//qDebug() << "slider!!!" << lightXSlider->value();
-	theModel.lightPosition.x = lightXSlider->value();
-	theModel.lightPosition.y = lightYSlider->value();
-	theModel.lightPosition.z = lightZSlider->value();
+	theModel.sliderPosition.x = lightXSlider->value();
+	theModel.sliderPosition.y = lightYSlider->value();
+	theModel.sliderPosition.z = lightZSlider->value();
 	myGlWindow->repaint();
 }
 
