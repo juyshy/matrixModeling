@@ -47,91 +47,166 @@ ShapeData ShapeGenerator::makeTriangle(){
 ShapeData ShapeGenerator::makeCube(){
 	ShapeData ret;
 
-	Vertex stackVerts[] =
-	{
+	//ret.vertPositions =
+	std::vector<vec3> vertPositions {
 		vec3(-1.0f, +1.0f, +1.0f),  // 0
-		vec3(+1.0f, +0.0f, +0.0f),	// Color
-		vec3(+0.0f, +1.0f, +0.0f),  // Normal
 		vec3(+1.0f, +1.0f, +1.0f),  // 1
-		vec3(+0.0f, +1.0f, +0.0f),	// Color
-		vec3(+0.0f, +1.0f, +0.0f),  // Normal
 		vec3(+1.0f, +1.0f, -1.0f),  // 2
-		vec3(+0.0f, +0.0f, +1.0f),  // Color
-		vec3(+0.0f, +1.0f, +0.0f),  // Normal
 		vec3(-1.0f, +1.0f, -1.0f),  // 3
-		vec3(+1.0f, +1.0f, +1.0f),  // Color
-		vec3(+0.0f, +1.0f, +0.0f),  // Normal
-
 		vec3(-1.0f, +1.0f, -1.0f),  // 4
-		vec3(+1.0f, +0.0f, +1.0f),  // Color
-		vec3(+0.0f, +0.0f, -1.0f),  // Normal
 		vec3(+1.0f, +1.0f, -1.0f),  // 5
-		vec3(+0.0f, +0.5f, +0.2f),  // Color
-		vec3(+0.0f, +0.0f, -1.0f),  // Normal
 		vec3(+1.0f, -1.0f, -1.0f),  // 6
-		vec3(+0.8f, +0.6f, +0.4f),  // Color
-		vec3(+0.0f, +0.0f, -1.0f),  // Normal
 		vec3(-1.0f, -1.0f, -1.0f),  // 7
-		vec3(+0.3f, +1.0f, +0.5f),  // Color
-		vec3(+0.0f, +0.0f, -1.0f),  // Normal
-
 		vec3(+1.0f, +1.0f, -1.0f),  // 8
-		vec3(+0.2f, +0.5f, +0.2f),  // Color
-		vec3(+1.0f, +0.0f, +0.0f),  // Normal
 		vec3(+1.0f, +1.0f, +1.0f),  // 9
-		vec3(+0.9f, +0.3f, +0.7f),  // Color
-		vec3(+1.0f, +0.0f, +0.0f),  // Normal
 		vec3(+1.0f, -1.0f, +1.0f),  // 10
-		vec3(+0.3f, +0.7f, +0.5f),  // Color
-		vec3(+1.0f, +0.0f, +0.0f),  // Normal
 		vec3(+1.0f, -1.0f, -1.0f),  // 11
-		vec3(+0.5f, +0.7f, +0.5f),  // Color
-		vec3(+1.0f, +0.0f, +0.0f),  // Normal
-
 		vec3(-1.0f, +1.0f, +1.0f),  // 12
-		vec3(+0.7f, +0.8f, +0.2f),  // Color
-		vec3(-1.0f, +0.0f, +0.0f),  // Normal
 		vec3(-1.0f, +1.0f, -1.0f),  // 13
-		vec3(+0.5f, +0.7f, +0.3f),  // Color
-		vec3(-1.0f, +0.0f, +0.0f),  // Normal
 		vec3(-1.0f, -1.0f, -1.0f),  // 14
-		vec3(+0.4f, +0.7f, +0.7f),  // Color
-		vec3(-1.0f, +0.0f, +0.0f),  // Normal
 		vec3(-1.0f, -1.0f, +1.0f),  // 15
-		vec3(+0.2f, +0.5f, +1.0f),  // Color
-		vec3(-1.0f, +0.0f, +0.0f),  // Normal
-
 		vec3(+1.0f, +1.0f, +1.0f),  // 16
-		vec3(+0.6f, +1.0f, +0.7f),  // Color
-		vec3(+0.0f, +0.0f, +1.0f),  // Normal
 		vec3(-1.0f, +1.0f, +1.0f),  // 17
-		vec3(+0.6f, +0.4f, +0.8f),  // Color
-		vec3(+0.0f, +0.0f, +1.0f),  // Normal
 		vec3(-1.0f, -1.0f, +1.0f),  // 18
-		vec3(+0.2f, +0.8f, +0.7f),  // Color
-		vec3(+0.0f, +0.0f, +1.0f),  // Normal
 		vec3(+1.0f, -1.0f, +1.0f),  // 19
-		vec3(+0.2f, +0.7f, +1.0f),  // Color
-		vec3(+0.0f, +0.0f, +1.0f),  // Normal
-
 		vec3(+1.0f, -1.0f, -1.0f),  // 20
-		vec3(+0.8f, +0.3f, +0.7f),  // Color
-		vec3(+0.0f, -1.0f, +0.0f),  // Normal
 		vec3(-1.0f, -1.0f, -1.0f),  // 21
-		vec3(+0.8f, +0.9f, +0.5f),  // Color
-		vec3(+0.0f, -1.0f, +0.0f),  // Normal
 		vec3(-1.0f, -1.0f, +1.0f),  // 22
-		vec3(+0.5f, +0.8f, +0.5f),  // Color
-		vec3(+0.0f, -1.0f, +0.0f),  // Normal
 		vec3(+1.0f, -1.0f, +1.0f),  // 23
-		vec3(+0.9f, +1.0f, +0.2f),  // Color
-		vec3(+0.0f, -1.0f, +0.0f),  // Normal
-
 	};
+	std::vector<vec3> norlmals{
+		vec3(+0.0f, +1.0f, +0.0f),  // Normal
+		vec3(+0.0f, +1.0f, +0.0f),  // Normal
+		vec3(+0.0f, +1.0f, +0.0f),  // Normal
+		vec3(+0.0f, +1.0f, +0.0f),  // Normal
+		vec3(+0.0f, +0.0f, -1.0f),  // Normal
+		vec3(+0.0f, +0.0f, -1.0f),  // Normal
+		vec3(+0.0f, +0.0f, -1.0f),  // Normal
+		vec3(+0.0f, +0.0f, -1.0f),  // Normal
+		vec3(+1.0f, +0.0f, +0.0f),  // Normal
+		vec3(+1.0f, +0.0f, +0.0f),  // Normal
+		vec3(+1.0f, +0.0f, +0.0f),  // Normal
+		vec3(+1.0f, +0.0f, +0.0f),  // Normal
+		vec3(-1.0f, +0.0f, +0.0f),  // Normal
+		vec3(-1.0f, +0.0f, +0.0f),  // Normal
+		vec3(-1.0f, +0.0f, +0.0f),  // Normal
+		vec3(-1.0f, +0.0f, +0.0f),  // Normal
+		vec3(+0.0f, +0.0f, +1.0f),  // Normal
+		vec3(+0.0f, +0.0f, +1.0f),  // Normal
+		vec3(+0.0f, +0.0f, +1.0f),  // Normal
+		vec3(+0.0f, +0.0f, +1.0f),  // Normal
+		vec3(+0.0f, -1.0f, +0.0f),  // Normal
+		vec3(+0.0f, -1.0f, +0.0f),  // Normal
+		vec3(+0.0f, -1.0f, +0.0f),  // Normal
+		vec3(+0.0f, -1.0f, +0.0f),  // Normal
+	};
+
+	std::vector<vec3> colors;
+	for (uint i = 0; i < 24; ++i)
+		colors.push_back(randomColor());
+	//ret.colors = colors;
+
+	/*std::vector<Vertex[24]> cubes;*/
+	uint count = 0;
+	Vertex stackVerts[24 /** 100 * 50*/];
+	//for (uint i = 0; i < 100; i++){
+	//	for (uint j = 0; j < 50; j++){
+
+
+			//Vertex stackVerts1[24];
+			for (uint k = 0; k < 24; ++k){
+				stackVerts[k].position = vertPositions.at(k);//  +vec3(i * 10 - 100.0f, 0.0f, j * 10 - 100.0f);
+				stackVerts[k].color = colors.at(k);
+				stackVerts[k].normal = norlmals.at(k);
+				count++;
+			}
+	/*	}
+	}*/
+	//Vertex stackVerts[] =
+	//{
+	//	vec3(-1.0f, +1.0f, +1.0f),  // 0
+	//	vec3(+1.0f, +0.0f, +0.0f),	// Color
+	//	vec3(+0.0f, +1.0f, +0.0f),  // Normal
+	//	vec3(+1.0f, +1.0f, +1.0f),  // 1
+	//	vec3(+0.0f, +1.0f, +0.0f),	// Color
+	//	vec3(+0.0f, +1.0f, +0.0f),  // Normal
+	//	vec3(+1.0f, +1.0f, -1.0f),  // 2
+	//	vec3(+0.0f, +0.0f, +1.0f),  // Color
+	//	vec3(+0.0f, +1.0f, +0.0f),  // Normal
+	//	vec3(-1.0f, +1.0f, -1.0f),  // 3
+	//	vec3(+1.0f, +1.0f, +1.0f),  // Color
+	//	vec3(+0.0f, +1.0f, +0.0f),  // Normal
+
+	//	vec3(-1.0f, +1.0f, -1.0f),  // 4
+	//	vec3(+1.0f, +0.0f, +1.0f),  // Color
+	//	vec3(+0.0f, +0.0f, -1.0f),  // Normal
+	//	vec3(+1.0f, +1.0f, -1.0f),  // 5
+	//	vec3(+0.0f, +0.5f, +0.2f),  // Color
+	//	vec3(+0.0f, +0.0f, -1.0f),  // Normal
+	//	vec3(+1.0f, -1.0f, -1.0f),  // 6
+	//	vec3(+0.8f, +0.6f, +0.4f),  // Color
+	//	vec3(+0.0f, +0.0f, -1.0f),  // Normal
+	//	vec3(-1.0f, -1.0f, -1.0f),  // 7
+	//	vec3(+0.3f, +1.0f, +0.5f),  // Color
+	//	vec3(+0.0f, +0.0f, -1.0f),  // Normal
+
+	//	vec3(+1.0f, +1.0f, -1.0f),  // 8
+	//	vec3(+0.2f, +0.5f, +0.2f),  // Color
+	//	vec3(+1.0f, +0.0f, +0.0f),  // Normal
+	//	vec3(+1.0f, +1.0f, +1.0f),  // 9
+	//	vec3(+0.9f, +0.3f, +0.7f),  // Color
+	//	vec3(+1.0f, +0.0f, +0.0f),  // Normal
+	//	vec3(+1.0f, -1.0f, +1.0f),  // 10
+	//	vec3(+0.3f, +0.7f, +0.5f),  // Color
+	//	vec3(+1.0f, +0.0f, +0.0f),  // Normal
+	//	vec3(+1.0f, -1.0f, -1.0f),  // 11
+	//	vec3(+0.5f, +0.7f, +0.5f),  // Color
+	//	vec3(+1.0f, +0.0f, +0.0f),  // Normal
+
+	//	vec3(-1.0f, +1.0f, +1.0f),  // 12
+	//	vec3(+0.7f, +0.8f, +0.2f),  // Color
+	//	vec3(-1.0f, +0.0f, +0.0f),  // Normal
+	//	vec3(-1.0f, +1.0f, -1.0f),  // 13
+	//	vec3(+0.5f, +0.7f, +0.3f),  // Color
+	//	vec3(-1.0f, +0.0f, +0.0f),  // Normal
+	//	vec3(-1.0f, -1.0f, -1.0f),  // 14
+	//	vec3(+0.4f, +0.7f, +0.7f),  // Color
+	//	vec3(-1.0f, +0.0f, +0.0f),  // Normal
+	//	vec3(-1.0f, -1.0f, +1.0f),  // 15
+	//	vec3(+0.2f, +0.5f, +1.0f),  // Color
+	//	vec3(-1.0f, +0.0f, +0.0f),  // Normal
+
+	//	vec3(+1.0f, +1.0f, +1.0f),  // 16
+	//	vec3(+0.6f, +1.0f, +0.7f),  // Color
+	//	vec3(+0.0f, +0.0f, +1.0f),  // Normal
+	//	vec3(-1.0f, +1.0f, +1.0f),  // 17
+	//	vec3(+0.6f, +0.4f, +0.8f),  // Color
+	//	vec3(+0.0f, +0.0f, +1.0f),  // Normal
+	//	vec3(-1.0f, -1.0f, +1.0f),  // 18
+	//	vec3(+0.2f, +0.8f, +0.7f),  // Color
+	//	vec3(+0.0f, +0.0f, +1.0f),  // Normal
+	//	vec3(+1.0f, -1.0f, +1.0f),  // 19
+	//	vec3(+0.2f, +0.7f, +1.0f),  // Color
+	//	vec3(+0.0f, +0.0f, +1.0f),  // Normal
+
+	//	vec3(+1.0f, -1.0f, -1.0f),  // 20
+	//	vec3(+0.8f, +0.3f, +0.7f),  // Color
+	//	vec3(+0.0f, -1.0f, +0.0f),  // Normal
+	//	vec3(-1.0f, -1.0f, -1.0f),  // 21
+	//	vec3(+0.8f, +0.9f, +0.5f),  // Color
+	//	vec3(+0.0f, -1.0f, +0.0f),  // Normal
+	//	vec3(-1.0f, -1.0f, +1.0f),  // 22
+	//	vec3(+0.5f, +0.8f, +0.5f),  // Color
+	//	vec3(+0.0f, -1.0f, +0.0f),  // Normal
+	//	vec3(+1.0f, -1.0f, +1.0f),  // 23
+	//	vec3(+0.9f, +1.0f, +0.2f),  // Color
+	//	vec3(+0.0f, -1.0f, +0.0f),  // Normal
+
+	//};
 	ret.numVertices = NUM_ARRAY_ELEMENTS(stackVerts);
 	ret.vertices = new Vertex[ret.numVertices];
 	memcpy(ret.vertices, stackVerts, sizeof(stackVerts));
-
+//	std::vector<GLushort> indicesVector 
 	GLushort stackIndices[] = { 
 		0, 1, 2 , 0, 2, 3, // top
 		4,5,6, 4,6,7, // front
@@ -140,6 +215,11 @@ ShapeData ShapeGenerator::makeCube(){
 		16,17, 18, 16, 18, 19, // back
 		20,22, 21, 20, 23,22, // bottom
 	};
+	//GLushort stackIndices[36 * 50 * 100];
+	//for (uint i = 0; i < 50 * 100; i++)
+	//	for (uint j = 0; j < 36; j++)
+	//		stackIndices[i * 36 + j] = indicesVector.at(j) + i*36;
+
 	ret.numIndices = NUM_ARRAY_ELEMENTS(stackIndices);
 	ret.indices = new GLushort[ret.numIndices];
 	memcpy(ret.indices, stackIndices, sizeof(stackIndices));

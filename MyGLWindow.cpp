@@ -47,24 +47,24 @@ void MyGLWindow::update(int elapsed) {
 void MyGLWindow::sendDataToOpenGL() {
  
 	cube1.Init("cube");
-	cube2.Init("cube");
+	//cube2.Init("cube");
 	arrow.Init("arrow");
 	plane.Init("plane");
 
-	cube2.position = vec3(10.5f, 1.0f, -3.0f);
+	//cube2.position = vec3(10.5f, 1.0f, -3.0f);
 	arrow.position = vec3(4.5f, 2.0f, -3.0f);
 	plane.position = vec3(0.0f, 0.0f, 0.0f);
 
 	
 	arrow.rotation.axis = vec3(0.0f, 0.0f, 1.0f);
-	cube1.rotation.angle = 36.0f;
-	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
-	cube2.rotation.angle = 56.0f;
-	cube2.rotation.axis = vec3(0.0f, 1.0f, 0.0f);
-	cube2.scale = glm::vec3(0.5f, 2.0f, 3.0f);
+	//cube1.rotation.angle = 36.0f;
+	//cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
+	//cube2.rotation.angle = 56.0f;
+	//cube2.rotation.axis = vec3(0.0f, 1.0f, 0.0f);
+	//cube2.scale = glm::vec3(0.5f, 2.0f, 3.0f);
 	plane.scale =   glm::vec3(10.0f, 1.0f, 30.0f);
 
- 
+ //
 	cube1.scale = glm::vec3(0.2f, 1.0f, 0.2f);
 	cube1.rotation.angle = 0.0f;
 	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
@@ -181,20 +181,20 @@ void MyGLWindow::paintGL(){
  
 	cube1.position = theModel->sliderPosition;
 	cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
-	cube2.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
+	//cube2.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 	arrow.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 	plane.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 
 	//for (ShapeModel block : blocks)
 	//	block.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 
-	for (uint i = 0; i < 100; i++){
-		for (uint j = 0; j < 50; j++){
-		
-			cube1.position = vec3(i * 2 - 100.0f, 0.5f, j * 2 - 100.0f);
-			cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
-		}
-	}
+	//for (uint i = 0; i < 100; i++){
+	//	for (uint j = 0; j < 50; j++){
+	//	
+	//		cube1.position = vec3(i * 2 - 100.0f, 0.5f, j * 2 - 100.0f);
+	//		cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
+	//	}
+	//}
 
 }
 
