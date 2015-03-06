@@ -11,5 +11,6 @@ public:
 	static ShapeData  makeCube();
 	static ShapeData  makeArrow();
 	static ShapeData makePlane(uint dimensions = 10);
+	ShapeData generateNormals(const ShapeData& data);
 };
 

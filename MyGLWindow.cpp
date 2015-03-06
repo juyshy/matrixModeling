@@ -21,7 +21,7 @@ extern  const char* fragmentShaderCode;
 const float X_DELTA = 0.1F;
 uint numTris = 0;
 const uint NUM_VERTICES_PER_TRI = 3;
-const uint NUM_FLOATS_PER_VERTICE = 6;
+const uint NUM_FLOATS_PER_VERTICE = 9;
 const uint TRIANGLE_BYTE_SIZE = NUM_VERTICES_PER_TRI* NUM_FLOATS_PER_VERTICE*sizeof(float);
 const uint VERTEX_BYTE_SIZE =   NUM_FLOATS_PER_VERTICE*sizeof(float);
 const uint MAX_TRIS = 20;
@@ -228,6 +228,9 @@ void MyGLWindow::paintGL(){
 	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
 	mat4 worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;
 
+	GLuint ambientLightUniformLocation = glGetUniformLocation(programID, "ambientLight");
+	vec3 ambientLight(0.9f, 0.9f, 0.9f);
+	glUniform3fv(ambientLightUniformLocation, 1, &ambientLight[0]);
 	// cube
 	glBindVertexArray(cubeVertexArrayObjectID);
 	mat4 cube1ModelToWorldMatrix = glm::translate(vec3(-1.5f, 0.0f, -3.0f)) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
