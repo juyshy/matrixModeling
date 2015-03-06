@@ -6,9 +6,11 @@
 #include <QtGui\qlabel.h>
 #include <MyGLWindow.h>
 #include <DebugSlider.h>
+#include <Qt\qtimer.h>
 
 MyWidget::MyWidget()
 {
+	//setFocusPolicy(Qt::StrongFocus);
 	QVBoxLayout* mainLayout;
 	setLayout(mainLayout = new QVBoxLayout);
 	QVBoxLayout* controlsLayout;
@@ -35,16 +37,28 @@ MyWidget::MyWidget()
 	theModel.sliderPosition.x = lightXSlider->value();
 	theModel.sliderPosition.y = lightYSlider->value();
 	theModel.sliderPosition.z = lightZSlider->value();
+
+	QTimer *timer = new QTimer(this);
+	//connect(timer, SIGNAL(timeout()), native, SLOT(animate()));
+	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
+	timer->start(20);
+	elapsed=0;
 	myGlWindow->repaint();
 }
 
+void MyWidget::animate(){
+		elapsed = (elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100000;
+		
+		myGlWindow->update(elapsed);
+	myGlWindow->repaint();
+}
 void MyWidget::sliderValueChanged()
 {
 	//qDebug() << "slider!!!" << lightXSlider->value();
 	theModel.sliderPosition.x = lightXSlider->value();
 	theModel.sliderPosition.y = lightYSlider->value();
 	theModel.sliderPosition.z = lightZSlider->value();
-	myGlWindow->repaint();
+	//myGlWindow->repaint();
 }
 
 
@@ -73,7 +87,7 @@ void MyWidget::keyPressEvent(QKeyEvent* e)
 	default:
 		break;
 	}
-	myGlWindow->repaint();
+	//myGlWindow->repaint();
 }
 
  

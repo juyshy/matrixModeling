@@ -7,9 +7,11 @@ int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);
 	MyWidget widg;
+	
 	widg.show();
 	//MyGLWindow myWindow;
 	//myWindow.show();
+	app.setKeyboardInputInterval(40);
 	return app.exec();
 
 }

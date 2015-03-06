@@ -4,6 +4,7 @@
 #include <fstream>
 #include <QtGui\qmouseevent>
 #include <QtGui\qkeyevent>
+#include <Qt\qtimer.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtx\transform.hpp>
@@ -27,6 +28,20 @@ bool mouseDown = false;
 MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 {
 
+	//elapsed = 0;
+
+}
+//void MyGLWindow::animate()
+//{
+//	elapsed = (elapsed + qobject_cast<QTimer*>(sender())->interval()) % 1000;
+//	std::cout << elapsed << std::endl;
+//
+//	repaint();
+//}
+
+void MyGLWindow::update(int elapsed) {
+	arrow.rotation.angle = elapsed / 20.0f;
+	std::cout << elapsed << std::endl;
 }
 
 void MyGLWindow::sendDataToOpenGL() {
@@ -36,10 +51,12 @@ void MyGLWindow::sendDataToOpenGL() {
 	arrow.Init("arrow");
 	plane.Init("plane");
 
-	cube2.position = vec3(2.5f, 1.0f, -3.0f);
-	arrow.position = vec3(0.5f, 2.0f, -3.0f);
+	cube2.position = vec3(10.5f, 1.0f, -3.0f);
+	arrow.position = vec3(4.5f, 2.0f, -3.0f);
 	plane.position = vec3(0.0f, 0.0f, 0.0f);
 
+	
+	arrow.rotation.axis = vec3(0.0f, 0.0f, 1.0f);
 	cube1.rotation.angle = 36.0f;
 	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
 	cube2.rotation.angle = 56.0f;
@@ -185,7 +202,7 @@ void MyGLWindow::mouseMoveEvent(QMouseEvent* e)
 {
 	if (mouseDown)
 	camera.mouseUpdate(glm::vec2(e->x(), e->y()));
-	repaint();
+	//repaint();
 }
 
 void MyGLWindow::keyPressEvent(QKeyEvent* e)

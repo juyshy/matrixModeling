@@ -12,9 +12,11 @@ class MyWidget : public  QWidget
 
 	MyGLWindow * myGlWindow;
 	MyModel theModel;
+	int elapsed;
 	private slots:
 	void sliderValueChanged();
-
+ 
+	void  animate();
 protected:
 	void keyPressEvent(QKeyEvent* e);
 public:

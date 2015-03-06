@@ -10,6 +10,7 @@ class MyModel;
 
 class MyGLWindow : public QGLWidget
 {
+	 
 	void MyGLWindow::sendDataToOpenGL();
 	bool MyGLWindow::checkStatus(
 		GLuint objectID,
@@ -25,8 +26,10 @@ class MyGLWindow : public QGLWidget
 	MyModel * theModel;
 	GLuint ambientLightUniformLocation;
 	glm::vec3 ambientLight;
+	//int elapsed;
 
 protected:
+	
 	void initializeGL();
 	void paintGL();
 	void mouseReleaseEvent(QMouseEvent *event);
@@ -39,6 +42,7 @@ public:
  
 	~MyGLWindow();
 
+	void update(int elapsed);
 	GLint fullTransformUniformLocation;
 	glm::mat4 worldToProojectionMatrix;
 	glm::mat4 fullTransformMatrix;
