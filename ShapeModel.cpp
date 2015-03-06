@@ -15,6 +15,7 @@ ShapeModel::ShapeModel()
 {
 	rotation.angle = 0.0f;
 	rotation.axis = glm::vec3(1.0f, 0.0f, 0.0f);
+	scale = glm::vec3(1.0f, 1.0f, 1.0f);
 	//Init();
 }
 void ShapeModel::Init(char  shapeLabel[]) { //MyGLWindow * myGlWin
@@ -53,7 +54,7 @@ void ShapeModel::Draw(const glm::mat4 * worldToProjectionMatrix, const GLint* fu
 
 	glBindVertexArray(vertexArrayObjectID);
 	//position = theModel->sliderPosition; // vec3(-1.5f, 0.0f, -3.0f);
-	shapeModelToWorldMatrix = glm::translate(position) * glm::rotate(rotation.angle, rotation.axis);
+	shapeModelToWorldMatrix = glm::translate(position) * glm::rotate(rotation.angle, rotation.axis) * glm::scale(scale);
 	fullTransformMatrix = *worldToProjectionMatrix * shapeModelToWorldMatrix;
 	glUniformMatrix4fv(*fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
 	glDrawElements(GL_TRIANGLES, shapeNumIndices, GL_UNSIGNED_SHORT, 0);

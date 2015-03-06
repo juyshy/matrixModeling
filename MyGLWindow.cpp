@@ -18,30 +18,10 @@ using glm::mat4;
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
 
-
-const float X_DELTA = 0.1F;
-uint numTris = 0;
-const uint NUM_VERTICES_PER_TRI = 3;
-const uint NUM_FLOATS_PER_VERTICE = 9;
-const uint TRIANGLE_BYTE_SIZE = NUM_VERTICES_PER_TRI* NUM_FLOATS_PER_VERTICE*sizeof(float);
-const uint VERTEX_BYTE_SIZE =   NUM_FLOATS_PER_VERTICE*sizeof(float);
-const uint MAX_TRIS = 20;
+ 
 GLuint programID;
 
-GLuint cubeNumIndices;
-GLuint arrowNumIndices;
-GLuint planeNumIndices;
-
-GLuint cubeVertexbufferID;
-GLuint arrowVertexbufferID;
-GLuint planeVertexbufferID;
-GLuint cubeIndexBufferID;
-GLuint arrowIndexBufferID;
-GLuint planeIndexBufferID;
-GLuint cubeVertexArrayObjectID;
-GLuint arrowVertexArrayObjectID;
-GLuint planeVertexArrayObjectID;
-
+ 
 bool mouseDown = false;
 
 MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
@@ -56,14 +36,16 @@ void MyGLWindow::sendDataToOpenGL() {
 	arrow.Init("arrow");
 	plane.Init("plane");
 
-
 	cube2.position = vec3(2.5f, 1.0f, -3.0f);
 	arrow.position = vec3(0.5f, 2.0f, -3.0f);
 	plane.position = vec3(0.0f, 0.0f, 0.0f);
+
 	cube1.rotation.angle = 36.0f;
 	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
 	cube2.rotation.angle = 56.0f;
 	cube2.rotation.axis = vec3(0.0f, 1.0f, 0.0f);
+	cube2.scale = glm::vec3(0.5f, 2.0f, 3.0f);
+	plane.scale =   glm::vec3(10.0f, 1.0f, 30.0f);
 	 
 }
 
@@ -159,7 +141,7 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
+	viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 100.0f);
  
 	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
 	worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;

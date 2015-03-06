@@ -26,6 +26,7 @@ public:
 	GLuint shapeNumIndices;
 	glm::vec3 position;
 	Rotation rotation;
+	glm::vec3 scale;
 	glm::mat4 shapeModelToWorldMatrix;
  
 };
