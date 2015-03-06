@@ -5,6 +5,7 @@
 #include <string>
 #include "Camera.h"
 #include <ShapeModel.h>
+#include <vector>
 class MyModel;
 
 class MyGLWindow : public QGLWidget
@@ -47,6 +48,9 @@ public:
 	ShapeModel cube2;
 	ShapeModel arrow;
 	ShapeModel plane;
+
+	std::vector<ShapeModel> blocks;
+
 };
 
 #endif

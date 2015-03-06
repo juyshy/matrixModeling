@@ -46,6 +46,16 @@ void MyGLWindow::sendDataToOpenGL() {
 	cube2.rotation.axis = vec3(0.0f, 1.0f, 0.0f);
 	cube2.scale = glm::vec3(0.5f, 2.0f, 3.0f);
 	plane.scale =   glm::vec3(10.0f, 1.0f, 30.0f);
+
+	for (uint i = 0; i < 20; i++){
+		for (uint j = 0; j < 20; j++){
+			ShapeModel block;
+			block.Init("cube");
+			block.scale = glm::vec3(0.2f, 1.0f, 0.2f);
+			block.position = vec3(i * 2 - 20, 0.5f, j * 2 - 20);
+			blocks.push_back(block);
+		}
+	}
 	 
 }
 
@@ -153,7 +163,11 @@ void MyGLWindow::paintGL(){
 	arrow.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 	plane.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 
-	 
+	for (ShapeModel block : blocks)
+		block.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
+
+
+
 }
 
 
