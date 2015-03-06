@@ -2,6 +2,7 @@
 #include <Qt\qdebug.h>
 #include <QtGui\qvboxlayout>
 #include <QtGui\qhboxlayout>
+#include <QtGui\qkeyevent>
 #include <MyGLWindow.h>
 #include <DebugSlider.h>
 
@@ -36,5 +37,33 @@ void MyWidget::sliderValueChanged()
 	myGlWindow->repaint();
 }
 
+
+void MyWidget::keyPressEvent(QKeyEvent* e)
+{
+	switch (e->key())
+	{
+	case Qt::Key::Key_W:
+		myGlWindow->camera.moveForward();
+		break;
+	case Qt::Key::Key_S:
+		myGlWindow->camera.moveBackwards();
+		break;
+	case Qt::Key::Key_A:
+		myGlWindow->camera.strafeLeft();
+		break;
+	case Qt::Key::Key_D:
+		myGlWindow->camera.strafeRight();
+		break;
+	case Qt::Key::Key_R:
+		myGlWindow->camera.moveUp();
+		break;
+	case Qt::Key::Key_F:
+		myGlWindow->camera.moveDown();
+		break;
+	default:
+		break;
+	}
+	myGlWindow->repaint();
+}
 
  

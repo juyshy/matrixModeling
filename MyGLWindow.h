@@ -3,6 +3,7 @@
 #include <gl\glew.h>
 #include <QtOpenGL\qglwidget>
 #include <string>
+#include "Camera.h"
 class MyModel;
 class MyGLWindow : public QGLWidget
 {
@@ -22,10 +23,12 @@ class MyGLWindow : public QGLWidget
 protected:
 	void initializeGL();
 	void paintGL();
+	void mouseReleaseEvent(QMouseEvent *event);
+	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent* e);
 	void keyPressEvent(QKeyEvent* e);
 public:
-
+	Camera camera;
 	MyGLWindow(MyModel * theModel); 
  
 	~MyGLWindow();

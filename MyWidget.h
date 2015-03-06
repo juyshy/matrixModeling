@@ -15,6 +15,8 @@ class MyWidget : public  QWidget
 	private slots:
 	void sliderValueChanged();
 
+protected:
+	void keyPressEvent(QKeyEvent* e);
 public:
 	MyWidget();
  

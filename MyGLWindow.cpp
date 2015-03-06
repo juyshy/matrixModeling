@@ -31,7 +31,7 @@ GLuint programID;
 GLuint cubeNumIndices;
 GLuint arrowNumIndices;
 GLuint planeNumIndices;
-Camera camera;
+
 GLuint cubeVertexbufferID;
 GLuint arrowVertexbufferID;
 GLuint planeVertexbufferID;
@@ -42,7 +42,7 @@ GLuint cubeVertexArrayObjectID;
 GLuint arrowVertexArrayObjectID;
 GLuint planeVertexArrayObjectID;
 GLint fullTransformUniformLocation;
-
+bool mouseDown = false;
 
 MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 {
@@ -275,8 +275,21 @@ void MyGLWindow::paintGL(){
 
 	
 }
+
+
+
+void MyGLWindow::mouseReleaseEvent(QMouseEvent *event){
+	if (event->button() == Qt::LeftButton)
+		mouseDown = false;
+}
+void MyGLWindow::mousePressEvent(QMouseEvent *event){
+	if (event->button() == Qt::LeftButton)
+		mouseDown = true;
+}
+
 void MyGLWindow::mouseMoveEvent(QMouseEvent* e)
 {
+	if (mouseDown)
 	camera.mouseUpdate(glm::vec2(e->x(), e->y()));
 	repaint();
 }
