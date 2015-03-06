@@ -65,33 +65,40 @@ MyWidget::MyWidget()
 void MyWidget::animate(){
 	elapsed = etimer.elapsed(); //(elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100000;
 	double fps = 1000 / (elapsed - previousTime);
-	//QLocale german(QLocale::German, QLocale::Germany);
-	QString fpsstr = "FPS:" + QString::number(fps);// german.toString(fps, 'f', 1);
-	
+ 
+	QString fpsstr = "FPS:" + QString::number(fps); 
 	
 	label->setText(fpsstr);
-	if (elapsed <10000) {
+	if (elapsed <60000) {
 		debugstr << elapsed << ":" << fps << "\n";
 	}
 	else if (!saved )
 	{
-		saved = true;
-		//QDateTime curtime ;
-		//QString now=  curtime.currentDateTime().toString();
-		date today = day_clock::local_day();
-		ptime now = second_clock::local_time();
-		std::string nowstr= to_simple_string(now);
-		//QString newTime = QDateTime::currentDateTime().toString("ddd MMMM d yy, hh:mm:ss");
-		//char currtimeStr2[] = newTime.toStdString(); // crashes: http://stackoverflow.com/questions/15610994/qstringtostdstring-crashes-on-stdstring-destructor
-		erase_all(nowstr, ":");
-		std::string filename = "tracing/fpstrace" + nowstr + ".txt";
-		Utility::SaveToFile(filename, debugstr.str());
-		 
+		saveTrace(); 
 	}
 	previousTime = elapsed;
 	myGlWindow->update(elapsed);
 	myGlWindow->repaint();
 }
+
+void MyWidget::saveTrace(){
+	saved = true;
+	date today = day_clock::local_day();
+	ptime now = second_clock::local_time();
+	std::string nowstr = to_simple_string(now);
+	erase_all(nowstr, ":");
+	std::string filename = "tracing/fpstrace" + nowstr + ".txt";
+	Utility::SaveToFile(filename, debugstr.str());
+}
+
+MyWidget::~MyWidget(){
+
+	if (!saved)
+	{
+		saveTrace();
+	}
+}
+
 void MyWidget::sliderValueChanged()
 {
 	//qDebug() << "slider!!!" << lightXSlider->value();

@@ -22,6 +22,7 @@ class MyWidget : public  QWidget
 	std::string currtimeStr;
 	
 	bool saved;
+	void MyWidget::saveTrace();
 	private slots:
 	void sliderValueChanged();
  
@@ -30,6 +31,6 @@ protected:
 	void keyPressEvent(QKeyEvent* e);
 public:
 	MyWidget();
- 
+	~MyWidget();
 };
 
