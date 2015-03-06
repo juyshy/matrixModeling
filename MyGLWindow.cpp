@@ -66,6 +66,8 @@ void MyGLWindow::sendDataToOpenGL() {
 
  
 	cube1.scale = glm::vec3(0.2f, 1.0f, 0.2f);
+	cube1.rotation.angle = 0.0f;
+	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
 
 	//for (uint i = 0; i < 100; i++){
 	//	for (uint j = 0; j < 50; j++){
@@ -185,8 +187,7 @@ void MyGLWindow::paintGL(){
 
 	//for (ShapeModel block : blocks)
 	//	block.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
-	cube1.rotation.angle = 0.0f;
-	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
+
 	for (uint i = 0; i < 100; i++){
 		for (uint j = 0; j < 50; j++){
 		
