@@ -206,6 +206,7 @@ void MyGLWindow::installShaders(){
 
 }
 void MyGLWindow::initializeGL(){
+	setMinimumSize(800, 600);
 	setMouseTracking(true);
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
