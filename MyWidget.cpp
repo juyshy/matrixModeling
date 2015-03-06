@@ -3,6 +3,7 @@
 #include <QtGui\qvboxlayout>
 #include <QtGui\qhboxlayout>
 #include <QtGui\qkeyevent>
+#include <QtGui\qlabel.h>
 #include <MyGLWindow.h>
 #include <DebugSlider.h>
 
@@ -11,6 +12,12 @@ MyWidget::MyWidget()
 	QVBoxLayout* mainLayout;
 	setLayout(mainLayout = new QVBoxLayout);
 	QVBoxLayout* controlsLayout;
+	QVBoxLayout* labelLayout;
+ 
+	QLabel *label;
+	label = new QLabel(tr("FPS:"));
+	mainLayout->addLayout(labelLayout = new QVBoxLayout);
+	labelLayout->addWidget (label);
 	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
 	mainLayout->addWidget(myGlWindow =  new MyGLWindow(&theModel));
 
