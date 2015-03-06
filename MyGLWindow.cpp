@@ -64,12 +64,12 @@ void MyGLWindow::sendDataToOpenGL() {
 	cube2.scale = glm::vec3(0.5f, 2.0f, 3.0f);
 	plane.scale =   glm::vec3(10.0f, 1.0f, 30.0f);
 
-	for (uint i = 0; i < 20; i++){
-		for (uint j = 0; j < 20; j++){
+	for (uint i = 0; i < 100; i++){
+		for (uint j = 0; j < 50; j++){
 			ShapeModel block;
 			block.Init("cube");
 			block.scale = glm::vec3(0.2f, 1.0f, 0.2f);
-			block.position = vec3(i * 2 - 20, 0.5f, j * 2 - 20);
+			block.position = vec3(i * 2 - 100.0f, 0.5f, j * 2 - 100.0f);
 			blocks.push_back(block);
 		}
 	}
@@ -168,7 +168,7 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 100.0f);
+	viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 300.0f);
  
 	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
 	worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;

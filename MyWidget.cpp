@@ -64,7 +64,7 @@ MyWidget::MyWidget()
 
 void MyWidget::animate(){
 	elapsed = etimer.elapsed(); //(elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100000;
-	double fps = 1000 / (elapsed - previousTime);
+	double fps = 1000.0 / (elapsed - previousTime);
  
 	QString fpsstr = "FPS:" + QString::number(fps); 
 	
