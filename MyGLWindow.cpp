@@ -29,13 +29,17 @@ GLuint programID;
 
 GLuint cubeNumIndices;
 GLuint arrowNumIndices;
+GLuint planeNumIndices;
 Camera camera;
 GLuint cubeVertexbufferID;
 GLuint arrowVertexbufferID;
+GLuint planeVertexbufferID;
 GLuint cubeIndexBufferID;
 GLuint arrowIndexBufferID;
+GLuint planeIndexBufferID;
 GLuint cubeVertexArrayObjectID;
 GLuint arrowVertexArrayObjectID;
+GLuint planeVertexArrayObjectID;
 GLint fullTransformUniformLocation;
 
 void MyGLWindow::sendDataToOpenGL() {
@@ -58,7 +62,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	cubeNumIndices = shape.numIndices;
 	shape.cleanup();
 
-	 shape = ShapeGenerator::makePlane();
+	shape = ShapeGenerator::makeArrow();
 
  
 	 glGenBuffers(1, &arrowVertexbufferID);
@@ -78,31 +82,32 @@ void MyGLWindow::sendDataToOpenGL() {
 	arrowNumIndices = shape.numIndices;
 	shape.cleanup();
 
-	/*GLuint transformationMatrixBufferID;
-	glGenBuffers(1, &transformationMatrixBufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, transformationMatrixBufferID);
+	shape = ShapeGenerator::makePlane();
 
- 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(mat4)*2, 0, GL_DYNAMIC_DRAW);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)(sizeof(float) * 0));
-	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)(sizeof(float) * 4));
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)(sizeof(float) * 8));
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)(sizeof(float) * 12));
-	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
-	glEnableVertexAttribArray(4);
-	glEnableVertexAttribArray(5);
-	glVertexAttribDivisor(2, 1);
-	glVertexAttribDivisor(3, 1);
-	glVertexAttribDivisor(4, 1);
-	glVertexAttribDivisor(5, 1);*/
 
+	glGenBuffers(1, &planeVertexbufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, planeVertexbufferID);
+	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0); // 0 = layoput location
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
+
+
+
+	glGenBuffers(1, &planeIndexBufferID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, planeIndexBufferID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
+	planeNumIndices = shape.numIndices;
+	shape.cleanup();
 }
 
 void MyGLWindow::setupVertexArrays(){
 	glGenVertexArrays(1, &cubeVertexArrayObjectID);
 	glGenVertexArrays(1, &arrowVertexArrayObjectID);
-
+	glGenVertexArrays(1, &planeVertexArrayObjectID);
+	
 	glBindVertexArray(cubeVertexArrayObjectID);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
@@ -119,6 +124,13 @@ void MyGLWindow::setupVertexArrays(){
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrowIndexBufferID);
 
+	glBindVertexArray(planeVertexArrayObjectID);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, planeVertexbufferID);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, planeIndexBufferID);
 }
 bool MyGLWindow::checkStatus(
 	GLuint objectID,
@@ -218,7 +230,7 @@ void MyGLWindow::paintGL(){
 
 	// cube
 	glBindVertexArray(cubeVertexArrayObjectID);
-	mat4 cube1ModelToWorldMatrix = glm::translate(vec3(-1.0f, 0.0f, -3.0f)) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
+	mat4 cube1ModelToWorldMatrix = glm::translate(vec3(-1.5f, 0.0f, -3.0f)) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
 	fullTransformMatrix = worldToProojectionMatrix * cube1ModelToWorldMatrix;
 
 	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
@@ -226,7 +238,7 @@ void MyGLWindow::paintGL(){
 	glDrawElements(GL_TRIANGLES, cubeNumIndices, GL_UNSIGNED_SHORT, 0);
 
 	
-	mat4 cube2ModelToWorldMatrix = glm::translate(vec3(1.5f, 0.0f, -3.0f)) *  glm::rotate(36.0f, vec3(0.0f, 1.0f, 0.0f));
+	mat4 cube2ModelToWorldMatrix = glm::translate(vec3(2.5f, 0.0f, -3.0f)) *  glm::rotate(36.0f, vec3(0.0f, 1.0f, 0.0f));
 	fullTransformMatrix = worldToProojectionMatrix * cube2ModelToWorldMatrix;
 
 	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
@@ -235,12 +247,21 @@ void MyGLWindow::paintGL(){
 
 	// arrow
 	glBindVertexArray(arrowVertexArrayObjectID);
-	mat4 arrowModelToWorldMatrix = glm::translate(0.0f, 0.0f, -5.0f);
+	mat4 arrowModelToWorldMatrix = glm::translate(0.0f, 2.0f, -5.0f);
 	fullTransformMatrix = worldToProojectionMatrix * arrowModelToWorldMatrix;
 	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
 
 	glDrawElements(GL_TRIANGLES, arrowNumIndices, GL_UNSIGNED_SHORT, 0);
 
+	glBindVertexArray(planeVertexArrayObjectID);
+	mat4 planeModelToWorldMatrix = glm::translate(0.0f, 0.0f, 0.0f);
+	fullTransformMatrix = worldToProojectionMatrix * planeModelToWorldMatrix;
+	glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+
+	glDrawElements(GL_TRIANGLES, planeNumIndices, GL_UNSIGNED_SHORT, 0);
+
+
+	
 }
 void MyGLWindow::mouseMoveEvent(QMouseEvent* e)
 {
