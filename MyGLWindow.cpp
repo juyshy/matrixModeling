@@ -50,42 +50,21 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 }
 
 void MyGLWindow::sendDataToOpenGL() {
-	//glGenVertexArrays(1, &cubeVertexArrayObjectID);
-	//glGenVertexArrays(1, &arrowVertexArrayObjectID);
-	//glGenVertexArrays(1, &planeVertexArrayObjectID);
-
-	cube1.Init();
-
-	//shape = ShapeGenerator::makeArrow();
-	//glBindVertexArray(arrowVertexArrayObjectID);
-	//glGenBuffers(1, &arrowVertexbufferID);
-	//glBindBuffer(GL_ARRAY_BUFFER, arrowVertexbufferID);
-	//glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
-	//glEnableVertexAttribArray(0); // 0 = layoput location
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
-	//glGenBuffers(1, &arrowIndexBufferID);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, arrowIndexBufferID);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
-	//arrowNumIndices = shape.numIndices;
-	//shape.cleanup();
+ 
+	cube1.Init("cube");
+	cube2.Init("cube");
+	arrow.Init("arrow");
+	plane.Init("plane");
 
 
-	//shape = ShapeGenerator::makePlane();
-	//glBindVertexArray(planeVertexArrayObjectID);
-	//glGenBuffers(1, &planeVertexbufferID);
-	//glBindBuffer(GL_ARRAY_BUFFER, planeVertexbufferID);
-	//glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);
-	//glEnableVertexAttribArray(0); // 0 = layoput location
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // 0 = layoput location
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
-	//glGenBuffers(1, &planeIndexBufferID);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, planeIndexBufferID);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
-	//planeNumIndices = shape.numIndices;
-	//shape.cleanup();
+	cube2.position = vec3(2.5f, 1.0f, -3.0f);
+	arrow.position = vec3(0.5f, 2.0f, -3.0f);
+	plane.position = vec3(0.0f, 0.0f, 0.0f);
+	cube1.rotation.angle = 36.0f;
+	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
+	cube2.rotation.angle = 56.0f;
+	cube2.rotation.axis = vec3(0.0f, 1.0f, 0.0f);
+	 
 }
 
 void MyGLWindow::setupVertexArrays(){
@@ -185,46 +164,14 @@ void MyGLWindow::paintGL(){
 	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
 	worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;
 
-	// cube
-
+ 
 	cube1.position = theModel->sliderPosition;
-	//cube1.worldToProjectionMatrix = worldToProojectionMatrix;
-	//cube1.fullTransformUniformLocation = &fullTransformUniformLocation;
 	cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
-	//glBindVertexArray(cube1.vertexArrayObjectID);
-	//vec3 cube1pos = theModel->sliderPosition; // vec3(-1.5f, 0.0f, -3.0f);
-	//mat4 cube1ModelToWorldMatrix = glm::translate(cube1pos) * glm::rotate(36.0f, vec3(1.0f, 0.0f, 0.0f));
-	//fullTransformMatrix = worldToProojectionMatrix * cube1.shapeModelToWorldMatrix;
+	cube2.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
+	arrow.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
+	plane.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 
-	//glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
-
-	//glDrawElements(GL_TRIANGLES, cube1.shapeNumIndices, GL_UNSIGNED_SHORT, 0);
-
-	//
-	//mat4 cube2ModelToWorldMatrix = glm::translate(vec3(2.5f, 0.0f, -3.0f)) *  glm::rotate(36.0f, vec3(0.0f, 1.0f, 0.0f));
-	//fullTransformMatrix = worldToProojectionMatrix * cube2ModelToWorldMatrix;
-
-	//glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
-
-	//glDrawElements(GL_TRIANGLES, cubeNumIndices, GL_UNSIGNED_SHORT, 0);
-
-	// arrow
-	//glBindVertexArray(arrowVertexArrayObjectID);
-	//mat4 arrowModelToWorldMatrix = glm::translate(0.0f, 2.0f, -5.0f);
-	//fullTransformMatrix = worldToProojectionMatrix * arrowModelToWorldMatrix;
-	//glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
-
-	//glDrawElements(GL_TRIANGLES, arrowNumIndices, GL_UNSIGNED_SHORT, 0);
-
-	//glBindVertexArray(planeVertexArrayObjectID);
-	//mat4 planeModelToWorldMatrix = glm::translate(0.0f, 0.0f, 0.0f);
-	//fullTransformMatrix = worldToProojectionMatrix * planeModelToWorldMatrix;
-	//glUniformMatrix4fv(fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
-
-	//glDrawElements(GL_TRIANGLES, planeNumIndices, GL_UNSIGNED_SHORT, 0);
-
-
-	
+	 
 }
 
 

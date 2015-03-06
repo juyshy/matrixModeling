@@ -2,6 +2,10 @@
 #include <ShapeGenerator.h>
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtx\transform.hpp>
+#include <string>
+#include <iostream>
+
+
 const uint NUM_VERTICES_PER_TRI = 3;
 const uint NUM_FLOATS_PER_VERTICE = 9;
 const uint TRIANGLE_BYTE_SIZE = NUM_VERTICES_PER_TRI* NUM_FLOATS_PER_VERTICE*sizeof(float);
@@ -9,10 +13,24 @@ const uint VERTEX_BYTE_SIZE = NUM_FLOATS_PER_VERTICE*sizeof(float);
 
 ShapeModel::ShapeModel()  
 {
+	rotation.angle = 0.0f;
+	rotation.axis = glm::vec3(1.0f, 0.0f, 0.0f);
 	//Init();
 }
-void ShapeModel::Init() { //MyGLWindow * myGlWin
-	ShapeData shape = ShapeGenerator::makeCube();
+void ShapeModel::Init(char  shapeLabel[]) { //MyGLWindow * myGlWin
+	ShapeData shape;
+	if (shapeLabel == "cube"){
+		  shape = ShapeGenerator::makeCube();
+	}
+	else if (shapeLabel == "arrow"){
+		shape = ShapeGenerator::makeArrow();
+	}
+	else if (shapeLabel == "plane"){
+		shape = ShapeGenerator::makePlane();
+	}
+	else {
+		shape = ShapeGenerator::makeCube();
+	}
 	glGenVertexArrays(1, &vertexArrayObjectID);
 	glBindVertexArray(vertexArrayObjectID);
 	glGenBuffers(1, &vertexBufferID);
@@ -31,16 +49,13 @@ void ShapeModel::Init() { //MyGLWindow * myGlWin
 
 }
 
-void ShapeModel::Draw(const glm::mat4 * worldToProojectionMatrix, const GLint* fullTransformUniformLocation) {
-
+void ShapeModel::Draw(const glm::mat4 * worldToProjectionMatrix, const GLint* fullTransformUniformLocation) {
 
 	glBindVertexArray(vertexArrayObjectID);
 	//position = theModel->sliderPosition; // vec3(-1.5f, 0.0f, -3.0f);
-	shapeModelToWorldMatrix = glm::translate(position) * glm::rotate(36.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	fullTransformMatrix = *worldToProojectionMatrix * shapeModelToWorldMatrix;
-
+	shapeModelToWorldMatrix = glm::translate(position) * glm::rotate(rotation.angle, rotation.axis);
+	fullTransformMatrix = *worldToProjectionMatrix * shapeModelToWorldMatrix;
 	glUniformMatrix4fv(*fullTransformUniformLocation, 1, GL_FALSE, &fullTransformMatrix[0][0]);
-
 	glDrawElements(GL_TRIANGLES, shapeNumIndices, GL_UNSIGNED_SHORT, 0);
 
 }

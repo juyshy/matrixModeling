@@ -44,6 +44,9 @@ public:
 	glm::mat4 viewToProjectionMatrix;
 
 	ShapeModel cube1;
+	ShapeModel cube2;
+	ShapeModel arrow;
+	ShapeModel plane;
 };
 
 #endif
