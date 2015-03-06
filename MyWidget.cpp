@@ -30,7 +30,7 @@ MyWidget::MyWidget()
 
 void MyWidget::sliderValueChanged()
 {
-	qDebug() << "slider!!!" << lightXSlider->value();
+	//qDebug() << "slider!!!" << lightXSlider->value();
 	theModel.lightPosition.x = lightXSlider->value();
 	theModel.lightPosition.y = lightYSlider->value();
 	theModel.lightPosition.z = lightZSlider->value();
