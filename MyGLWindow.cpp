@@ -126,10 +126,10 @@ void MyGLWindow::installShaders(){
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 	const char* adapter[1];
-	string temp = readShaderCode("VertexShaderCode.glsl");
+	string temp = readShaderCode("shader/VertexShaderCode.glsl");
 	adapter[0] = temp.c_str();
 	glShaderSource(vertexShaderID, 1, adapter, 0);
-	temp = readShaderCode("FragmentShaderCode.glsl");
+	temp = readShaderCode("shader/FragmentShaderCode.glsl");
 	adapter[0] = temp.c_str();
 	glShaderSource(fragmentShaderID, 1, adapter, 0);
 
