@@ -28,42 +28,13 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 }
 
 void MyGLWindow::update(int elapsed) {
-	arrow.rotation.angle = elapsed / 20.0f;
+	//arrow.rotation.angle = elapsed / 20.0f;
 	//std::cout << elapsed << std::endl;
 }
 
 void MyGLWindow::sendDataToOpenGL() {
  
-	cube1.Init("cube");
-	//cube2.Init("cube");
-	arrow.Init("arrow");
-	plane.Init("plane");
-
-	//cube2.position = vec3(10.5f, 1.0f, -3.0f);
-	arrow.position = vec3(4.5f, 2.0f, -3.0f);
-	plane.position = vec3(0.0f, 0.0f, 0.0f);
-
-	arrow.rotation.axis = vec3(0.0f, 0.0f, 1.0f);
-	//cube1.rotation.angle = 36.0f;
-	//cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
-	//cube2.rotation.angle = 56.0f;
-	//cube2.rotation.axis = vec3(0.0f, 1.0f, 0.0f);
-	//cube2.scale = glm::vec3(0.5f, 2.0f, 3.0f);
-	plane.scale =   glm::vec3(10.0f, 1.0f, 30.0f);
-
-	//cube1.scale = glm::vec3(0.2f, 1.0f, 0.2f);
-	cube1.rotation.angle = 0.0f;
-	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
-
-	//for (uint i = 0; i < 100; i++){
-	//	for (uint j = 0; j < 50; j++){
-	//		ShapeModel block;
-	//		block.Init("cube");
-	//		block.scale = glm::vec3(0.2f, 1.0f, 0.2f);
-	//		block.position = vec3(i * 2 - 100.0f, 0.5f, j * 2 - 100.0f);
-	//		blocks.push_back(block);
-	//	}
-	//}
+	triangle.Init("triangle");
 	 
 }
 
@@ -143,17 +114,10 @@ void MyGLWindow::initializeGL(){
 	
 	//setupVertexArrays();
 	installShaders();
-	fullTransformUniformLocation = glGetUniformLocation(programID, "fullTransformMatrix");
-	
-	ambientLightUniformLocation = glGetUniformLocation(programID, "ambientLight");
-	ambientLight = vec3(0.9f, 0.9f, 0.9f);
-	glUniform3fv(ambientLightUniformLocation, 1, &ambientLight[0]);
-
-
+ 
 	sendDataToOpenGL();
 
-	viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 300.0f);
-
+ 
 }
 
 void MyGLWindow::paintGL(){
@@ -163,19 +127,7 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	// shader uniforms
-	GLuint ligthPositionUniformLocation = glGetUniformLocation(programID, "ligthPosition");
-	glm::vec3 ligthPosition(0.0f, 3.0f, 0.0f);
-	glUniform3fv(ligthPositionUniformLocation, 1, &ligthPosition[0]);
-
-	//mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
-	worldToProojectionMatrix = viewToProjectionMatrix*  camera.getWorldToViewMatrix();
-
-	// draw
-	cube1.position = theModel->sliderPosition;
-	cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
-	arrow.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
-	plane.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
+	triangle.Draw();
  
 }
 

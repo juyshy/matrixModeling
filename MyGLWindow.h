@@ -43,17 +43,10 @@ public:
 	~MyGLWindow();
 
 	void update(int elapsed);
-	GLint fullTransformUniformLocation;
-	glm::mat4 worldToProojectionMatrix;
-	glm::mat4 fullTransformMatrix;
-	glm::mat4 viewToProjectionMatrix;
+ 
 
-	ShapeModel cube1;
-	ShapeModel cube2;
-	ShapeModel arrow;
-	ShapeModel plane;
-
-	std::vector<ShapeModel> blocks;
+	ShapeModel triangle;
+ 
 
 };
 

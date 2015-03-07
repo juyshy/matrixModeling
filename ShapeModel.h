@@ -22,6 +22,7 @@ public:
 	~ShapeModel();
 	void ShapeModel::Init(char shapeLabel[]);
 	void ShapeModel::Draw(const glm::mat4 * worldToProojectionMatrix,  const GLint* fullTransformUniformLocation);
+	void ShapeModel::Draw();
 	GLuint vertexArrayObjectID;
 	GLuint shapeNumIndices;
 	glm::vec3 position;

@@ -29,6 +29,9 @@ void ShapeModel::Init(char  shapeLabel[]) { //MyGLWindow * myGlWin
 	else if (shapeLabel == "plane"){
 		shape = ShapeGenerator::makePlane();
 	}
+	else if (shapeLabel == "triangle"){
+		shape = ShapeGenerator::makeTriangle();
+	}
 	else {
 		shape = ShapeGenerator::makeCube();
 	}
@@ -63,6 +66,13 @@ void ShapeModel::Draw(const glm::mat4 * worldToProjectionMatrix, const GLint* fu
 
 }
 
+
+void ShapeModel::Draw() {
+glBindVertexArray( vertexArrayObjectID);
+
+glDrawElements(GL_TRIANGLES,  shapeNumIndices, GL_UNSIGNED_SHORT, 0);
+ 
+}
 ShapeModel::~ShapeModel()
 {
 }
