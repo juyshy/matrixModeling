@@ -35,7 +35,41 @@ void MyGLWindow::update(int elapsed) {
 void MyGLWindow::sendDataToOpenGL() {
  
 	triangle.Init("triangle");
-	 
+	/////////////////// Create the VBO ////////////////////
+	float positionData[] = {
+		-0.8f, -0.8f, 0.0f,
+		0.8f, -0.8f, 0.0f,
+		0.0f, 0.8f, 0.0f };
+	float colorData[] = {
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f };
+
+
+	// Create and populate the buffer objects
+	GLuint vboHandles[2];
+	glGenBuffers(2, vboHandles);
+	GLuint positionBufferHandle = vboHandles[0];
+	GLuint colorBufferHandle = vboHandles[1];
+
+	glBindBuffer(GL_ARRAY_BUFFER, positionBufferHandle);
+	glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), positionData, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
+	glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), colorData, GL_STATIC_DRAW);
+
+	// Create and set-up the vertex array object
+	glGenVertexArrays(1, &vaoHandle);
+	glBindVertexArray(vaoHandle);
+
+	glEnableVertexAttribArray(0);  // Vertex position
+	glEnableVertexAttribArray(1);  // Vertex color
+
+	glBindBuffer(GL_ARRAY_BUFFER, positionBufferHandle);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
 }
 
 void MyGLWindow::setupVertexArrays(){
@@ -80,10 +114,10 @@ void MyGLWindow::installShaders(){
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 	const char* adapter[1];
-	string temp = readShaderCode("shader/VertexShaderCode.glsl");
+	string temp = readShaderCode("shader/basic.vert");
 	adapter[0] = temp.c_str();
 	glShaderSource(vertexShaderID, 1, adapter, 0);
-	temp = readShaderCode("shader/FragmentShaderCode.glsl");
+	temp = readShaderCode("shader/basic.frag");
 	adapter[0] = temp.c_str();
 	glShaderSource(fragmentShaderID, 1, adapter, 0);
 
@@ -94,6 +128,12 @@ void MyGLWindow::installShaders(){
 		return;
 
 	 programID = glCreateProgram();
+
+	 // Bind index 0 to the shader input variable "VertexPosition"
+	 glBindAttribLocation(programID, 0, "VertexPosition");
+	 // Bind index 1 to the shader input variable "VertexColor"
+	 glBindAttribLocation(programID, 1, "VertexColor");
+
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);
 	glLinkProgram(programID);
@@ -127,8 +167,9 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	triangle.Draw();
- 
+	///triangle.Draw();
+	glBindVertexArray(vaoHandle);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 

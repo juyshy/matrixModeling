@@ -27,6 +27,7 @@ class MyGLWindow : public QGLWidget
 	GLuint ambientLightUniformLocation;
 	glm::vec3 ambientLight;
 	//int elapsed;
+	GLuint vaoHandle;
 
 protected:
 	
@@ -36,6 +37,9 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent* e);
 	void keyPressEvent(QKeyEvent* e);
+
+	
+
 public:
 	Camera camera;
 	MyGLWindow(MyModel * theModel); 
