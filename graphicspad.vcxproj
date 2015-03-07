@@ -104,8 +104,8 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FragmentShaderCode.glsl" />
-    <None Include="VertexShaderCode.glsl" />
+    <None Include="shader\FragmentShaderCode.glsl" />
+    <None Include="shader\VertexShaderCode.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

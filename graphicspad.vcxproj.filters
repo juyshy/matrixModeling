@@ -29,12 +29,19 @@
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="VertexShaderCode.glsl" />
-    <None Include="FragmentShaderCode.glsl" />
+    <None Include="shader\FragmentShaderCode.glsl">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\VertexShaderCode.glsl">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Primitives">
       <UniqueIdentifier>{38b7fd96-d296-40a1-a1fb-f9fe58a51ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{32bc2b05-4a53-44c2-afa3-6436dcdfd60d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
