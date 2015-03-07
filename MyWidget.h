@@ -20,7 +20,7 @@ class MyWidget : public  QWidget
 	int previousTime;
 	std::ostringstream debugstr;
 	std::string currtimeStr;
-	
+	bool savefpsTracing;
 	bool saved;
 	void MyWidget::saveTrace();
 	private slots:

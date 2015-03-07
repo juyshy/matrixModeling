@@ -1,4 +1,7 @@
 #include "MyWidget.h"
+#include <QtGui\qapplication.h>
+#include <Qt\qrect.h>
+#include <QtGui\qdesktopwidget.h>
 #include <Qt\qdebug.h>
 #include <Qt\qelapsedtimer.h>
 #include <QtGui\qvboxlayout>
@@ -21,8 +24,14 @@
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 using namespace boost;
+ 
 MyWidget::MyWidget()
 {
+	QRect r = QApplication::desktop()->availableGeometry();
+	//r.setLeft(r.center().x());
+	resize(r.width(), r.height());
+	move(r.topLeft());
+	savefpsTracing = false;
 	//setFocusPolicy(Qt::StrongFocus);
 	QVBoxLayout* mainLayout;
 	setLayout(mainLayout = new QVBoxLayout);
@@ -69,12 +78,14 @@ void MyWidget::animate(){
 	QString fpsstr = "FPS:" + QString::number(fps); 
 	
 	label->setText(fpsstr);
-	if (elapsed <60000) {
-		debugstr << elapsed << ":" << fps << "\n";
-	}
-	else if (!saved )
-	{
-		saveTrace(); 
+	if (savefpsTracing){
+		if (elapsed <60000) { // get data for 60 secs
+			debugstr << elapsed << ":" << fps << "\n";
+		}
+		else if (!saved )
+		{
+			saveTrace(); 
+		}
 	}
 	previousTime = elapsed;
 	myGlWindow->update(elapsed);
