@@ -7,6 +7,7 @@
 #include <ShapeModel.h>
 #include <vector>
 #include "shader/glslprogram.h"
+#include <extra\vbotorus.h>
 class MyModel;
 
 class MyGLWindow : public QGLWidget
@@ -25,7 +26,7 @@ class MyGLWindow : public QGLWidget
 	void MyGLWindow::installShaders();
 	void setupVertexArrays();
 	void MyGLWindow::compile();
-
+ 
 	MyModel * theModel;
 	GLuint ambientLightUniformLocation;
 	glm::vec3 ambientLight;
@@ -37,6 +38,8 @@ class MyGLWindow : public QGLWidget
 	GLuint programHandle;
 	GLSLProgram prog;
 
+ 
+
 protected:
 	
 	void initializeGL();
@@ -45,6 +48,8 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent* e);
 	void keyPressEvent(QKeyEvent* e);
+
+
 
 	
 
@@ -56,7 +61,7 @@ public:
 
 	void update(int elapsed);
  
-
+	VBOTorus * torus;
 	ShapeModel triangle;
  
 

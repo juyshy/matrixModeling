@@ -14,6 +14,8 @@
     <ClCompile Include="shader\glslprogram.cpp">
       <Filter>shader</Filter>
     </ClCompile>
+    <ClCompile Include="extra\drawable.cpp" />
+    <ClCompile Include="extra\vbotorus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGLWindow.h" />
@@ -33,6 +35,9 @@
     <ClInclude Include="shader\glslprogram.h">
       <Filter>shader</Filter>
     </ClInclude>
+    <ClInclude Include="extra\defines.h" />
+    <ClInclude Include="extra\drawable.h" />
+    <ClInclude Include="extra\vbotorus.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\FragmentShaderCode.glsl">
