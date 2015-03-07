@@ -114,10 +114,10 @@ void MyGLWindow::installShaders(){
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 	const char* adapter[1];
-	string temp = readShaderCode("shader/basic.vert");
+	string temp = readShaderCode("shader/basic_layout.vert");
 	adapter[0] = temp.c_str();
 	glShaderSource(vertexShaderID, 1, adapter, 0);
-	temp = readShaderCode("shader/basic.frag");
+	temp = readShaderCode("shader/basic_layout.frag");
 	adapter[0] = temp.c_str();
 	glShaderSource(fragmentShaderID, 1, adapter, 0);
 
@@ -129,10 +129,10 @@ void MyGLWindow::installShaders(){
 
 	 programID = glCreateProgram();
 
-	 // Bind index 0 to the shader input variable "VertexPosition"
-	 glBindAttribLocation(programID, 0, "VertexPosition");
-	 // Bind index 1 to the shader input variable "VertexColor"
-	 glBindAttribLocation(programID, 1, "VertexColor");
+	 //// Bind index 0 to the shader input variable "VertexPosition"
+	 //glBindAttribLocation(programID, 0, "VertexPosition");
+	 //// Bind index 1 to the shader input variable "VertexColor"
+	 //glBindAttribLocation(programID, 1, "VertexColor");
 
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);
@@ -144,6 +144,7 @@ void MyGLWindow::installShaders(){
 	glDeleteShader(fragmentShaderID);
 
 	glUseProgram(programID);
+	printActiveAttribs(programID);
 
 }
 void MyGLWindow::initializeGL(){
@@ -173,6 +174,27 @@ void MyGLWindow::paintGL(){
 }
 
 
+void MyGLWindow::printActiveAttribs(GLuint programHandle) {
+
+	GLint written, size, location, maxLength, nAttribs;
+	GLenum type;
+	GLchar * name;
+
+	glGetProgramiv(programHandle, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxLength);
+	glGetProgramiv(programHandle, GL_ACTIVE_ATTRIBUTES, &nAttribs);
+
+	name = (GLchar *)malloc(maxLength);
+
+	printf(" Index | Name\n");
+	printf("------------------------------------------------\n");
+	for (int i = 0; i < nAttribs; i++) {
+		glGetActiveAttrib(programHandle, i, maxLength, &written, &size, &type, name);
+		location = glGetAttribLocation(programHandle, name);
+		printf(" %-5d | %s\n", location, name);
+	}
+
+	free(name);
+}
 
 void MyGLWindow::mouseReleaseEvent(QMouseEvent *event){
 	if (event->button() == Qt::LeftButton)

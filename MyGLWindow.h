@@ -28,7 +28,7 @@ class MyGLWindow : public QGLWidget
 	glm::vec3 ambientLight;
 	//int elapsed;
 	GLuint vaoHandle;
-
+	void MyGLWindow::printActiveAttribs(GLuint programHandle);
 protected:
 	
 	void initializeGL();
