@@ -65,7 +65,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	plane.scale =   glm::vec3(10.0f, 1.0f, 30.0f);
 
  //
-	cube1.scale = glm::vec3(0.2f, 1.0f, 0.2f);
+	//cube1.scale = glm::vec3(0.2f, 1.0f, 0.2f);
 	cube1.rotation.angle = 0.0f;
 	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
 

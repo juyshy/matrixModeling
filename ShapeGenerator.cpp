@@ -1,5 +1,7 @@
 #include "ShapeGenerator.h"
 #include <glm\glm.hpp>
+#include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtx\transform.hpp>
 #include <Vertex.h>
 #include <vector>
 #define NUM_ARRAY_ELEMENTS(a)  sizeof(a) / sizeof(*a)
@@ -106,6 +108,11 @@ ShapeData ShapeGenerator::makeCube(){
 		colors.push_back(randomColor());
 	//ret.colors = colors;
 
+	std::vector<vec3> vertPositions2;
+	vec3 scale = glm::vec3(0.2f, 1.0f, 0.2f);
+	for (vec3 pos : vertPositions)
+		vertPositions2.push_back(glm::vec3(glm::scale(scale) * glm::vec4(pos, 1.0f)));
+
 	/*std::vector<Vertex[24]> cubes;*/
 	uint count = 0;
 	Vertex stackVerts[24 /** 100 * 50*/];
@@ -115,7 +122,7 @@ ShapeData ShapeGenerator::makeCube(){
 
 			//Vertex stackVerts1[24];
 			for (uint k = 0; k < 24; ++k){
-				stackVerts[k].position = vertPositions.at(k);//  +vec3(i * 10 - 100.0f, 0.0f, j * 10 - 100.0f);
+				stackVerts[k].position = vertPositions2.at(k) +vec3(0,-0.3f,0);
 				stackVerts[k].color = colors.at(k);
 				stackVerts[k].normal = norlmals.at(k);
 				count++;
