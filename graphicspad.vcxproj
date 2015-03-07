@@ -87,6 +87,7 @@
     <ClCompile Include="MyGLWindow.cpp" />
     <ClCompile Include="MyWidget.cpp" />
     <ClCompile Include="MyWidget_moc.cpp" />
+    <ClCompile Include="shader\glslprogram.cpp" />
     <ClCompile Include="ShapeGenerator.cpp" />
     <ClCompile Include="ShapeModel.cpp" />
     <ClCompile Include="Utility.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="MyGLWindow.h" />
     <ClInclude Include="MyModel.h" />
     <ClInclude Include="MyWidget.h" />
+    <ClInclude Include="shader\glslprogram.h" />
     <ClInclude Include="ShapeData.h" />
     <ClInclude Include="ShapeGenerator.h" />
     <ClInclude Include="ShapeModel.h" />

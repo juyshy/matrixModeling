@@ -11,6 +11,9 @@
     <ClCompile Include="MyWidget_moc.cpp" />
     <ClCompile Include="ShapeModel.cpp" />
     <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="shader\glslprogram.cpp">
+      <Filter>shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGLWindow.h" />
@@ -27,6 +30,9 @@
     <ClInclude Include="MyModel.h" />
     <ClInclude Include="ShapeModel.h" />
     <ClInclude Include="Utility.h" />
+    <ClInclude Include="shader\glslprogram.h">
+      <Filter>shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\FragmentShaderCode.glsl">

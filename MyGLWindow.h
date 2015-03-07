@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include <ShapeModel.h>
 #include <vector>
+#include "shader/glslprogram.h"
 class MyModel;
 
 class MyGLWindow : public QGLWidget
@@ -23,12 +24,19 @@ class MyGLWindow : public QGLWidget
 	std::string MyGLWindow::readShaderCode(const char* filename);
 	void MyGLWindow::installShaders();
 	void setupVertexArrays();
+	void MyGLWindow::compile();
+
 	MyModel * theModel;
 	GLuint ambientLightUniformLocation;
 	glm::vec3 ambientLight;
 	//int elapsed;
 	GLuint vaoHandle;
-	void MyGLWindow::printActiveAttribs(GLuint programHandle);
+	//void MyGLWindow::printActiveUniforms(GLuint programHandle);
+	glm::mat4 rotationMatrix;
+	float angle;
+	GLuint programHandle;
+	GLSLProgram prog;
+
 protected:
 	
 	void initializeGL();

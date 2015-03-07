@@ -24,17 +24,20 @@ bool mouseDown = false;
 
 MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 {
-
+	angle = 0;
 }
 
 void MyGLWindow::update(int elapsed) {
-	//arrow.rotation.angle = elapsed / 20.0f;
-	//std::cout << elapsed << std::endl;
+	angle += 0.01f * theModel->sliderPosition.x;
+	if (angle >= 360.0f) angle -= 360.0f;
+	
+	////arrow.rotation.angle = elapsed / 20.0f;
+	std::cout << angle << std::endl;
 }
 
 void MyGLWindow::sendDataToOpenGL() {
  
-	triangle.Init("triangle");
+	//triangle.Init("triangle");
 	/////////////////// Create the VBO ////////////////////
 	float positionData[] = {
 		-0.8f, -0.8f, 0.0f,
@@ -114,10 +117,10 @@ void MyGLWindow::installShaders(){
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 	const char* adapter[1];
-	string temp = readShaderCode("shader/basic_layout.vert");
+	string temp = readShaderCode("shader/basic_uniform.vert");
 	adapter[0] = temp.c_str();
 	glShaderSource(vertexShaderID, 1, adapter, 0);
-	temp = readShaderCode("shader/basic_layout.frag");
+	temp = readShaderCode("shader/basic_uniform.frag");
 	adapter[0] = temp.c_str();
 	glShaderSource(fragmentShaderID, 1, adapter, 0);
 
@@ -144,7 +147,9 @@ void MyGLWindow::installShaders(){
 	glDeleteShader(fragmentShaderID);
 
 	glUseProgram(programID);
-	printActiveAttribs(programID);
+	this->programHandle = programID;
+	//printActiveUniforms(programID);
+
 
 }
 void MyGLWindow::initializeGL(){
@@ -154,8 +159,9 @@ void MyGLWindow::initializeGL(){
 	glEnable(GL_DEPTH_TEST);
 	
 	//setupVertexArrays();
-	installShaders();
- 
+	//installShaders();
+	compile();
+	prog.printActiveUniforms();
 	sendDataToOpenGL();
 
  
@@ -168,32 +174,38 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
+	mat4 viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
+	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
+	mat4 worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;
+
+	rotationMatrix = glm::rotate(mat4(1.0f), angle, vec3(0.0f, 0.0f, 1.0f));
+
+	mat4 fullTransformMatrix = worldToProojectionMatrix * rotationMatrix;
+
+	GLuint programHandle = prog.getHandle();
+	GLuint location = glGetUniformLocation(programHandle, "RotationMatrix");
+	if (location >= 0)
+	{
+		glUniformMatrix4fv(location, 1, GL_FALSE, &fullTransformMatrix[0][0]);
+	}
+
 	///triangle.Draw();
 	glBindVertexArray(vaoHandle);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-
-void MyGLWindow::printActiveAttribs(GLuint programHandle) {
-
-	GLint written, size, location, maxLength, nAttribs;
-	GLenum type;
-	GLchar * name;
-
-	glGetProgramiv(programHandle, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxLength);
-	glGetProgramiv(programHandle, GL_ACTIVE_ATTRIBUTES, &nAttribs);
-
-	name = (GLchar *)malloc(maxLength);
-
-	printf(" Index | Name\n");
-	printf("------------------------------------------------\n");
-	for (int i = 0; i < nAttribs; i++) {
-		glGetActiveAttrib(programHandle, i, maxLength, &written, &size, &type, name);
-		location = glGetAttribLocation(programHandle, name);
-		printf(" %-5d | %s\n", location, name);
+void MyGLWindow::compile()
+{
+	try {
+		prog.compileShader("shader/basic_uniform.vert");
+		prog.compileShader("shader/basic_uniform.frag");
+		prog.link();
+		prog.use();
 	}
-
-	free(name);
+	catch (GLSLProgramException &e) {
+		cerr << e.what() << endl;
+		exit(EXIT_FAILURE);
+	}
 }
 
 void MyGLWindow::mouseReleaseEvent(QMouseEvent *event){
