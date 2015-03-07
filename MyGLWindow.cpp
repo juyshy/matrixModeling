@@ -41,7 +41,7 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 
 void MyGLWindow::update(int elapsed) {
 	arrow.rotation.angle = elapsed / 20.0f;
-	std::cout << elapsed << std::endl;
+	//std::cout << elapsed << std::endl;
 }
 
 void MyGLWindow::sendDataToOpenGL() {
@@ -173,6 +173,12 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
+	
+
+	GLuint ligthPositionUniformLocation = glGetUniformLocation(programID, "ligthPosition");
+	glm::vec3 ligthPosition(0.0f, 3.0f, 0.0f);
+	glUniform3fv(ligthPositionUniformLocation, 1, &ligthPosition[0]);
+
 	viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 300.0f);
  
 	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
@@ -188,13 +194,13 @@ void MyGLWindow::paintGL(){
 	//for (ShapeModel block : blocks)
 	//	block.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 
-	for (uint i = 0; i < 50; i++){
-		for (uint j = 0; j < 40; j++){
-		
-			cube1.position = vec3(i * 2 - 50.0f, 0.5f, j * 2 - 20.0f);
-			cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
-		}
-	}
+	//for (uint i = 0; i < 50; i++){
+	//	for (uint j = 0; j < 40; j++){
+	//	
+	//		cube1.position = vec3(i * 2 - 50.0f, 0.5f, j * 2 - 20.0f);
+	//		cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
+	//	}
+	//}
 
 }
 
