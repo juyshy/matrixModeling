@@ -19,25 +19,13 @@ using glm::mat4;
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
 
- 
 GLuint programID;
-
- 
 bool mouseDown = false;
 
 MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 {
 
-	//elapsed = 0;
-
 }
-//void MyGLWindow::animate()
-//{
-//	elapsed = (elapsed + qobject_cast<QTimer*>(sender())->interval()) % 1000;
-//	std::cout << elapsed << std::endl;
-//
-//	repaint();
-//}
 
 void MyGLWindow::update(int elapsed) {
 	arrow.rotation.angle = elapsed / 20.0f;
@@ -55,7 +43,6 @@ void MyGLWindow::sendDataToOpenGL() {
 	arrow.position = vec3(4.5f, 2.0f, -3.0f);
 	plane.position = vec3(0.0f, 0.0f, 0.0f);
 
-	
 	arrow.rotation.axis = vec3(0.0f, 0.0f, 1.0f);
 	//cube1.rotation.angle = 36.0f;
 	//cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
@@ -64,7 +51,6 @@ void MyGLWindow::sendDataToOpenGL() {
 	//cube2.scale = glm::vec3(0.5f, 2.0f, 3.0f);
 	plane.scale =   glm::vec3(10.0f, 1.0f, 30.0f);
 
- //
 	//cube1.scale = glm::vec3(0.2f, 1.0f, 0.2f);
 	cube1.rotation.angle = 0.0f;
 	cube1.rotation.axis = vec3(1.0f, 0.0f, 0.0f);
@@ -82,7 +68,6 @@ void MyGLWindow::sendDataToOpenGL() {
 }
 
 void MyGLWindow::setupVertexArrays(){
-	 
 }
 bool MyGLWindow::checkStatus(	GLuint objectID,	PFNGLGETSHADERIVPROC objectPropertyGetterFunc,	PFNGLGETSHADERINFOLOGPROC getInfoLogFunc,	GLenum statusType	)
 {
@@ -119,8 +104,6 @@ string MyGLWindow::readShaderCode(const char* filename)
 	return std::string(
 		std::istreambuf_iterator<char>(myInput),
 		std::istreambuf_iterator<char>());
-
-
 }
 void MyGLWindow::installShaders(){
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -173,8 +156,6 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	
-
 	GLuint ligthPositionUniformLocation = glGetUniformLocation(programID, "ligthPosition");
 	glm::vec3 ligthPosition(0.0f, 3.0f, 0.0f);
 	glUniform3fv(ligthPositionUniformLocation, 1, &ligthPosition[0]);
@@ -184,7 +165,6 @@ void MyGLWindow::paintGL(){
 	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
 	worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;
 
- 
 	cube1.position = theModel->sliderPosition;
 	cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 	//cube2.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
@@ -201,7 +181,6 @@ void MyGLWindow::paintGL(){
 	//		cube1.Draw(&worldToProojectionMatrix, &fullTransformUniformLocation);
 	//	}
 	//}
-
 }
 
 

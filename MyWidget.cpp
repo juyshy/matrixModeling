@@ -27,19 +27,23 @@ using namespace boost;
  
 MyWidget::MyWidget()
 {
+	// gather fps info to debugfile:
+	savefpsTracing = false;
+
+	// fullscreen:
 	QRect r = QApplication::desktop()->availableGeometry();
 	//r.setLeft(r.center().x());
 	resize(r.width(), r.height());
 	move(r.topLeft());
-	savefpsTracing = false;
-	//setFocusPolicy(Qt::StrongFocus);
+	
+	// labels:
+	label = new QLabel(tr("FPS:"));
+
+	// layout
 	QVBoxLayout* mainLayout;
 	setLayout(mainLayout = new QVBoxLayout);
 	QVBoxLayout* controlsLayout;
 	QVBoxLayout* labelLayout;
- 
-
-	label = new QLabel(tr("FPS:"));
 	mainLayout->addLayout(labelLayout = new QVBoxLayout);
 	labelLayout->addWidget (label);
 	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
@@ -50,19 +54,23 @@ MyWidget::MyWidget()
 	lightPositionLayout->addWidget(lightXSlider = new DebugSlider);
 	lightPositionLayout->addWidget(lightYSlider = new DebugSlider);
 	lightPositionLayout->addWidget(lightZSlider = new DebugSlider);
+
+	// initial values
 	lightXSlider->setValue(-1.5f);
 	lightYSlider->setValue(0);
 	lightZSlider->setValue(0);
+	saved = false;
+
 	connect(lightXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(lightYSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(lightZSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
+	
 	theModel.sliderPosition.x = lightXSlider->value();
 	theModel.sliderPosition.y = lightYSlider->value();
 	theModel.sliderPosition.z = lightZSlider->value();
 
-	saved = false;
-	QTimer *timer = new QTimer(this);
 
+	QTimer *timer = new QTimer(this);
 	etimer.start();
 	//connect(timer, SIGNAL(timeout()), native, SLOT(animate()));
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -74,10 +82,9 @@ MyWidget::MyWidget()
 void MyWidget::animate(){
 	elapsed = etimer.elapsed(); //(elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100000;
 	double fps = 1000.0 / (elapsed - previousTime);
- 
 	QString fpsstr = "FPS:" + QString::number(fps); 
-	
 	label->setText(fpsstr);
+
 	if (savefpsTracing){
 		if (elapsed <60000) { // get data for 60 secs
 			debugstr << elapsed << ":" << fps << "\n";
@@ -87,6 +94,7 @@ void MyWidget::animate(){
 			saveTrace(); 
 		}
 	}
+
 	previousTime = elapsed;
 	myGlWindow->update(elapsed);
 	myGlWindow->repaint();
