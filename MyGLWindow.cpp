@@ -17,7 +17,7 @@ using glm::vec3;
 using glm::mat4;
 using std::cerr;
 using std::endl;
-#define GLM_FORCE_RADIANS
+
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
 
@@ -146,7 +146,7 @@ void MyGLWindow::installShaders(){
 
 }
 void MyGLWindow::initializeGL(){
-	setMinimumSize(700, 500);
+	setMinimumSize(800, 600);
 	setMouseTracking(true);
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
@@ -168,9 +168,13 @@ void MyGLWindow::paintGL(){
 	
 
 	model = mat4(1.0f);
+	model *= glm::translate(vec3(theModel->sliderPosition.y, 0.0f, 0.0f));
 	model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
 	model *= glm::rotate(glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
 	model *= glm::rotate(glm::radians(35.0f), vec3(0.0f, 1.0f, 0.0f));
+
+	//theModel->sliderPosition.x;
+
 	mat4 mv = view * model;
 	prog.setUniform("ModelViewMatrix", mv);
 	prog.setUniform("NormalMatrix",

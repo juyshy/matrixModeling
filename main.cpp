@@ -4,7 +4,8 @@
 #include <MyGLWindow.h>
 #include <QtGui\qwidget.h>
 #include <MyWidget.h>
- 
+#define GLM_FORCE_RADIANS
+
 int main(int argc, char* argv[])
 {
 	QApplication app(argc, argv);
