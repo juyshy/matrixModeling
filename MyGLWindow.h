@@ -38,7 +38,9 @@ class MyGLWindow : public QGLWidget
 	GLuint programHandle;
 	GLSLProgram prog;
 
- 
+	mat4 model;
+	mat4 view;
+	mat4 projection;
 
 protected:
 	

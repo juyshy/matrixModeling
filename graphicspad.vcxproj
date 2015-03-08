@@ -53,7 +53,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);C:\Qt\4.8.5\include;$(ProjectDir)..\..\middleware\glm;$(ProjectDir)..\..\middleware\glew\include;E:\ohjelmointi\cpp\boost_1_57_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\Qt\4.8.5\include;$(ProjectDir);C:\Program Files (x86)\GLM;$(ProjectDir)..\..\middleware\glew\include;E:\ohjelmointi\cpp\boost_1_57_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,6 +111,8 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shader\diffuse.frag" />
+    <None Include="shader\diffuse.vert" />
     <None Include="shader\FragmentShaderCode.glsl" />
     <None Include="shader\VertexShaderCode.glsl" />
   </ItemGroup>

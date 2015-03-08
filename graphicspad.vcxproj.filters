@@ -46,6 +46,12 @@
     <None Include="shader\VertexShaderCode.glsl">
       <Filter>shader</Filter>
     </None>
+    <None Include="shader\diffuse.frag">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\diffuse.vert">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Primitives">

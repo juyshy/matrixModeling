@@ -15,7 +15,9 @@
 using namespace std;
 using glm::vec3;
 using glm::mat4;
-
+using std::cerr;
+using std::endl;
+#define GLM_FORCE_RADIANS
 extern const char* vertexShaderCode;
 extern  const char* fragmentShaderCode;
 
@@ -42,7 +44,16 @@ void MyGLWindow::sendDataToOpenGL() {
 
 
 	torus = new VBOTorus(0.7f, 0.3f, 10, 10);
- 
+	model = mat4(1.0f);
+	model *= glm::rotate(glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
+	model *= glm::rotate(glm::radians(35.0f), vec3(0.0f, 1.0f, 0.0f));
+	view = glm::lookAt(vec3(0.0f, 0.0f, 2.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	projection = mat4(1.0f);
+
+	prog.setUniform("Kd", 0.9f, 0.5f, 0.3f);
+	prog.setUniform("Ld", 1.0f, 1.0f, 1.0f);
+	prog.setUniform("LightPosition", view * vec4(5.0f, 5.0f, 2.0f, 1.0f));
+
  
  
 }
@@ -146,20 +157,12 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height());
 
-	mat4 viewToProjectionMatrix = glm::perspective(60.0f, ((float)width()) / height(), 0.1f, 10.0f);
-	mat4 worldToViewMatrix = camera.getWorldToViewMatrix();
-	mat4 worldToProojectionMatrix = viewToProjectionMatrix* worldToViewMatrix;
-
-	rotationMatrix = glm::rotate(mat4(1.0f), angle, vec3(0.0f, 0.0f, 1.0f));
-
-	mat4 fullTransformMatrix = worldToProojectionMatrix * rotationMatrix;
-
-	GLuint programHandle = prog.getHandle();
-	GLuint location = glGetUniformLocation(programHandle, "RotationMatrix");
-	if (location >= 0)
-	{
-		glUniformMatrix4fv(location, 1, GL_FALSE, &fullTransformMatrix[0][0]);
-	}
+	projection = glm::perspective(glm::radians(70.0f), (float)width() / height(), 0.3f, 100.0f);
+	mat4 mv = view * model;
+	prog.setUniform("ModelViewMatrix", mv);
+	prog.setUniform("NormalMatrix",
+		mat3(vec3(mv[0]), vec3(mv[1]), vec3(mv[2])));
+	prog.setUniform("MVP", projection * mv);
 
     torus->render();
 }
@@ -168,9 +171,10 @@ void MyGLWindow::paintGL(){
 void MyGLWindow::compile()
 {
 	try {
-		prog.compileShader("shader/basic_uniform.vert");
-		prog.compileShader("shader/basic_uniform.frag");
+		prog.compileShader("shader/diffuse.vert");
+		prog.compileShader("shader/diffuse.frag");
 		prog.link();
+		prog.validate();
 		prog.use();
 	}
 	catch (GLSLProgramException &e) {
