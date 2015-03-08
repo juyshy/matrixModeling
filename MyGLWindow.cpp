@@ -36,6 +36,11 @@ void MyGLWindow::update(int elapsed) {
 	////arrow.rotation.angle = elapsed / 20.0f;
 	std::cout << angle << std::endl;
 }
+void MyGLWindow::resizeGL(int width, int height)
+{
+	projection = glm::perspective(glm::radians(70.0f), (float)width  / height , 0.3f, 100.0f);
+	glViewport(0, 0, width , height );
+}
 
 void MyGLWindow::sendDataToOpenGL() {
  
@@ -141,7 +146,7 @@ void MyGLWindow::installShaders(){
 
 }
 void MyGLWindow::initializeGL(){
-	setMinimumSize(800, 600);
+	setMinimumSize(700, 500);
 	setMouseTracking(true);
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
@@ -160,9 +165,8 @@ void MyGLWindow::paintGL(){
 	// clear background
 	glClearColor(0.2, 0, 0.5, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-	glViewport(0, 0, width(), height());
+	
 
-	projection = glm::perspective(glm::radians(70.0f), (float)width() / height(), 0.3f, 100.0f);
 	model = mat4(1.0f);
 	model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
 	model *= glm::rotate(glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
