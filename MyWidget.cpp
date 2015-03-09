@@ -65,6 +65,13 @@ MyWidget::MyWidget()
 	extrScaleLayout->addWidget(extrScaleWSlider = new DebugSlider(-1.05, 1));
 
 
+	QHBoxLayout* extrTransLayout;
+	controlsLayout->addLayout(extrTransLayout = new QHBoxLayout);
+	extrTransLayout->addWidget(extrTransXSlider = new DebugSlider(0.0, 1));
+	extrTransLayout->addWidget(extrTransYSlider = new DebugSlider(0.0, 1));
+	extrTransLayout->addWidget(extrTransZSlider = new DebugSlider(0.0, 1));
+	
+ 
 	QHBoxLayout* lightPositionLayout;
 	controlsLayout->addLayout(lightPositionLayout = new QHBoxLayout);
 	lightPositionLayout->addWidget(lightXSlider = new DebugSlider);
@@ -82,10 +89,19 @@ MyWidget::MyWidget()
 	connect(extrScaleYSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
 	connect(extrScaleZSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
 	connect(extrScaleWSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+
+	connect(extrTransXSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
+	connect(extrTransYSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
+	connect(extrTransZSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
+
 	extrScaleXSlider->setValue(0);
 	extrScaleYSlider->setValue(0);
 	extrScaleZSlider->setValue(0);
 	extrScaleWSlider->setValue(0);
+
+	extrTransXSlider->setValue(0);
+	extrTransYSlider->setValue(0.2);
+	extrTransZSlider->setValue(0);
 
 	connect(lightXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(lightYSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
@@ -103,6 +119,15 @@ MyWidget::MyWidget()
 	timer->start(1);
 	elapsed=0;
 	myGlWindow->repaint();
+}
+void MyWidget::exsTrliderValueChanged()
+{
+	if (myGlWindow->pModel.done) {
+		myGlWindow->pModel.extrudetranslate1.x = extrTransXSlider->value();
+		myGlWindow->pModel.extrudetranslate1.y = extrTransYSlider->value();
+		myGlWindow->pModel.extrudetranslate1.z = extrTransZSlider->value();
+		myGlWindow->pModel.rebuid();
+	}
 }
 void MyWidget::exsliderValueChanged()
 {

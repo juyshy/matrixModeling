@@ -19,6 +19,11 @@ class MyWidget : public  QWidget
 	DebugSlider * extrScaleZSlider;
 	DebugSlider * extrScaleWSlider;
 
+	DebugSlider * extrTransXSlider;
+	DebugSlider * extrTransYSlider;
+	DebugSlider * extrTransZSlider;
+ 
+
 	QLabel *label;
 	QLabel *sblabel;
 
@@ -38,6 +43,7 @@ class MyWidget : public  QWidget
 	void sliderValueChanged();
 	void spinBValueChanged(int);
 	void exsliderValueChanged();
+	void exsTrliderValueChanged();
 	void  animate();
 protected:
 	void keyPressEvent(QKeyEvent* e);
