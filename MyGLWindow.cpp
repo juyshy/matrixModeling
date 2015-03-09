@@ -172,22 +172,7 @@ void MyGLWindow::paintGL(){
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	
 	view = camera.getWorldToViewMatrix();
-	model = mat4(1.0f);
-	//model *= glm::translate(vec3(theModel->sliderPosition.y, 0.0f, 0.0f));
-	//model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
-	//model *= glm::rotate(glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
-	//model *= glm::rotate(glm::radians(35.0f), vec3(0.0f, 1.0f, 0.0f));
-
-	//theModel->sliderPosition.x;
-
-	
-	/*prog.setUniform("ModelViewMatrix", mv);
-	prog.setUniform("NormalMatrix",
-		mat3(vec3(mv[0]), vec3(mv[1]), vec3(mv[2])));
-	prog.setUniform("MVP", projection * mv);
-
-    torus->render();*/
-
+ 
 
 	for (uint i = 0; i < 10; i++) {
 		model = mat4(1.0f);
@@ -198,13 +183,7 @@ void MyGLWindow::paintGL(){
 		setMatrixes();
 		pModel.draw();
 	}
-	//model = mat4(1.0f);
-
-	//model *= glm::translate(vec3(2.0f, 0.0f, -3.0f));
-	////model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
-	//setMatrixes();
-	//triangle.Draw();
-
+ 
  
 	
 }
