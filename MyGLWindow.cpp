@@ -180,29 +180,43 @@ void MyGLWindow::paintGL(){
 
 	//theModel->sliderPosition.x;
 
-	mat4 mv = view * model;
+	
 	/*prog.setUniform("ModelViewMatrix", mv);
 	prog.setUniform("NormalMatrix",
 		mat3(vec3(mv[0]), vec3(mv[1]), vec3(mv[2])));
 	prog.setUniform("MVP", projection * mv);
 
     torus->render();*/
-	model = mat4(1.0f);
 
-	model *= glm::translate(pModel.translateVec);
-	model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
-	mv = view * model;
+
+	for (uint i = 0; i < 10; i++) {
+		model = mat4(1.0f);
+
+		model *= glm::translate(pModel.translateVec);
+		model *= glm::translate(vec3(i * 5.0f - 20.0f, 0.0f, 0.0f));
+		model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
+		setMatrixes();
+		pModel.draw();
+	}
+	//model = mat4(1.0f);
+
+	//model *= glm::translate(vec3(2.0f, 0.0f, -3.0f));
+	////model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
+	//setMatrixes();
+	//triangle.Draw();
+
+ 
+	
+}
+ 
+void MyGLWindow::setMatrixes()
+{
+	mat4 mv = view * model;
 	prog.setUniform("ModelViewMatrix", mv);
 	prog.setUniform("NormalMatrix",
 		mat3(vec3(mv[0]), vec3(mv[1]), vec3(mv[2])));
 	prog.setUniform("MVP", projection * mv);
-	//triangle.Draw();
-
- 
-	pModel.draw();
 }
- 
-
 void MyGLWindow::compile()
 {
 	try {

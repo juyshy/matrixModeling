@@ -28,7 +28,7 @@ class MyGLWindow : public QGLWidget
 	void MyGLWindow::installShaders();
 	void setupVertexArrays();
 	void MyGLWindow::compile();
- 
+	void setMatrixes();
 	MyModel * theModel;
 	GLuint ambientLightUniformLocation;
 	glm::vec3 ambientLight;
