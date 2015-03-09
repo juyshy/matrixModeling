@@ -8,6 +8,8 @@
 #include <vector>
 #include "shader/glslprogram.h"
 #include <extra\vbotorus.h>
+
+#include <ProcModel.h>
 class MyModel;
 
 class MyGLWindow : public QGLWidget
@@ -68,8 +70,8 @@ public:
 	ShapeModel triangle;
 
 	float fps;
- 
-
+	
+	ProcModel pModel;
 };
 
 #endif

@@ -32,7 +32,7 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 void MyGLWindow::update(int elapsed) {
 	angle += 0.01f * theModel->sliderPosition.x;
 	if (angle >= 360.0f) angle -= 360.0f;
-	
+	pModel.translateVec = vec3(pModel.transXoffset, theModel->sliderPosition.y + pModel.transYoffset, theModel->sliderPosition.z + pModel.transZoffset);
 	////arrow.rotation.angle = elapsed / 20.0f;
 	std::cout << angle << std::endl;
 }
@@ -47,6 +47,10 @@ void MyGLWindow::sendDataToOpenGL() {
 	triangle.Init("cube");
 	/////////////////// Create the VBO ////////////////////
 
+	pModel.transXoffset = 0;
+	pModel.transYoffset = -3.5;
+	pModel.transZoffset = -6.5;
+	pModel.createModel();
 
 	//torus = new VBOTorus(0.7f, 0.3f, 50,50);
 	//model = mat4(1.0f);
@@ -184,13 +188,18 @@ void MyGLWindow::paintGL(){
 
     torus->render();*/
 	model = mat4(1.0f);
+
+	model *= glm::translate(pModel.translateVec);
+	model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
 	mv = view * model;
 	prog.setUniform("ModelViewMatrix", mv);
 	prog.setUniform("NormalMatrix",
 		mat3(vec3(mv[0]), vec3(mv[1]), vec3(mv[2])));
 	prog.setUniform("MVP", projection * mv);
-	triangle.Draw();
+	//triangle.Draw();
 
+ 
+	pModel.draw();
 }
  
 
