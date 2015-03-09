@@ -56,17 +56,36 @@ MyWidget::MyWidget()
 	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
 	mainLayout->addWidget(myGlWindow =  new MyGLWindow(&theModel));
 
+
+	QHBoxLayout* extrScaleLayout;
+	controlsLayout->addLayout(extrScaleLayout = new QHBoxLayout);
+	extrScaleLayout->addWidget(extrScaleXSlider = new DebugSlider(-1.05, 1));
+	extrScaleLayout->addWidget(extrScaleYSlider = new DebugSlider(-1.05, 1));
+	extrScaleLayout->addWidget(extrScaleZSlider = new DebugSlider(-1.05, 1));
+	extrScaleLayout->addWidget(extrScaleWSlider = new DebugSlider(-1.05, 1));
+
+
 	QHBoxLayout* lightPositionLayout;
 	controlsLayout->addLayout(lightPositionLayout = new QHBoxLayout);
 	lightPositionLayout->addWidget(lightXSlider = new DebugSlider);
 	lightPositionLayout->addWidget(lightYSlider = new DebugSlider);
 	lightPositionLayout->addWidget(lightZSlider = new DebugSlider);
 
+
+
 	// initial values
 	lightXSlider->setValue(-1.5f);
 	lightYSlider->setValue(0);
 	lightZSlider->setValue(0);
 	saved = false;
+	connect(extrScaleXSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	connect(extrScaleYSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	connect(extrScaleZSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	connect(extrScaleWSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	extrScaleXSlider->setValue(0);
+	extrScaleYSlider->setValue(0);
+	extrScaleZSlider->setValue(0);
+	extrScaleWSlider->setValue(0);
 
 	connect(lightXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(lightYSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
@@ -85,7 +104,17 @@ MyWidget::MyWidget()
 	elapsed=0;
 	myGlWindow->repaint();
 }
-
+void MyWidget::exsliderValueChanged()
+{
+	if (myGlWindow->pModel.done) {
+	myGlWindow->pModel.undulatingAmountX = extrScaleXSlider->value();
+	myGlWindow->pModel.undulatingAmountZ = extrScaleYSlider->value();
+	myGlWindow->pModel.undulatingRateX = extrScaleZSlider->value();
+	myGlWindow->pModel.undulatingRateZ = extrScaleWSlider->value();
+	myGlWindow->pModel.rebuid();
+	}
+	std::cout << extrScaleXSlider->value() << std::endl;
+}
 void MyWidget::spinBValueChanged(int newValue)
 {
 	myGlWindow->pModel.setTriagleCount(newValue);

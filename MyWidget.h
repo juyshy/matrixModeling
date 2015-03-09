@@ -13,6 +13,12 @@ class MyWidget : public  QWidget
 	DebugSlider * lightXSlider;
 	DebugSlider * lightYSlider;
 	DebugSlider * lightZSlider;
+
+	DebugSlider * extrScaleXSlider;
+	DebugSlider * extrScaleYSlider;
+	DebugSlider * extrScaleZSlider;
+	DebugSlider * extrScaleWSlider;
+
 	QLabel *label;
 	QLabel *sblabel;
 
@@ -31,6 +37,7 @@ class MyWidget : public  QWidget
 	private slots:
 	void sliderValueChanged();
 	void spinBValueChanged(int);
+	void exsliderValueChanged();
 	void  animate();
 protected:
 	void keyPressEvent(QKeyEvent* e);

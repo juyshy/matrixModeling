@@ -53,7 +53,7 @@ public:
 	UINT extrudes  ; // num of extrudes
 	float extrudeRotationAngleStart  ; // agle for first extrude
 	//float extrRotaAngleCounterMult = 0.01; // multiplier for updating angle in successive extrudes
-	float undulatingRateX = 0.285;
+	float undulatingRateX = 0.285; // extrudeScale
 	float undulatingRateZ = 0.285;
 	float undulatingAmountX = 0.15;
 	float undulatingAmountZ = 0.14;
@@ -80,6 +80,7 @@ public:
 	bool calcAverageNormas = false;
 	glm::vec3 translateVec = glm::vec3(0.0f, 0.0f, 0.0f);
 	bool debugtxtsave = false;
+	bool done = false;
 private:
 	UINT triangleCount; // triangles in the base
 	float elapsedTime;

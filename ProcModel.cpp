@@ -20,6 +20,7 @@ extrudes(40), extrudeRotationAngleStart(0.2)
 }
 
 void ProcModel::initialize() {
+	done = false;
 	translateAmount = glm::vec3(0.0f, 0.0f, 0.0f);
 	firstcaptriangleNums = firstCap ? (triangleCount * 3) : 0;
 	lastcaptriangleNums = lastCap ? ((triangleCount - 2) * 3) : 0;
@@ -38,6 +39,7 @@ void ProcModel::createModel() {
 	doExtrusions();
 	prapareVertexes();
 	createVbos();
+	done = true;
 
 }
 void ProcModel::createBase() {
@@ -190,7 +192,7 @@ void ProcModel::rebuid(){
 	deleteModel();
 	initialize();
 	createModel();
-
+ 
 
 
 }
