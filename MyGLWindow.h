@@ -66,6 +66,8 @@ public:
  
 	VBOTorus * torus;
 	ShapeModel triangle;
+
+	float fps;
  
 
 };

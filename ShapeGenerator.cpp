@@ -109,7 +109,8 @@ ShapeData ShapeGenerator::makeCube(){
 	//ret.colors = colors;
 
 	std::vector<vec3> vertPositions2;
-	vec3 scale = glm::vec3(0.2f, 1.0f, 0.2f);
+	//vec3 scale = glm::vec3(0.2f, 1.0f, 0.2f);
+	vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
 	for (vec3 pos : vertPositions)
 		vertPositions2.push_back(glm::vec3(glm::scale(scale) * glm::vec4(pos, 1.0f)));
 

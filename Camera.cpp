@@ -2,7 +2,7 @@
 #include <glm\gtx\transform.hpp>
 
 const float Camera::MOVEMENT_SPEED = 0.1f;
-
+const float ROTATIONAL_SPEED = 0.01f;
 
 Camera::Camera() : viewDirection(0.0f,0.0f, -1.0f),
 UP(0.0f, 1.0f, 0.0f), position(0.0f, 0.0f, 1.0f)
@@ -18,7 +18,7 @@ void Camera::mouseUpdate(const glm::vec2 &newMousePosition)
 		return;
 	}
 	//mouseDelta.x
-	const float ROTATIONAL_SPEED = 0.5f;
+	
 	 strafeDirection = glm::cross(viewDirection, UP);
 	glm::mat4 rotator =  
 		 glm::rotate(-mouseDelta.x * ROTATIONAL_SPEED, UP) * 
