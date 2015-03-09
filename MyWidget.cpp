@@ -88,6 +88,8 @@ MyWidget::MyWidget()
 
 void MyWidget::spinBValueChanged(int newValue)
 {
+	myGlWindow->pModel.setTriagleCount(newValue);
+	myGlWindow->pModel.rebuid();
 	std::cout << spinBox->value()   << std::endl;
 }
 
