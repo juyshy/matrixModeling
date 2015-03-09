@@ -38,14 +38,21 @@ MyWidget::MyWidget()
 	
 	// labels:
 	label = new QLabel(tr("FPS:"));
+	sblabel = new QLabel("triangles: ");
 
+	spinBox = new QSpinBox;
+	spinBox->setRange(3, 130);
+	spinBox->setMaximumWidth(100);
 	// layout
 	QVBoxLayout* mainLayout;
 	setLayout(mainLayout = new QVBoxLayout);
 	QVBoxLayout* controlsLayout;
-	QVBoxLayout* labelLayout;
-	mainLayout->addLayout(labelLayout = new QVBoxLayout);
-	labelLayout->addWidget (label);
+	QHBoxLayout* labelLayout;
+	mainLayout->addLayout(labelLayout = new QHBoxLayout);
+	labelLayout->addWidget(label);
+	labelLayout->addStretch();
+	labelLayout->addWidget(sblabel);
+	labelLayout->addWidget(spinBox);
 	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
 	mainLayout->addWidget(myGlWindow =  new MyGLWindow(&theModel));
 
@@ -64,7 +71,7 @@ MyWidget::MyWidget()
 	connect(lightXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(lightYSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(lightZSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
-	
+	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(spinBValueChanged(int)));
 	theModel.sliderPosition.x = lightXSlider->value();
 	theModel.sliderPosition.y = lightYSlider->value();
 	theModel.sliderPosition.z = lightZSlider->value();
@@ -77,6 +84,11 @@ MyWidget::MyWidget()
 	timer->start(1);
 	elapsed=0;
 	myGlWindow->repaint();
+}
+
+void MyWidget::spinBValueChanged(int newValue)
+{
+	std::cout << spinBox->value()   << std::endl;
 }
 
 void MyWidget::animate(){

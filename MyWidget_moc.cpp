@@ -22,7 +22,7 @@ static const uint qt_meta_data_MyWidget[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,12 +32,14 @@ static const uint qt_meta_data_MyWidget[] = {
  // slots: signature, parameters, type, tag, flags
       10,    9,    9,    9, 0x08,
       31,    9,    9,    9, 0x08,
+      54,    9,    9,    9, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MyWidget[] = {
-    "MyWidget\0\0sliderValueChanged()\0animate()\0"
+    "MyWidget\0\0sliderValueChanged()\0"
+    "spinBValueChanged(int)\0animate()\0"
 };
 
 void MyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -47,11 +49,11 @@ void MyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         MyWidget *_t = static_cast<MyWidget *>(_o);
         switch (_id) {
         case 0: _t->sliderValueChanged(); break;
-        case 1: _t->animate(); break;
+        case 1: _t->spinBValueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->animate(); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData MyWidget::staticMetaObjectExtraData = {
@@ -86,9 +88,9 @@ int MyWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

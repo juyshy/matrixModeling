@@ -34,7 +34,7 @@ void MyGLWindow::update(int elapsed) {
 	if (angle >= 360.0f) angle -= 360.0f;
 	pModel.translateVec = vec3(pModel.transXoffset, theModel->sliderPosition.y + pModel.transYoffset, theModel->sliderPosition.z + pModel.transZoffset);
 	////arrow.rotation.angle = elapsed / 20.0f;
-	std::cout << angle << std::endl;
+	//std::cout << angle << std::endl;
 }
 void MyGLWindow::resizeGL(int width, int height)
 {

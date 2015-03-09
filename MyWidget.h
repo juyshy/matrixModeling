@@ -2,6 +2,7 @@
 #include <QtGui\qwidget.h>
 #include <Qt\qelapsedtimer.h>
 #include <QtGui\qlabel.h>
+#include <QtGui\qspinbox.h>
 #include <MyModel.h>
 #include <sstream>
 class DebugSlider;
@@ -13,6 +14,10 @@ class MyWidget : public  QWidget
 	DebugSlider * lightYSlider;
 	DebugSlider * lightZSlider;
 	QLabel *label;
+	QLabel *sblabel;
+
+	QSpinBox * spinBox;
+
 	MyGLWindow * myGlWindow;
 	MyModel theModel;
 	int elapsed;
@@ -25,7 +30,7 @@ class MyWidget : public  QWidget
 	void MyWidget::saveTrace();
 	private slots:
 	void sliderValueChanged();
- 
+	void spinBValueChanged(int);
 	void  animate();
 protected:
 	void keyPressEvent(QKeyEvent* e);
