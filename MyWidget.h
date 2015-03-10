@@ -1,5 +1,7 @@
 #pragma once
 #include <QtGui\qwidget.h>
+#include <QtGui\qmainwindow.h>
+ 
 #include <Qt\qelapsedtimer.h>
 #include <QtGui\qlabel.h>
 #include <QtGui\qspinbox.h>
@@ -7,7 +9,7 @@
 #include <sstream>
 class DebugSlider;
 class MyGLWindow; // forward declare
-class MyWidget : public  QWidget
+class MyWidget : public  QMainWindow
 {
 	Q_OBJECT
 	DebugSlider * lightXSlider;
@@ -39,6 +41,11 @@ class MyWidget : public  QWidget
 	bool savefpsTracing;
 	bool saved;
 	void MyWidget::saveTrace();
+
+
+	QWidget *centralWidget;
+
+
 	private slots:
 	void sliderValueChanged();
 	void spinBValueChanged(int);

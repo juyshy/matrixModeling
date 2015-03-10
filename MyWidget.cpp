@@ -43,9 +43,14 @@ MyWidget::MyWidget()
 	spinBox = new QSpinBox;
 	spinBox->setRange(3, 130);
 	spinBox->setMaximumWidth(100);
+
 	// layout
+	centralWidget = new QWidget;
+	setCentralWidget(centralWidget);
+
 	QVBoxLayout* mainLayout;
-	setLayout(mainLayout = new QVBoxLayout);
+	//setLayout(mainLayout = new QVBoxLayout);
+	centralWidget->setLayout(mainLayout = new QVBoxLayout);
 	QVBoxLayout* controlsLayout;
 	QHBoxLayout* labelLayout;
 	mainLayout->addLayout(labelLayout = new QHBoxLayout);
