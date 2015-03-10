@@ -1,7 +1,8 @@
 #pragma once
 #include <QtGui\qwidget.h>
 #include <QtGui\qmainwindow.h>
- 
+#include <Qt\qmenu.h>
+#include <Qt\qaction.h>
 #include <Qt\qelapsedtimer.h>
 #include <QtGui\qlabel.h>
 #include <QtGui\qspinbox.h>
@@ -44,7 +45,16 @@ class MyWidget : public  QMainWindow
 
 
 	QWidget *centralWidget;
-
+	void createActions();
+	void createMenus();
+	QMenu *fileMenu;
+	QMenu *helpMenu;
+	QAction *saveSettingsAct;
+	QAction *renderIntoPixmapAct;
+	QAction *saveModelDataToFileAct;
+	QAction *exitAct;
+	QAction *aboutAct;
+	QAction *aboutQtAct;
 
 	private slots:
 	void sliderValueChanged();

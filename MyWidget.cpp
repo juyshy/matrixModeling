@@ -3,6 +3,7 @@
 #include <Qt\qrect.h>
 #include <QtGui\qdesktopwidget.h>
 #include <Qt\qdebug.h>
+#include <QtGui\qmenubar.h>
 #include <Qt\qelapsedtimer.h>
 #include <QtGui\qvboxlayout>
 #include <QtGui\qhboxlayout>
@@ -116,6 +117,8 @@ MyWidget::MyWidget()
 	theModel.sliderPosition.y = lightYSlider->value();
 	theModel.sliderPosition.z = lightZSlider->value();
 
+	createActions();
+	createMenus();
 
 	QTimer *timer = new QTimer(this);
 	etimer.start();
@@ -229,4 +232,46 @@ void MyWidget::keyPressEvent(QKeyEvent* e)
 	//myGlWindow->repaint();
 }
 
- 
+
+void MyWidget::createActions()
+{
+	renderIntoPixmapAct = new QAction(tr("&Render into Pixmap..."), this);
+	renderIntoPixmapAct->setShortcut(tr("Ctrl+R"));
+	//connect(renderIntoPixmapAct, SIGNAL(triggered()),
+		//this, SLOT(renderIntoPixmap()));
+
+	saveSettingsAct = new QAction(tr("Save S&ettings"), this);
+	saveSettingsAct->setShortcut(tr("Ctrl+E"));
+	//connect(saveSettingsAct, SIGNAL(triggered()),this, SLOT(saveSettings()));
+
+	saveModelDataToFileAct = new QAction(tr("Save &ModelData To File"), this);
+	saveModelDataToFileAct->setShortcut(tr("Ctrl+M"));
+	//connect(saveModelDataToFileAct, SIGNAL(triggered()), this, SLOT(saveModelDataToFile()));
+
+	exitAct = new QAction(tr("E&xit"), this);
+	exitAct->setShortcuts(QKeySequence::Quit);
+	//connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
+
+	aboutAct = new QAction(tr("&About"), this);
+	//connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+
+	aboutQtAct = new QAction(tr("About &Qt"), this);
+	//connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+}
+
+void MyWidget::createMenus()
+{
+	fileMenu = menuBar()->addMenu(tr("&File"));
+	fileMenu->addAction(renderIntoPixmapAct);
+
+	fileMenu->addSeparator();
+	fileMenu->addAction(exitAct);
+
+	fileMenu = menuBar()->addMenu(tr("&Model"));
+	fileMenu->addAction(saveSettingsAct);
+	fileMenu->addAction(saveModelDataToFileAct);
+
+	helpMenu = menuBar()->addMenu(tr("&Help"));
+	helpMenu->addAction(aboutAct);
+	helpMenu->addAction(aboutQtAct);
+}
