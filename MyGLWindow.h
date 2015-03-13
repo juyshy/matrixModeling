@@ -15,26 +15,26 @@ class MyModel;
 __declspec(align(16))  class MyGLWindow : public QGLWidget
 {
 	 
-	void MyGLWindow::sendDataToOpenGL();
-	bool MyGLWindow::checkStatus(
+	void sendDataToOpenGL();
+	bool checkStatus(
 		GLuint objectID,
 		PFNGLGETSHADERIVPROC objectPropertyGetterFunc,
 		PFNGLGETSHADERINFOLOGPROC getInfoLogFunc,
 		GLenum statusType
 		);
-	bool MyGLWindow::checkShaderStatus(GLuint shaderID);
-	bool MyGLWindow::checkProgramStatus(GLuint programID);
-	std::string MyGLWindow::readShaderCode(const char* filename);
-	void MyGLWindow::installShaders();
+	bool checkShaderStatus(GLuint shaderID);
+	bool checkProgramStatus(GLuint programID);
+	std::string readShaderCode(const char* filename);
+	void installShaders();
 	void setupVertexArrays();
-	void MyGLWindow::compile();
+	void compile();
 	void setMatrixes();
 	MyModel * theModel;
 	GLuint ambientLightUniformLocation;
 	glm::vec3 ambientLight;
 	//int elapsed;
 	GLuint vaoHandle;
-	//void MyGLWindow::printActiveUniforms(GLuint programHandle);
+	//void printActiveUniforms(GLuint programHandle);
 	glm::mat4 rotationMatrix;
 	float angle;
 	GLuint programHandle;
