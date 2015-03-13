@@ -28,7 +28,12 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 {
 	angle = 0;
 }
-
+void MyGLWindow::updateColor()
+{
+	materialAmbient =materialDiffuse = theModel->color;
+	prog.setUniform("Material.Kd", materialDiffuse);
+	prog.setUniform("Material.Ka", materialAmbient);
+}
 void MyGLWindow::update(int elapsed) {
 	angle += 0.01f * theModel->sliderPosition.x;
 	if (angle >= 360.0f) angle -= 360.0f;
@@ -60,11 +65,12 @@ void MyGLWindow::sendDataToOpenGL() {
 	view =camera.getWorldToViewMatrix();
 	projection = mat4(1.0f);
 	vec4 worldLight = vec4(5.0f, 5.0f, 2.0f, 1.0f);
-
-	prog.setUniform("Material.Kd", 0.9f, 0.5f, 0.3f);
+	 materialDiffuse =  vec3(0.9f, 0.5f, 0.3f);
+	 materialAmbient = materialDiffuse;
+	prog.setUniform("Material.Kd", materialDiffuse);
 	prog.setUniform("Light.Ld", 1.0f, 1.0f, 1.0f);
 	prog.setUniform("Light.Position", view * worldLight);
-	prog.setUniform("Material.Ka", 0.9f, 0.5f, 0.3f);
+	prog.setUniform("Material.Ka", materialAmbient);
 	prog.setUniform("Light.La", 0.4f, 0.4f, 0.4f);
 	prog.setUniform("Material.Ks", 0.8f, 0.8f, 0.8f);
 	prog.setUniform("Light.Ls", 1.0f, 1.0f, 1.0f);

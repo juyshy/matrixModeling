@@ -52,6 +52,7 @@ class MyWidget : public  QMainWindow
 	QMenu *fileMenu;
 	QMenu *helpMenu;
 	QAction *saveSettingsAct;
+	QAction *chooseColorAct;
 	QAction *modelingParametersAct;
 	QAction *translateViewAct;
 	QAction *renderIntoPixmapAct;
@@ -62,6 +63,8 @@ class MyWidget : public  QMainWindow
 	QVBoxLayout* controlsLayout;
 	QDialog * parametersDialog;
 	QDialog * translateDialog;
+	QColor color;
+	QLabel * colorLabel;
 
 	private slots:
 	void sliderValueChanged();
@@ -72,6 +75,7 @@ class MyWidget : public  QMainWindow
 	void about();
 	void parameters();
 	void translate();
+	void setColor();
 protected:
 	void keyPressEvent(QKeyEvent* e);
 public:

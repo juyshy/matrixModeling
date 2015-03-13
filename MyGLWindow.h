@@ -43,7 +43,8 @@ __declspec(align(16))  class MyGLWindow : public QGLWidget
 	mat4 model;
 	mat4 view;
 	mat4 projection;
-
+	glm::vec3 materialDiffuse; 
+	glm::vec3 materialAmbient;
 protected:
 	
 	void initializeGL();
@@ -60,6 +61,8 @@ public:
 	MyGLWindow(MyModel * theModel); 
  
 	~MyGLWindow();
+
+	void updateColor();
 
 	void update(int elapsed);
  

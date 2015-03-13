@@ -11,6 +11,7 @@
 #include <QtGui\QDialog>
 #include <QtGui\qkeyevent>
 #include <QtGui\qlabel.h>
+#include <QtGui\QColorDialog>
 #include <MyGLWindow.h>
 #include <DebugSlider.h>
 #include <QtCore\qtimer.h>
@@ -42,7 +43,7 @@ MyWidget::MyWidget()
 	// labels:
 	label = new QLabel(tr("FPS:"));
 	sblabel = new QLabel("triangles: ");
-
+	colorLabel = new QLabel( );
 	spinBox = new QSpinBox;
 	spinBox->setRange(3, 130);
 	spinBox->setMaximumWidth(100);
@@ -59,6 +60,8 @@ MyWidget::MyWidget()
 	mainLayout->addLayout(labelLayout = new QHBoxLayout);
 	labelLayout->addWidget(label);
 	labelLayout->addStretch();
+ 
+	labelLayout->addWidget(colorLabel);
 	labelLayout->addWidget(sblabel);
 	labelLayout->addWidget(spinBox);
 	controlsLayout = new QVBoxLayout;
@@ -222,6 +225,7 @@ void MyWidget::sliderValueChanged()
 
 void MyWidget::keyPressEvent(QKeyEvent* e)
 {
+	std::cout << "key event!" << std::endl;
 	switch (e->key())
 	{
 	case Qt::Key::Key_W:
@@ -256,6 +260,11 @@ void MyWidget::createActions()
 	renderIntoPixmapAct->setShortcut(tr("Ctrl+R"));
 	//connect(renderIntoPixmapAct, SIGNAL(triggered()),
 		//this, SLOT(renderIntoPixmap()));
+
+	 
+	chooseColorAct = new QAction(tr("C&hoose Color"), this);
+	chooseColorAct->setShortcut(tr("Ctrl+H"));
+	connect(chooseColorAct, SIGNAL(triggered()), this, SLOT(setColor()));
 
 	saveSettingsAct = new QAction(tr("Save S&ettings"), this);
 	saveSettingsAct->setShortcut(tr("Ctrl+E"));
@@ -341,6 +350,31 @@ void MyWidget::about()
 	about.exec();
 }
 
+void MyWidget::setColor()
+{
+	
+/*	if (native->isChecked())
+		color = QColorDialog::getColor(Qt::green, this);
+	else
+		*/
+	color = QColorDialog::getColor(Qt::green, this, "Select Color", QColorDialog::DontUseNativeDialog);
+	qreal red;
+	qreal green;
+	qreal blue;
+	color.getRgbF(&red, &green, &blue);
+	int r, g, b;
+	color.getRgb(&r, &g, &b);
+
+	theModel.color = glm::vec3(red, green, blue);
+	if (color.isValid()) {
+		colorLabel->setText("Color chosen: " + QString::number(r) + ", " + QString::number(g) + ", " + QString::number(b)  );
+		colorLabel->setPalette(QPalette(color));
+		colorLabel->setAutoFillBackground(true);
+	}
+
+	myGlWindow->updateColor();
+}
+
 void MyWidget::createMenus()
 {
 	fileMenu = menuBar()->addMenu(tr("&File"));
@@ -354,6 +388,7 @@ void MyWidget::createMenus()
 
 	fileMenu = menuBar()->addMenu(tr("&Model"));
 	fileMenu->addAction(modelingParametersAct);
+	fileMenu->addAction(chooseColorAct);
 	fileMenu->addAction(saveSettingsAct);
 	fileMenu->addAction(saveModelDataToFileAct);
 
