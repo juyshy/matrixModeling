@@ -47,6 +47,7 @@ MyWidget::MyWidget()
 	spinBox = new QSpinBox;
 	spinBox->setRange(3, 130);
 	spinBox->setMaximumWidth(100);
+	
 
 	// layout
 	centralWidget = new QWidget;
@@ -145,7 +146,9 @@ MyWidget::MyWidget()
 	connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
 	timer->start(1);
 	elapsed=0;
+	spinBox->clearFocus();
 	myGlWindow->repaint();
+	myGlWindow->setFocus();
 }
 void MyWidget::exsTrliderValueChanged()
 {
@@ -171,6 +174,7 @@ void MyWidget::spinBValueChanged(int newValue)
 {
 	myGlWindow->pModel.setTriagleCount(newValue);
 	myGlWindow->pModel.rebuid();
+	myGlWindow->setFocus();
 	std::cout << spinBox->value()   << std::endl;
 }
 
