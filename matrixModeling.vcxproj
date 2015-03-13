@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{43D5E8DD-27BC-4DD2-A6EC-5067B5F03E46}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>graphicspad</RootNamespace>
+    <RootNamespace>matrixModeling</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
