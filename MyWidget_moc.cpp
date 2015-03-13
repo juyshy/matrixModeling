@@ -45,7 +45,7 @@ static const char qt_meta_stringdata_MyWidget[] = {
     "MyWidget\0\0sliderValueChanged()\0"
     "spinBValueChanged(int)\0exsliderValueChanged()\0"
     "exsTrliderValueChanged()\0animate()\0"
-    "about()\0parametersDialog()\0"
+    "about()\0parameters()\0"
 };
 
 void MyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -60,7 +60,7 @@ void MyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 3: _t->exsTrliderValueChanged(); break;
         case 4: _t->animate(); break;
         case 5: _t->about(); break;
-        case 6: _t->parametersDialog(); break;
+        case 6: _t->parameters(); break;
         default: ;
         }
     }

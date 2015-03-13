@@ -7,6 +7,7 @@
 #include <QtGui\qlabel.h>
 #include <QtGui\QVBoxLayout>
 #include <QtGui\qspinbox.h>
+#include <QtGui\QDialog>
 #include <MyModel.h>
 #include <sstream>
 class DebugSlider;
@@ -58,7 +59,7 @@ class MyWidget : public  QMainWindow
 	QAction *aboutAct;
 	QAction *aboutQtAct;
 	QVBoxLayout* controlsLayout;
-
+	QDialog * parametersDialog;
 	private slots:
 	void sliderValueChanged();
 	void spinBValueChanged(int);
@@ -66,7 +67,7 @@ class MyWidget : public  QMainWindow
 	void exsTrliderValueChanged();
 	void  animate();
 	void about();
-	void parametersDialog();
+	void parameters();
 protected:
 	void keyPressEvent(QKeyEvent* e);
 public:

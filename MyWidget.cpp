@@ -121,6 +121,13 @@ MyWidget::MyWidget()
 	theModel.sliderPosition.y = lightYSlider->value();
 	theModel.sliderPosition.z = lightZSlider->value();
 
+
+	parametersDialog = new QDialog(this);
+	//parametersDialog.setParent(this);
+	//parametersDialog.setModal(true);
+	parametersDialog->setWindowTitle(tr("Extrusion parameters"));
+	parametersDialog->setLayout(controlsLayout);
+
 	createActions();
 	createMenus();
 
@@ -252,7 +259,7 @@ void MyWidget::createActions()
 	
 	modelingParametersAct = new QAction(tr("&Modeling Parameters"), this);
 	modelingParametersAct->setShortcut(tr("Ctrl+M"));
-	connect(modelingParametersAct, SIGNAL(triggered()), this, SLOT(parametersDialog()));
+	connect(modelingParametersAct, SIGNAL(triggered()), this, SLOT(parameters()));
 
 	saveModelDataToFileAct = new QAction(tr("Save Model&Data To File"), this);
 	saveModelDataToFileAct->setShortcut(tr("Ctrl+D"));
@@ -269,26 +276,20 @@ void MyWidget::createActions()
 	//connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 }
 
-void MyWidget::parametersDialog()
+void MyWidget::parameters()
 {
 	//std::cout << "parameters" << std::endl;
  
 	//QPushButton *quitButton = new QPushButton("OK");
- 
-
-	QDialog parametersDialog(this);
-	//parametersDialog.setModal(true);
-	parametersDialog.setWindowTitle(tr("Extrusion parameters"));
-	parametersDialog.setLayout(controlsLayout);
 
 	//connect(quitButton, SIGNAL(clicked()), &parametersDialog, SLOT(close()));
 
-	parametersDialog.exec();
+	parametersDialog->exec();
 }
 void MyWidget::about()
 {
 	QLabel *icon = new QLabel;
-	//icon->setPixmap(QPixmap(":/icons/peertopeer.png"));
+  
 
 	QLabel *text = new QLabel;
 	text->setWordWrap(true);
