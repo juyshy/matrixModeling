@@ -62,6 +62,7 @@ class MyWidget : public  QMainWindow
 	void exsliderValueChanged();
 	void exsTrliderValueChanged();
 	void  animate();
+	void about();
 protected:
 	void keyPressEvent(QKeyEvent* e);
 public:

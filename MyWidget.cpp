@@ -6,7 +6,9 @@
 #include <QtGui\qmenubar.h>
 #include <QtCore\qelapsedtimer.h>
 #include <QtGui\qvboxlayout>
-#include <QtGui\qhboxlayout>
+#include <QtGui\qvboxlayout>
+#include <QtGui\QPushButton>
+#include <QtGui\QDialog>
 #include <QtGui\qkeyevent>
 #include <QtGui\qlabel.h>
 #include <MyGLWindow.h>
@@ -254,10 +256,51 @@ void MyWidget::createActions()
 	//connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
 	aboutAct = new QAction(tr("&About"), this);
-	//connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+	connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
 	aboutQtAct = new QAction(tr("About &Qt"), this);
 	//connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+}
+
+void MyWidget::about()
+{
+	QLabel *icon = new QLabel;
+	//icon->setPixmap(QPixmap(":/icons/peertopeer.png"));
+
+	QLabel *text = new QLabel;
+	text->setWordWrap(true);
+	text->setText("<p>The <b>Matrix Modeling</b> app demonstrates "
+		" modeling 3d objects using extrusions and matrix operations."
+		" </p>"
+		"<p>User can manipulate simple mathematical rules that generate"
+		" scaling, rotation and translation values for model generation extrusion steps."
+		" </p>");
+
+	QPushButton *quitButton = new QPushButton("OK");
+
+	QHBoxLayout *topLayout = new QHBoxLayout;
+	topLayout->setMargin(10);
+	topLayout->setSpacing(10);
+	topLayout->addWidget(icon);
+	topLayout->addWidget(text);
+
+	QHBoxLayout *bottomLayout = new QHBoxLayout;
+	bottomLayout->addStretch();
+	bottomLayout->addWidget(quitButton);
+	bottomLayout->addStretch();
+
+	QVBoxLayout *mainLayout = new QVBoxLayout;
+	mainLayout->addLayout(topLayout);
+	mainLayout->addLayout(bottomLayout);
+
+	QDialog about(this);
+	about.setModal(true);
+	about.setWindowTitle(tr("About Matrix Modeling App"));
+	about.setLayout(mainLayout);
+
+	connect(quitButton, SIGNAL(clicked()), &about, SLOT(close()));
+
+	about.exec();
 }
 
 void MyWidget::createMenus()
