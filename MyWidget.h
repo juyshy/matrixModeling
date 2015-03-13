@@ -53,6 +53,7 @@ class MyWidget : public  QMainWindow
 	QMenu *helpMenu;
 	QAction *saveSettingsAct;
 	QAction *modelingParametersAct;
+	QAction *translateViewAct;
 	QAction *renderIntoPixmapAct;
 	QAction *saveModelDataToFileAct;
 	QAction *exitAct;
@@ -60,6 +61,8 @@ class MyWidget : public  QMainWindow
 	QAction *aboutQtAct;
 	QVBoxLayout* controlsLayout;
 	QDialog * parametersDialog;
+	QDialog * translateDialog;
+
 	private slots:
 	void sliderValueChanged();
 	void spinBValueChanged(int);
@@ -68,6 +71,7 @@ class MyWidget : public  QMainWindow
 	void  animate();
 	void about();
 	void parameters();
+	void translate();
 protected:
 	void keyPressEvent(QKeyEvent* e);
 public:

@@ -82,11 +82,12 @@ MyWidget::MyWidget()
 	extrTransLayout->addWidget(extrTransZSlider = new DebugSlider(0.0, 1));
 	
  
-	QHBoxLayout* lightPositionLayout;
-	controlsLayout->addLayout(lightPositionLayout = new QHBoxLayout);
-	lightPositionLayout->addWidget(lightXSlider = new DebugSlider);
-	lightPositionLayout->addWidget(lightYSlider = new DebugSlider);
-	lightPositionLayout->addWidget(lightZSlider = new DebugSlider);
+	QHBoxLayout* translateSlidersLayout;
+	translateSlidersLayout = new QHBoxLayout;
+	//controlsLayout->addLayout(translateSlidersLayout = new QHBoxLayout);
+	translateSlidersLayout->addWidget(lightXSlider = new DebugSlider);
+	translateSlidersLayout->addWidget(lightYSlider = new DebugSlider);
+	translateSlidersLayout->addWidget(lightZSlider = new DebugSlider);
 
 
 
@@ -124,9 +125,13 @@ MyWidget::MyWidget()
 
 	parametersDialog = new QDialog(this);
 	//parametersDialog.setParent(this);
-	//parametersDialog.setModal(true);
+	parametersDialog->setModal(true);
 	parametersDialog->setWindowTitle(tr("Extrusion parameters"));
 	parametersDialog->setLayout(controlsLayout);
+
+	translateDialog = new QDialog(this);
+	translateDialog->setWindowTitle(tr("Translate object"));
+	translateDialog->setLayout(translateSlidersLayout);
 
 	createActions();
 	createMenus();
@@ -257,6 +262,11 @@ void MyWidget::createActions()
 	//connect(saveSettingsAct, SIGNAL(triggered()),this, SLOT(saveSettings()));
 
 	
+
+	translateViewAct = new QAction(tr("&Translate View"), this);
+	translateViewAct->setShortcut(tr("Ctrl+T"));
+	connect(translateViewAct, SIGNAL(triggered()), this, SLOT(translate()));
+
 	modelingParametersAct = new QAction(tr("&Modeling Parameters"), this);
 	modelingParametersAct->setShortcut(tr("Ctrl+M"));
 	connect(modelingParametersAct, SIGNAL(triggered()), this, SLOT(parameters()));
@@ -286,6 +296,12 @@ void MyWidget::parameters()
 
 	parametersDialog->exec();
 }
+
+void MyWidget::translate(){
+	std::cout << "translate" << std::endl;
+	translateDialog->exec();
+}
+
 void MyWidget::about()
 {
 	QLabel *icon = new QLabel;
@@ -332,6 +348,9 @@ void MyWidget::createMenus()
 
 	fileMenu->addSeparator();
 	fileMenu->addAction(exitAct);
+
+	fileMenu = menuBar()->addMenu(tr("&View"));
+	fileMenu->addAction(translateViewAct);
 
 	fileMenu = menuBar()->addMenu(tr("&Model"));
 	fileMenu->addAction(modelingParametersAct);
