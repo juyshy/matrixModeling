@@ -5,6 +5,7 @@
 #include <QtGui\qaction.h>
 #include <QtCore\qelapsedtimer.h>
 #include <QtGui\qlabel.h>
+#include <QtGui\QVBoxLayout>
 #include <QtGui\qspinbox.h>
 #include <MyModel.h>
 #include <sstream>
@@ -50,11 +51,13 @@ class MyWidget : public  QMainWindow
 	QMenu *fileMenu;
 	QMenu *helpMenu;
 	QAction *saveSettingsAct;
+	QAction *modelingParametersAct;
 	QAction *renderIntoPixmapAct;
 	QAction *saveModelDataToFileAct;
 	QAction *exitAct;
 	QAction *aboutAct;
 	QAction *aboutQtAct;
+	QVBoxLayout* controlsLayout;
 
 	private slots:
 	void sliderValueChanged();
@@ -63,6 +66,7 @@ class MyWidget : public  QMainWindow
 	void exsTrliderValueChanged();
 	void  animate();
 	void about();
+	void parametersDialog();
 protected:
 	void keyPressEvent(QKeyEvent* e);
 public:

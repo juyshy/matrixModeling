@@ -54,14 +54,15 @@ MyWidget::MyWidget()
 	QVBoxLayout* mainLayout;
 	//setLayout(mainLayout = new QVBoxLayout);
 	centralWidget->setLayout(mainLayout = new QVBoxLayout);
-	QVBoxLayout* controlsLayout;
+	
 	QHBoxLayout* labelLayout;
 	mainLayout->addLayout(labelLayout = new QHBoxLayout);
 	labelLayout->addWidget(label);
 	labelLayout->addStretch();
 	labelLayout->addWidget(sblabel);
 	labelLayout->addWidget(spinBox);
-	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
+	controlsLayout = new QVBoxLayout;
+	//mainLayout->addLayout(controlsLayout  );
 	myGlWindow = new MyGLWindow(&theModel);
 	mainLayout->addWidget(myGlWindow);
 
@@ -213,6 +214,7 @@ void MyWidget::keyPressEvent(QKeyEvent* e)
 	{
 	case Qt::Key::Key_W:
 		myGlWindow->camera.moveForward();
+		//std::cout << "forward" << std::endl;
 		break;
 	case Qt::Key::Key_S:
 		myGlWindow->camera.moveBackwards();
@@ -247,8 +249,13 @@ void MyWidget::createActions()
 	saveSettingsAct->setShortcut(tr("Ctrl+E"));
 	//connect(saveSettingsAct, SIGNAL(triggered()),this, SLOT(saveSettings()));
 
-	saveModelDataToFileAct = new QAction(tr("Save &ModelData To File"), this);
-	saveModelDataToFileAct->setShortcut(tr("Ctrl+M"));
+	
+	modelingParametersAct = new QAction(tr("&Modeling Parameters"), this);
+	modelingParametersAct->setShortcut(tr("Ctrl+M"));
+	connect(modelingParametersAct, SIGNAL(triggered()), this, SLOT(parametersDialog()));
+
+	saveModelDataToFileAct = new QAction(tr("Save Model&Data To File"), this);
+	saveModelDataToFileAct->setShortcut(tr("Ctrl+D"));
 	//connect(saveModelDataToFileAct, SIGNAL(triggered()), this, SLOT(saveModelDataToFile()));
 
 	exitAct = new QAction(tr("E&xit"), this);
@@ -262,6 +269,22 @@ void MyWidget::createActions()
 	//connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 }
 
+void MyWidget::parametersDialog()
+{
+	//std::cout << "parameters" << std::endl;
+ 
+	//QPushButton *quitButton = new QPushButton("OK");
+ 
+
+	QDialog parametersDialog(this);
+	//parametersDialog.setModal(true);
+	parametersDialog.setWindowTitle(tr("Extrusion parameters"));
+	parametersDialog.setLayout(controlsLayout);
+
+	//connect(quitButton, SIGNAL(clicked()), &parametersDialog, SLOT(close()));
+
+	parametersDialog.exec();
+}
 void MyWidget::about()
 {
 	QLabel *icon = new QLabel;
@@ -269,9 +292,7 @@ void MyWidget::about()
 
 	QLabel *text = new QLabel;
 	text->setWordWrap(true);
-	text->setText("<p>The <b>Matrix Modeling</b> app demonstrates "
-		" modeling 3d objects using extrusions and matrix operations."
-		" </p>"
+	text->setText( 
 		"<p>User can manipulate simple mathematical rules that generate"
 		" scaling, rotation and translation values for model generation extrusion steps."
 		" </p>");
@@ -312,6 +333,7 @@ void MyWidget::createMenus()
 	fileMenu->addAction(exitAct);
 
 	fileMenu = menuBar()->addMenu(tr("&Model"));
+	fileMenu->addAction(modelingParametersAct);
 	fileMenu->addAction(saveSettingsAct);
 	fileMenu->addAction(saveModelDataToFileAct);
 
