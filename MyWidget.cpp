@@ -1,18 +1,18 @@
 #include "MyWidget.h"
 #include <QtGui\qapplication.h>
-#include <Qt\qrect.h>
+#include <QtCore\qrect.h>
 #include <QtGui\qdesktopwidget.h>
-#include <Qt\qdebug.h>
+#include <QtCore\qdebug.h>
 #include <QtGui\qmenubar.h>
-#include <Qt\qelapsedtimer.h>
+#include <QtCore\qelapsedtimer.h>
 #include <QtGui\qvboxlayout>
 #include <QtGui\qhboxlayout>
 #include <QtGui\qkeyevent>
 #include <QtGui\qlabel.h>
 #include <MyGLWindow.h>
 #include <DebugSlider.h>
-#include <Qt\qtimer.h>
-#include <Qt\qdatetime.h>
+#include <QtCore\qtimer.h>
+#include <QtCore\qdatetime.h>
 #include <string>
 #include <Utility.h>
 #include <boost\algorithm\string\replace.hpp>
@@ -60,15 +60,16 @@ MyWidget::MyWidget()
 	labelLayout->addWidget(sblabel);
 	labelLayout->addWidget(spinBox);
 	mainLayout->addLayout(controlsLayout = new QVBoxLayout);
-	mainLayout->addWidget(myGlWindow =  new MyGLWindow(&theModel));
+	myGlWindow = new MyGLWindow(&theModel);
+	mainLayout->addWidget(myGlWindow);
 
 
 	QHBoxLayout* extrScaleLayout;
 	controlsLayout->addLayout(extrScaleLayout = new QHBoxLayout);
-	extrScaleLayout->addWidget(extrScaleXSlider = new DebugSlider(-1.05, 1));
-	extrScaleLayout->addWidget(extrScaleYSlider = new DebugSlider(-1.05, 1));
-	extrScaleLayout->addWidget(extrScaleZSlider = new DebugSlider(-1.05, 1));
-	extrScaleLayout->addWidget(extrScaleWSlider = new DebugSlider(-1.05, 1));
+	extrScaleLayout->addWidget(extrScaleXSlider = new DebugSlider(-1.05f, 1));
+	extrScaleLayout->addWidget(extrScaleYSlider = new DebugSlider(-1.05f, 1));
+	extrScaleLayout->addWidget(extrScaleZSlider = new DebugSlider(-1.05f, 1));
+	extrScaleLayout->addWidget(extrScaleWSlider = new DebugSlider(-1.05f, 1));
 
 
 	QHBoxLayout* extrTransLayout;
@@ -106,7 +107,7 @@ MyWidget::MyWidget()
 	extrScaleWSlider->setValue(0);
 
 	extrTransXSlider->setValue(0);
-	extrTransYSlider->setValue(0.2);
+	extrTransYSlider->setValue(0.2f);
 	extrTransZSlider->setValue(0);
 
 	connect(lightXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));

@@ -4,7 +4,7 @@
 #include <fstream>
 #include <QtGui\qmouseevent>
 #include <QtGui\qkeyevent>
-#include <Qt\qtimer.h>
+#include <QtCore\qtimer.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtx\transform.hpp>
@@ -168,7 +168,7 @@ void MyGLWindow::initializeGL(){
 void MyGLWindow::paintGL(){
 
 	// clear background
-	glClearColor(0.2, 0, 0.5, 1);
+	glClearColor(0.2f, 0, 0.5f, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	
 	view = camera.getWorldToViewMatrix();

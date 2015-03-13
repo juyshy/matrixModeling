@@ -13,7 +13,7 @@ glm::vec3 computeNormal(glm::vec3 const & a, glm::vec3 const & b, glm::vec3 cons
 }
 
 ProcModel::ProcModel() : transZoffset(-7), transYoffset(-4), triangleCount(5),
-extrudes(40), extrudeRotationAngleStart(0.2) 
+extrudes(40), extrudeRotationAngleStart(0.2f) 
 {
 	// initialize
 	initialize();
@@ -67,9 +67,9 @@ void ProcModel::createBase() {
 void ProcModel::doExtrusions() { 	// extrusions
 	glm::vec4	extrudetranslate = extrudetranslate1;
 	UINT xtrudestapes = 2;
-	for (int j = 0; j < extrudes; ++j) {
+	for (UINT j = 0; j < extrudes; ++j) {
 
-		for (int i = 1; i < triangleCount + 1; ++i) {
+		for (UINT i = 1; i < triangleCount + 1; ++i) {
 
 			indeksit.push_back(i + triangleCount*j);
 			indeksit.push_back(i + 1 + triangleCount*j);
@@ -90,7 +90,7 @@ void ProcModel::doExtrusions() { 	// extrusions
 			laskuri++;
 
 			extrudeScale = glm::vec3(sinf(j*undulatingRateX)*undulatingAmountX + 1, 1, cosf(j*undulatingRateZ)*undulatingAmountZ + 1);
-			extrudeRotationAngle = (extrudeRotationAngleStart + cosf(j*rotaUndulatingRate)*rotaUndulatingAmount)  * one_deg_in_rad;
+			extrudeRotationAngle = (extrudeRotationAngleStart + cosf(j*rotaUndulatingRate)*rotaUndulatingAmount)  * static_cast<float>( one_deg_in_rad);
 			if (rotaFirst) {
 				vrxTransMat = glm::scale(glm::mat4(), extrudeScale);
 				vrxTransMat = glm::rotate(vrxTransMat, extrudeRotationAngle, glm::vec3(0, 0, 1));
@@ -268,9 +268,9 @@ void ProcModel::updateMouse() {
 		}
 		// deceleration
 		if (abs(rotationAmount.y) > 0)
-			rotationAmount.y *= 0.9995;
+			rotationAmount.y *= 0.9995f;
 		if (abs(rotationAmount.x) > 0)
-			rotationAmount.x *= 0.9995;
+			rotationAmount.x *= 0.9995f;
 
 		rotaLimit(rotationAmount.x);
 		rotaLimit(rotationAmount.y);

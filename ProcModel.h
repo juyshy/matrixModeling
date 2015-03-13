@@ -53,13 +53,13 @@ public:
 	UINT extrudes  ; // num of extrudes
 	float extrudeRotationAngleStart  ; // agle for first extrude
 	//float extrRotaAngleCounterMult = 0.01; // multiplier for updating angle in successive extrudes
-	float undulatingRateX = 0.285; // extrudeScale
-	float undulatingRateZ = 0.285;
-	float undulatingAmountX = 0.15;
-	float undulatingAmountZ = 0.14;
+	float undulatingRateX = 0.285f; // extrudeScale
+	float undulatingRateZ = 0.285f;
+	float undulatingAmountX = 0.15f;
+	float undulatingAmountZ = 0.14f;
 
-	float rotaUndulatingRate = 0.285;
-	float rotaUndulatingAmount = 0.07;//0.15;
+	float rotaUndulatingRate = 0.285f;
+	float rotaUndulatingAmount = 0.07f;//0.15;
 	glm::vec4	extrudetranslate1 = glm::vec4(0.0f, 0.2f, 0.0f, 1.0f); // translation for extrudes
 
 	bool rotaFirst =false ; // rotation before translation in extrusion

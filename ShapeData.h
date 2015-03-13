@@ -3,7 +3,7 @@
 #include <GL\glew.h>
 #include <Vertex.h>
 #include <vector>
-class Vertex;
+struct Vertex;
 struct ShapeData
 {
 	ShapeData():

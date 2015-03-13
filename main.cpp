@@ -1,5 +1,5 @@
 #include <QtGui\qapplication.h>
-#include <Qt\qrect.h>
+#include <QtCore\qrect.h>
 #include <QtGui\qdesktopwidget.h>
 #include <MyGLWindow.h>
 #include <QtGui\qwidget.h>

@@ -1,7 +1,10 @@
 #pragma once
 #include <glm\glm.hpp>
-struct MyModel
+class MyModel
 {
+	public:
 	glm::vec3 lightPosition;
 	glm::vec3 sliderPosition;
+
+
 };

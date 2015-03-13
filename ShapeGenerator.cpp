@@ -411,13 +411,13 @@ ShapeData ShapeGenerator::makePlaneVerts(uint dimensions)
 	ret.numVertices = dimensions * dimensions;
 	int half = dimensions / 2;
 	ret.vertices = new Vertex[ret.numVertices];
-	for (int i = 0; i < dimensions; i++)
+	for (uint i = 0; i < dimensions; i++)
 	{
-		for (int j = 0; j < dimensions; j++)
+		for (uint j = 0; j < dimensions; j++)
 		{
 			Vertex& thisVert = ret.vertices[i * dimensions + j];
-			thisVert.position.x = j - half;
-			thisVert.position.z = i - half;
+			thisVert.position.x = static_cast<float>( j) - half;
+			thisVert.position.z = static_cast<float>(i) - half;
 			thisVert.position.y = 0;
 			thisVert.normal = glm::vec3(0, 1, 0);
 			thisVert.color = randomColor();
@@ -432,9 +432,9 @@ ShapeData ShapeGenerator::makePlaneIndices(uint dimensions)
 	ret.numIndices = (dimensions - 1) * (dimensions - 1) * 2 * 3; // 2 triangles per square, 3 indices per triangle
 	ret.indices = new unsigned short[ret.numIndices];
 	int runner = 0;
-	for (int row = 0; row < dimensions - 1; row++)
+	for (uint row = 0; row < dimensions - 1; row++)
 	{
-		for (int col = 0; col < dimensions - 1; col++)
+		for (uint col = 0; col < dimensions - 1; col++)
 		{
 			ret.indices[runner++] = dimensions * row + col;
 			ret.indices[runner++] = dimensions * row + col + dimensions;
@@ -465,7 +465,7 @@ ShapeData ShapeGenerator::generateNormals(const ShapeData& data)
 	ret.numVertices = data.numVertices * 2;
 	ret.vertices = new Vertex[ret.numVertices];
 	glm::vec3 white(1.0f, 1.0f, 1.0f);
-	for (int i = 0; i < data.numVertices; i++)
+	for (uint i = 0; i < data.numVertices; i++)
 	{
 		uint vertIndex = i * 2;
 		Vertex& v1 = ret.vertices[vertIndex];
@@ -478,7 +478,7 @@ ShapeData ShapeGenerator::generateNormals(const ShapeData& data)
 
 	ret.numIndices = ret.numVertices;
 	ret.indices = new GLushort[ret.numIndices];
-	for (int i = 0; i < ret.numIndices; i++)
+	for (uint i = 0; i < ret.numIndices; i++)
 		ret.indices[i] = i;
 	return ret;
 }

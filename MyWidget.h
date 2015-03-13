@@ -1,9 +1,9 @@
 #pragma once
 #include <QtGui\qwidget.h>
 #include <QtGui\qmainwindow.h>
-#include <Qt\qmenu.h>
-#include <Qt\qaction.h>
-#include <Qt\qelapsedtimer.h>
+#include <QtGui\qmenu.h>
+#include <QtGui\qaction.h>
+#include <QtCore\qelapsedtimer.h>
 #include <QtGui\qlabel.h>
 #include <QtGui\qspinbox.h>
 #include <MyModel.h>
