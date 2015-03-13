@@ -2,16 +2,20 @@
 #include <QtGui\qvboxlayout>
 #include <QtGui\qslider>
 #include <QtGui\qlabel>
+#include <QtCore\qstring.h>
 
-DebugSlider::DebugSlider(float min, float max, bool textOnLeft, float granularity)
+DebugSlider::DebugSlider(QString name, float min, float max, bool textOnLeft, float granularity)
 {
 	QLayout* layout;
 	this->min = min;
 	this->max = max;
 	sliderGranularity = granularity;
 	setLayout(layout = textOnLeft ? (QLayout*)new QHBoxLayout : new QVBoxLayout);
+	layout->addWidget(nameLabel = new QLabel);
 	layout->addWidget(label = new QLabel);
 	label->setMinimumWidth(35);
+	nameLabel->setText(name);
+ 
 	layout->addWidget(slider = new QSlider);
 	label->setAlignment(Qt::AlignCenter);
 	slider->setOrientation(Qt::Horizontal);

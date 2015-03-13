@@ -69,58 +69,58 @@ MyWidget::MyWidget()
 
 	QHBoxLayout* extrScaleLayout;
 	controlsLayout->addLayout(extrScaleLayout = new QHBoxLayout);
-	extrScaleLayout->addWidget(extrScaleXSlider = new DebugSlider(-1.05f, 1));
-	extrScaleLayout->addWidget(extrScaleYSlider = new DebugSlider(-1.05f, 1));
-	extrScaleLayout->addWidget(extrScaleZSlider = new DebugSlider(-1.05f, 1));
-	extrScaleLayout->addWidget(extrScaleWSlider = new DebugSlider(-1.05f, 1));
+	extrScaleLayout->addWidget(scaleUndlAmountX = new DebugSlider("Extr Scale Undul. X", -1.05f, 1));
+	extrScaleLayout->addWidget(scaleUndlAmountY = new DebugSlider("Extr Scale Undul. Y", -1.05f, 1));
+	extrScaleLayout->addWidget(scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", -1.05f, 1));
+	extrScaleLayout->addWidget(scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", -1.05f, 1));
 
 
 	QHBoxLayout* extrTransLayout;
 	controlsLayout->addLayout(extrTransLayout = new QHBoxLayout);
-	extrTransLayout->addWidget(extrTransXSlider = new DebugSlider(0.0, 1));
-	extrTransLayout->addWidget(extrTransYSlider = new DebugSlider(0.0, 1));
-	extrTransLayout->addWidget(extrTransZSlider = new DebugSlider(0.0, 1));
+	extrTransLayout->addWidget(extrTransXSlider = new DebugSlider("Extr Trans X", 0.0, 1));
+	extrTransLayout->addWidget(extrTransYSlider = new DebugSlider("Extr Trans Y", 0.0, 1));
+	extrTransLayout->addWidget(extrTransZSlider = new DebugSlider("Extr Trans Z", 0.0, 1));
 	
  
 	QHBoxLayout* translateSlidersLayout;
 	translateSlidersLayout = new QHBoxLayout;
 	//controlsLayout->addLayout(translateSlidersLayout = new QHBoxLayout);
-	translateSlidersLayout->addWidget(lightXSlider = new DebugSlider);
-	translateSlidersLayout->addWidget(lightYSlider = new DebugSlider);
-	translateSlidersLayout->addWidget(lightZSlider = new DebugSlider);
+	translateSlidersLayout->addWidget(translateXSlider = new DebugSlider("Rota speed"));
+	translateSlidersLayout->addWidget(translateYSlider = new DebugSlider("Y"));
+	translateSlidersLayout->addWidget(translateZSlider = new DebugSlider("Z"));
 
 
 
 	// initial values
-	lightXSlider->setValue(-1.5f);
-	lightYSlider->setValue(0);
-	lightZSlider->setValue(0);
+	translateXSlider->setValue(-1.5f);
+	translateYSlider->setValue(0);
+	translateZSlider->setValue(0);
 	saved = false;
-	connect(extrScaleXSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
-	connect(extrScaleYSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
-	connect(extrScaleZSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
-	connect(extrScaleWSlider, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	connect(scaleUndlAmountX, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	connect(scaleUndlAmountY, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	connect(scaleUndlRateX, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	connect(scaleUndlRateZ, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
 
 	connect(extrTransXSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
 	connect(extrTransYSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
 	connect(extrTransZSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
 
-	extrScaleXSlider->setValue(0);
-	extrScaleYSlider->setValue(0);
-	extrScaleZSlider->setValue(0);
-	extrScaleWSlider->setValue(0);
+	scaleUndlAmountX->setValue(0);
+	scaleUndlAmountY->setValue(0);
+	scaleUndlRateX->setValue(0);
+	scaleUndlRateZ->setValue(0);
 
 	extrTransXSlider->setValue(0);
 	extrTransYSlider->setValue(0.2f);
 	extrTransZSlider->setValue(0);
 
-	connect(lightXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
-	connect(lightYSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
-	connect(lightZSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
+	connect(translateXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
+	connect(translateYSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
+	connect(translateZSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(spinBValueChanged(int)));
-	theModel.sliderPosition.x = lightXSlider->value();
-	theModel.sliderPosition.y = lightYSlider->value();
-	theModel.sliderPosition.z = lightZSlider->value();
+	theModel.sliderPosition.x = translateXSlider->value();
+	theModel.sliderPosition.y = translateYSlider->value();
+	theModel.sliderPosition.z = translateZSlider->value();
 
 
 	parametersDialog = new QDialog(this);
@@ -156,13 +156,13 @@ void MyWidget::exsTrliderValueChanged()
 void MyWidget::exsliderValueChanged()
 {
 	if (myGlWindow->pModel.done) {
-	myGlWindow->pModel.undulatingAmountX = extrScaleXSlider->value();
-	myGlWindow->pModel.undulatingAmountZ = extrScaleYSlider->value();
-	myGlWindow->pModel.undulatingRateX = extrScaleZSlider->value();
-	myGlWindow->pModel.undulatingRateZ = extrScaleWSlider->value();
+	myGlWindow->pModel.undulatingAmountX = scaleUndlAmountX->value();
+	myGlWindow->pModel.undulatingAmountZ = scaleUndlAmountY->value();
+	myGlWindow->pModel.undulatingRateX = scaleUndlRateX->value();
+	myGlWindow->pModel.undulatingRateZ = scaleUndlRateZ->value();
 	myGlWindow->pModel.rebuid();
 	}
-	std::cout << extrScaleXSlider->value() << std::endl;
+	std::cout << scaleUndlAmountX->value() << std::endl;
 }
 void MyWidget::spinBValueChanged(int newValue)
 {
@@ -212,10 +212,10 @@ MyWidget::~MyWidget(){
 
 void MyWidget::sliderValueChanged()
 {
-	//qDebug() << "slider!!!" << lightXSlider->value();
-	theModel.sliderPosition.x = lightXSlider->value();
-	theModel.sliderPosition.y = lightYSlider->value();
-	theModel.sliderPosition.z = lightZSlider->value();
+	//qDebug() << "slider!!!" << translateXSlider->value();
+	theModel.sliderPosition.x = translateXSlider->value();
+	theModel.sliderPosition.y = translateYSlider->value();
+	theModel.sliderPosition.z = translateZSlider->value();
 	//myGlWindow->repaint();
 }
 

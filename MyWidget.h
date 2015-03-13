@@ -15,14 +15,14 @@ class MyGLWindow; // forward declare
 class MyWidget : public  QMainWindow
 {
 	Q_OBJECT
-	DebugSlider * lightXSlider;
-	DebugSlider * lightYSlider;
-	DebugSlider * lightZSlider;
+	DebugSlider * translateXSlider;
+	DebugSlider * translateYSlider;
+	DebugSlider * translateZSlider;
 
-	DebugSlider * extrScaleXSlider;
-	DebugSlider * extrScaleYSlider;
-	DebugSlider * extrScaleZSlider;
-	DebugSlider * extrScaleWSlider;
+	DebugSlider * scaleUndlAmountX;
+	DebugSlider * scaleUndlAmountY;
+	DebugSlider * scaleUndlRateX;
+	DebugSlider * scaleUndlRateZ;
 
 	DebugSlider * extrTransXSlider;
 	DebugSlider * extrTransYSlider;
