@@ -274,8 +274,7 @@ void ProcModel::rebuid(){
 }
 void ProcModel::draw(){
 
-	glUniformMatrix4fv(model_mat_location, 1, GL_FALSE, &model_mat[0][0]);
-
+ 
 	glBindVertexArray(vao);
 	// draw points 0-3 from the currently bound VAO with current in-use shader
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
