@@ -12,23 +12,27 @@ glm::vec3 computeNormal(glm::vec3 const & a, glm::vec3 const & b, glm::vec3 cons
 	return glm::normalize(glm::cross(c - a, b - a));
 }
 
-ProcModel::ProcModel()
+ProcModel::ProcModel(MyModel * mainParameters) : mainParameters(mainParameters)
 {
-	transZoffset = -7;
-	transYoffset = -4;
-
-	triangleCount = 5; 
-	extrudes = 40; 
 	
-	extrudeRotationAngleStart = 0.2f;
-	undulatingRateX = 0.285f; // extrudeScale
-	undulatingRateZ = 0.285f;
-	undulatingAmountX = 0.15f;
-	undulatingAmountZ = 0.14f;
+	//this->mainParameters = mainParameters;
+	transXoffset = 0;
+	transYoffset = -3.5;
+	transZoffset = -6.5;
 
-	rotaUndulatingRate = 0.285f;
-	rotaUndulatingAmount = 0.07f;//0.15;
-	extrudetranslate1 = glm::vec4(0.0f, 0.2f, 0.0f, 1.0f); // translation for extrudes
+	triangleCount = mainParameters->triangleCount;//  5;
+	extrudes = mainParameters->extrudes;// 40;
+	
+	extrudeRotationAngleStart = mainParameters->extrudeRotationAngleStart;// 0.2f;
+	undulatingAmountX = mainParameters->undulatingAmountX;// 0.15f;// extrudeScale
+	undulatingAmountZ = mainParameters->undulatingAmountZ;//  0.14f;
+	undulatingRateX = mainParameters->undulatingRateX;  0.285f; // extrudeScale
+	undulatingRateZ = mainParameters->undulatingRateZ; 0.285f;
+
+
+	rotaUndulatingRate = mainParameters->rotaUndulatingRate; // 0.285f;
+	rotaUndulatingAmount = mainParameters->rotaUndulatingAmount;// 0.07f;//0.15;
+	extrudetranslate1 = mainParameters->extrudetranslate1;// glm::vec4(0.0f, 0.2f, 0.0f, 1.0f); // translation for extrudes
 
 	rotaFirst = false; // rotation before translation in extrusion
 	firstCap = true; // render first cap
@@ -40,7 +44,7 @@ ProcModel::ProcModel()
 }
 
 void ProcModel::initialize() {
-	ready2render = false;
+	
 	translateAmount = glm::vec3(0.0f, 0.0f, 0.0f);
 	firstcaptriangleNums = firstCap ? (triangleCount * 3) : 0;
 	lastcaptriangleNums = lastCap ? ((triangleCount - 2) * 3) : 0;

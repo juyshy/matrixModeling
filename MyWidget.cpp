@@ -34,6 +34,8 @@ MyWidget::MyWidget()
 	// gather fps info to debugfile:
 	savefpsTracing = false;
 
+	myGlWindow = new MyGLWindow(&theModel);
+
 	// fullscreen:
 	QRect r = QApplication::desktop()->availableGeometry();
 	//r.setLeft(r.center().x());
@@ -45,13 +47,17 @@ MyWidget::MyWidget()
 	sblabel = new QLabel(tr("triangles: "));
 	numExtrLabel  = new QLabel(tr("Num of Extrudes: "));
 	colorLabel = new QLabel( );
-
+	colorLabel->setText("Color : " + QString::number(theModel.color.r) + ", " + QString::number(theModel.color.g) + ", " + QString::number(theModel.color.b));
+	color.setRgbF((qreal)theModel.color.r, (qreal)theModel.color.g, (qreal)theModel.color.b);
+	colorLabel->setPalette(QPalette(color));
+	colorLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
 	spinBox = new QSpinBox;
 	spinBox->setRange(3, 130);
 	spinBox->setMaximumWidth(100);
+	spinBox->setValue(theModel.triangleCount);
 	numExtrSpinBox = new QSpinBox;
 	numExtrSpinBox->setRange(0, 130);
-	
+	numExtrSpinBox->setValue(theModel.extrudes);
 
 	// layout
 	centralWidget = new QWidget;
@@ -74,16 +80,20 @@ MyWidget::MyWidget()
 	labelLayout->addWidget(spinBox);
 	controlsLayout = new QVBoxLayout;
 	//mainLayout->addLayout(controlsLayout  );
-	myGlWindow = new MyGLWindow(&theModel);
+	
 	mainLayout->addWidget(myGlWindow);
 
 
 	QHBoxLayout* extrScaleLayout;
 	controlsLayout->addLayout(extrScaleLayout = new QHBoxLayout);
-	extrScaleLayout->addWidget(scaleUndlAmountX = new DebugSlider("Extr Scale Undul. X", -0.15f, 0.15f));
-	extrScaleLayout->addWidget(scaleUndlAmountY = new DebugSlider("Extr Scale Undul. Y", -0.15f, 0.15f));
-	extrScaleLayout->addWidget(scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", -0.15f, 0.15f));
-	extrScaleLayout->addWidget(scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", -0.15f, 0.15f));
+	scaleUndlAmountX = new DebugSlider("Extr Scale Undul. X", theModel.scaleUndlAmountXSliderRange.x, theModel.scaleUndlAmountXSliderRange.y);
+	extrScaleLayout->addWidget(scaleUndlAmountX);
+	scaleUndlAmountY = new DebugSlider("Extr Scale Undul. Y", 0.0f, 0.35f);
+	extrScaleLayout->addWidget(scaleUndlAmountY);
+	scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", 0.0f, 0.35f);
+	extrScaleLayout->addWidget(scaleUndlRateX);
+	scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", 0.0f, 0.35f);
+	extrScaleLayout->addWidget(scaleUndlRateZ);
 
 
 	QHBoxLayout* extrTransLayout;
@@ -116,13 +126,13 @@ MyWidget::MyWidget()
 	connect(extrTransYSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
 	connect(extrTransZSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
 
-	scaleUndlAmountX->setValue(0);
-	scaleUndlAmountY->setValue(0);
-	scaleUndlRateX->setValue(0);
-	scaleUndlRateZ->setValue(0);
+	scaleUndlAmountX->setValue(theModel.undulatingAmountX);
+	scaleUndlAmountY->setValue(theModel.undulatingAmountZ);
+	scaleUndlRateX->setValue(theModel.undulatingRateX);
+	scaleUndlRateZ->setValue(theModel.undulatingRateZ);
 
 	extrTransXSlider->setValue(0);
-	extrTransYSlider->setValue(0.2f);
+	extrTransYSlider->setValue(theModel.extrudetranslate1.y);
 	extrTransZSlider->setValue(0);
 
 	connect(translateXSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
@@ -160,37 +170,37 @@ MyWidget::MyWidget()
 }
 void MyWidget::exsTrliderValueChanged()
 {
-	if (myGlWindow->pModel.ready2render) {
-		myGlWindow->pModel.extrudetranslate1.x = extrTransXSlider->value();
-		myGlWindow->pModel.extrudetranslate1.y = extrTransYSlider->value();
-		myGlWindow->pModel.extrudetranslate1.z = extrTransZSlider->value();
-		myGlWindow->pModel.rebuid();
+	if (myGlWindow->pModel->ready2render) {
+		myGlWindow->pModel->extrudetranslate1.x = extrTransXSlider->value();
+		myGlWindow->pModel->extrudetranslate1.y = extrTransYSlider->value();
+		myGlWindow->pModel->extrudetranslate1.z = extrTransZSlider->value();
+		myGlWindow->pModel->rebuid();
 	}
 }
 void MyWidget::exsliderValueChanged()
 {
-	if (myGlWindow->pModel.ready2render) {
-	myGlWindow->pModel.undulatingAmountX = scaleUndlAmountX->value();
-	myGlWindow->pModel.undulatingAmountZ = scaleUndlAmountY->value();
-	myGlWindow->pModel.undulatingRateX = scaleUndlRateX->value();
-	myGlWindow->pModel.undulatingRateZ = scaleUndlRateZ->value();
-	myGlWindow->pModel.rebuid();
+	if (myGlWindow->pModel->ready2render) {
+	myGlWindow->pModel->undulatingAmountX = scaleUndlAmountX->value();
+	myGlWindow->pModel->undulatingAmountZ = scaleUndlAmountY->value();
+	myGlWindow->pModel->undulatingRateX = scaleUndlRateX->value();
+	myGlWindow->pModel->undulatingRateZ = scaleUndlRateZ->value();
+	myGlWindow->pModel->rebuid();
 	}
 	std::cout << scaleUndlAmountX->value() << std::endl;
 }
 
 void MyWidget::numExtrspinBValueChanged(int newValue)
 {
-	myGlWindow->pModel.extrudes = newValue;
-	myGlWindow->pModel.rebuid();
+	myGlWindow->pModel->extrudes = newValue;
+	myGlWindow->pModel->rebuid();
 	myGlWindow->setFocus();
 	std::cout << numExtrSpinBox->value() << std::endl;
 }
 
 void MyWidget::spinBValueChanged(int newValue)
 {
-	myGlWindow->pModel.setTriagleCount(newValue);
-	myGlWindow->pModel.rebuid();
+	myGlWindow->pModel->setTriagleCount(newValue);
+	myGlWindow->pModel->rebuid();
 	myGlWindow->setFocus();
 	std::cout << spinBox->value()   << std::endl;
 }
@@ -388,7 +398,7 @@ void MyWidget::setColor()
 
 	theModel.color = glm::vec3(red, green, blue);
 	if (color.isValid()) {
-		colorLabel->setText("Color chosen: " + QString::number(r) + ", " + QString::number(g) + ", " + QString::number(b)  );
+		colorLabel->setText("Color : " + QString::number(red) + ", " + QString::number(green) + ", " + QString::number(blue)  );
 		colorLabel->setPalette(QPalette(color));
 		colorLabel->setAutoFillBackground(true);
 	}

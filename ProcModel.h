@@ -14,6 +14,7 @@
 //#include <glm/vec4.hpp>// glm::vec4
 #include "glm/gtc/matrix_transform.hpp"
 #include <glm/geometric.hpp>// glm::cross, glm::normalize
+#include <MyModel.h>
 
 typedef unsigned int UINT;
 const double pi = std::acos(-1);
@@ -23,6 +24,7 @@ const double  one_deg_in_rad = (2.0 * pi) / 360.0; // 0.017444444 //
 class ProcModel {
 public:
 	ProcModel();
+	ProcModel(MyModel * mainParameters);
 	//ProcModel(UINT triangles , UINT extrudes) : transZoffset(-7), transYoffset(-4), 
 	//	triangleCount(triangles),
 	//	extrudes(extrudes), extrudeRotationAngleStart(0.2){}
@@ -85,7 +87,7 @@ public:
 	bool debugtxtsave = false;
 
 	bool ready2render = false; // flag indicating when model is ready for render
-	
+	MyModel *mainParameters;
 private:
 	
 	UINT triangleCount; // triangles in the base

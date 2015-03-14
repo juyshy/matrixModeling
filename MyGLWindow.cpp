@@ -26,18 +26,19 @@ bool mouseDown = false;
 
 MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 {
+	pModel = new ProcModel(theModel);
 	angle = 0;
 }
 void MyGLWindow::updateColor()
 {
-	materialAmbient = materialDiffuse = pModel.color = theModel->color;
+	materialAmbient = materialDiffuse = pModel->color = theModel->color;
 	prog.setUniform("Material.Kd", materialDiffuse);
 	prog.setUniform("Material.Ka", materialAmbient);
 }
 void MyGLWindow::update(int elapsed) {
 	angle += 0.01f * theModel->sliderPosition.x;
 	if (angle >= 360.0f) angle -= 360.0f;
-	pModel.translateVec = vec3(pModel.transXoffset, theModel->sliderPosition.y + pModel.transYoffset, theModel->sliderPosition.z + pModel.transZoffset);
+	pModel->translateVec = vec3(pModel->transXoffset, theModel->sliderPosition.y + pModel->transYoffset, theModel->sliderPosition.z + pModel->transZoffset);
 	////arrow.rotation.angle = elapsed / 20.0f;
 	//std::cout << angle << std::endl;
 }
@@ -52,10 +53,8 @@ void MyGLWindow::sendDataToOpenGL() {
 	triangle.Init("cube");
 	/////////////////// Create the VBO ////////////////////
 
-	pModel.transXoffset = 0;
-	pModel.transYoffset = -3.5;
-	pModel.transZoffset = -6.5;
-	pModel.createModel();
+	
+	pModel->createModel();
 
 	//torus = new VBOTorus(0.7f, 0.3f, 50,50);
 	//model = mat4(1.0f);
@@ -65,7 +64,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	view =camera.getWorldToViewMatrix();
 	projection = mat4(1.0f);
 	vec4 worldLight = vec4(5.0f, 5.0f, 2.0f, 1.0f);
-	materialDiffuse = pModel.color;
+	materialDiffuse = pModel->color;
 	materialAmbient = materialDiffuse;
 	prog.setUniform("Material.Kd", materialDiffuse);
 	prog.setUniform("Light.Ld", 1.0f, 1.0f, 1.0f);
@@ -183,11 +182,11 @@ void MyGLWindow::paintGL(){
 	for (uint i = 0; i < 10; i++) {
 		model = mat4(1.0f);
 
-		model *= glm::translate(pModel.translateVec);
+		model *= glm::translate(pModel->translateVec);
 		model *= glm::translate(vec3(i * 5.0f - 20.0f, 0.0f, 0.0f));
 		model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
 		setMatrixes();
-		pModel.draw();
+		pModel->draw();
 	}
  
  
