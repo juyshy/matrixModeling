@@ -21,7 +21,7 @@ const double pi = std::acos(-1);
 const double  one_deg_in_rad = (2.0 * pi) / 360.0; // 0.017444444 // 
 
 
-class ProcModel {
+__declspec(align(16)) class ProcModel {
 public:
 	ProcModel();
 	ProcModel(MyModel * mainParameters);
@@ -30,6 +30,7 @@ public:
 	//	extrudes(extrudes), extrudeRotationAngleStart(0.2){}
 	void initialize();
 	void createBase();
+	void createSquareBase();
 	void  doExtrusions();
 	void  prapareVertexes();
 	void createVbos();
@@ -88,6 +89,15 @@ public:
 
 	bool ready2render = false; // flag indicating when model is ready for render
 	MyModel *mainParameters;
+
+	void* operator new(size_t i)
+	{
+		return _mm_malloc(i, 16);
+	}
+		void operator delete(void* p)
+	{
+		_mm_free(p);
+	}
 private:
 	
 	UINT triangleCount; // triangles in the base

@@ -52,8 +52,10 @@ void ProcModel::initialize() {
 
 	// first two vertexes
 	origo = glm::vec4(0, 0, 0, 1);
-	vrtx1 = glm::vec4(1, 0, 0, 1);
+	
 	verteksit.push_back(origo);
+
+	vrtx1 = glm::vec4(1, 0, 0, 1);
 	verteksit.push_back(vrtx1);
 
 	translatedVertex = vrtx1;
@@ -66,10 +68,16 @@ void ProcModel::createModel() {
 	ready2render = true;
 
 }
+
+void ProcModel::createSquareBase(){
+
+
+}
+
 void ProcModel::createBase() {
 
 	// base vertexes:
-	for (UINT i = 1; i < triangleCount; ++i) { // starting from the secons vertex
+	for (UINT i = 1; i < triangleCount; ++i) { // starting from the second vertex
 		if (firstCap) {
 			indeksit.push_back(0);
 			indeksit.push_back(i + 1);
