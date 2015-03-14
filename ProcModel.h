@@ -12,7 +12,8 @@
 //#include "glm/gtx/simd_mat4.hpp"
 //#include <glm/vec3.hpp>// glm::vec3
 //#include <glm/vec4.hpp>// glm::vec4
-#include "glm/gtc/matrix_transform.hpp"
+#include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtx\transform.hpp>
 #include <glm/geometric.hpp>// glm::cross, glm::normalize
 #include <MyModel.h>
 
@@ -94,6 +95,9 @@ public:
 	bool ready2render = false; // flag indicating when model is ready for render
 	MyModel *mainParameters;
 	bool colorsInVbo;
+
+	uint num_cubes;
+
 	void* operator new(size_t i)
 	{
 		return _mm_malloc(i, 16);

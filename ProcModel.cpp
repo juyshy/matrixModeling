@@ -40,6 +40,9 @@ ProcModel::ProcModel(MyModel * mainParameters) : mainParameters(mainParameters)
 	calcAverageNormas = false;
 	colorsInVbo = false;
 	color = glm::vec3(0.9f, 0.5f, 0.3f);
+
+	num_cubes = 2;
+
 	// initialize
 	initialize();
 }
@@ -288,7 +291,7 @@ void ProcModel::draw(){
  
 	glBindVertexArray(vao);
 	// draw points 0-3 from the currently bound VAO with current in-use shader
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount*num_cubes);
 }
 
 void ProcModel::update(double current_seconds){
@@ -419,15 +422,39 @@ void ProcModel::createVbos(){
 
 
 void ProcModel::createMultiVbo(){
+	uint cubeByteSize = sizeof(glm::vec3) * verteksit2r.size();
+	uint cubeNormByteSize = sizeof(glm::vec3) * normals2r.size();
+
+	num_cubes = 5;
+
 	glGenBuffers(1, &points_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * verteksit2r.size(), &verteksit2r[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, cubeByteSize*num_cubes, NULL, GL_STATIC_DRAW);
+
+	float instanceDistance = 5.0f;
+	for (uint cubeIndex = 0; cubeIndex< num_cubes; ++cubeIndex) {
+		std::vector<glm::vec3> translatedVerts;
+		for (glm::vec3 vert : verteksit2r) {
+			glm::vec3 vert2(glm::translate(glm::mat4(), glm::vec3(instanceDistance*cubeIndex, 0.0f, 0.0f)) * glm::vec4(vert, 1));
+			translatedVerts.push_back(vert2);
+		}
+		glBufferSubData(GL_ARRAY_BUFFER,
+		cubeIndex*cubeByteSize, cubeByteSize, &translatedVerts[0]);
+	}
+ 
+
 
 
 	glGenBuffers(1, &normals_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, normals_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals2r.size(), &normals2r[0], GL_STATIC_DRAW);
- 
+	glBufferData(GL_ARRAY_BUFFER, cubeNormByteSize*num_cubes, NULL, GL_STATIC_DRAW);
+	for (uint cubeIndex = 0; cubeIndex < num_cubes; ++cubeIndex) {
+
+		glBufferSubData(GL_ARRAY_BUFFER,
+			cubeIndex*cubeByteSize, cubeByteSize, &normals2r[0]);
+	}
+
+	 
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
