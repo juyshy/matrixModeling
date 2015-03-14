@@ -73,6 +73,7 @@ public:
 	bool lastCap ; // render last cap
 	std::vector<glm::vec3> verteksit2r; // collection of vertexes 2 render
 	std::vector<glm::vec3> normals2r; // collection of normals 2 render
+	std::vector<glm::vec3> colors2r;
 	glm::mat4 model_mat = glm::mat4();
 	GLuint shader_programme; 
 	glm::mat4 view_mat;
@@ -106,6 +107,7 @@ private:
 	GLuint vao;
 	GLuint normals_vbo;
 	GLuint points_vbo;
+	GLuint colors_vbo;
 	double rotaz;
 	std::vector<glm::vec4> verteksit;
 	std::vector<glm::vec4> verteksit2;

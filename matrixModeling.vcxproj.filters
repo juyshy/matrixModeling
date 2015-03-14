@@ -54,6 +54,12 @@
     <None Include="shader\diffuse.vert">
       <Filter>shader</Filter>
     </None>
+    <None Include="shader\phong.frag">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\phong.vert">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Primitives">

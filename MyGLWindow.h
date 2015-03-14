@@ -16,17 +16,7 @@ __declspec(align(16))  class MyGLWindow : public QGLWidget
 {
 	 
 	void sendDataToOpenGL();
-	bool checkStatus(
-		GLuint objectID,
-		PFNGLGETSHADERIVPROC objectPropertyGetterFunc,
-		PFNGLGETSHADERINFOLOGPROC getInfoLogFunc,
-		GLenum statusType
-		);
-	bool checkShaderStatus(GLuint shaderID);
-	bool checkProgramStatus(GLuint programID);
-	std::string readShaderCode(const char* filename);
-	void installShaders();
-	void setupVertexArrays();
+ 
 	void compile();
 	void setMatrixes();
 	MyModel * theModel;

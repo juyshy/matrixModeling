@@ -116,6 +116,8 @@
     <None Include="shader\diffuse.frag" />
     <None Include="shader\diffuse.vert" />
     <None Include="shader\FragmentShaderCode.glsl" />
+    <None Include="shader\phong.frag" />
+    <None Include="shader\phong.vert" />
     <None Include="shader\VertexShaderCode.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

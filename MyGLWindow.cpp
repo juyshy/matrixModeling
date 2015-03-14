@@ -54,8 +54,8 @@ void MyGLWindow::sendDataToOpenGL() {
 	/////////////////// Create the VBO ////////////////////
 
 	
-	pModel->createCube();
-
+	pModel->createModel();
+	//pModel->createCube();
 	//torus = new VBOTorus(0.7f, 0.3f, 50,50);
 	//model = mat4(1.0f);
 	//model *= glm::rotate(glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
@@ -78,83 +78,8 @@ void MyGLWindow::sendDataToOpenGL() {
  
 }
 
-void MyGLWindow::setupVertexArrays(){
-}
-bool MyGLWindow::checkStatus(	GLuint objectID,	PFNGLGETSHADERIVPROC objectPropertyGetterFunc,	PFNGLGETSHADERINFOLOGPROC getInfoLogFunc,	GLenum statusType	)
-{
-	GLint status;
-	objectPropertyGetterFunc(objectID, statusType, &status);
-	if (status != GL_TRUE){
-		GLint infoLength;
-		objectPropertyGetterFunc(objectID, GL_INFO_LOG_LENGTH, &infoLength);
-		GLchar* buffer = new GLchar[infoLength];
-		GLsizei bufferSize;
-		getInfoLogFunc(objectID, infoLength, &bufferSize, buffer);
-		cout << buffer << endl;
-		delete[] buffer;
-		return false;
-	}
-	return true;
-}
-bool MyGLWindow::checkShaderStatus(GLuint shaderID){
-	return checkStatus(shaderID, glGetShaderiv, glGetShaderInfoLog, GL_COMPILE_STATUS);
-}
-
-bool MyGLWindow::checkProgramStatus(GLuint programID){
-	return checkStatus(programID, glGetProgramiv, glGetProgramInfoLog, GL_LINK_STATUS);
-
-}
-string MyGLWindow::readShaderCode(const char* filename)
-{
-	ifstream myInput(filename);
-	if (!myInput.good())
-	{
-		cout << "File failled to load .. " << filename;
-		exit(1);
-	}
-	return std::string(
-		std::istreambuf_iterator<char>(myInput),
-		std::istreambuf_iterator<char>());
-}
-void MyGLWindow::installShaders(){
-	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-	const char* adapter[1];
-	string temp = readShaderCode("shader/basic_uniform.vert");
-	adapter[0] = temp.c_str();
-	glShaderSource(vertexShaderID, 1, adapter, 0);
-	temp = readShaderCode("shader/basic_uniform.frag");
-	adapter[0] = temp.c_str();
-	glShaderSource(fragmentShaderID, 1, adapter, 0);
-
-	glCompileShader(vertexShaderID);
-	glCompileShader(fragmentShaderID);
-
-	if (!checkShaderStatus(vertexShaderID) || !checkShaderStatus(fragmentShaderID))
-		return;
-
-	 programID = glCreateProgram();
-
-	 //// Bind index 0 to the shader input variable "VertexPosition"
-	 //glBindAttribLocation(programID, 0, "VertexPosition");
-	 //// Bind index 1 to the shader input variable "VertexColor"
-	 //glBindAttribLocation(programID, 1, "VertexColor");
-
-	glAttachShader(programID, vertexShaderID);
-	glAttachShader(programID, fragmentShaderID);
-	glLinkProgram(programID);
-	if (!checkProgramStatus(programID))
-		return;
-
-	glDeleteShader(vertexShaderID);
-	glDeleteShader(fragmentShaderID);
-
-	glUseProgram(programID);
-	this->programHandle = programID;
-	//printActiveUniforms(programID);
-
-
-}
+ 
+ 
 void MyGLWindow::initializeGL(){
 	setMinimumSize(800, 600);
 	setMouseTracking(true);

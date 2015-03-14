@@ -215,6 +215,8 @@ void ProcModel::prapareVertexes() {
 		sharedNormals[indeksit.at(i)].push_back(norml);
 		normals2r.push_back(norml);
 
+		colors2r.push_back(color);
+
 	}
 	//sharedNormals;
 	if (calcAverageNormas) {
@@ -235,14 +237,16 @@ void ProcModel::prapareVertexes() {
 			normals2r.push_back(averagNormals[indeksit.at(i)]);
 		}
 	}
+	if (debugtxtsave) {
 	std::string debugsisalto;
 	std::ostringstream n;
 	for (glm::vec3 normal : normals2r)
 		n << "normal:" << normal[0] << ", " << normal[1] << ", " << normal[2] << "\n";
 
 	debugsisalto += n.str();
-	if (debugtxtsave)
+	
 	TallennaTiedosto("normaalit.txt", debugsisalto);
+	}
 }
 void ProcModel::TallennaTiedosto(std::string tinimi, std::string sisalto)
 {
@@ -380,6 +384,10 @@ void ProcModel::createVbos(){
 	glBindBuffer(GL_ARRAY_BUFFER, normals_vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals2r.size(), &normals2r[0], GL_STATIC_DRAW);
 
+	glGenBuffers(1, &colors_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * colors2r.size(), &colors2r[0], GL_STATIC_DRAW);
+
 	
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -389,6 +397,9 @@ void ProcModel::createVbos(){
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glEnableVertexAttribArray(2);
 
 }
 

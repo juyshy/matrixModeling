@@ -2,6 +2,7 @@
 
 layout (location = 0) in vec3 VertexPosition;
 layout (location = 1) in vec3 VertexNormal;
+layout (location = 2) in vec3 VertexColor;
 
 out vec3 LightIntensity;
 
@@ -36,6 +37,10 @@ void main()
     float sDotN = max( dot(s,tnorm), 0.0 );
     vec3 ambient = Light.La * Material.Ka;
     vec3 diffuse = Light.Ld * Material.Kd * sDotN;
+    //vec3 ambient = Light.La * VertexColor;
+    //vec3 diffuse = Light.Ld * VertexColor * sDotN;
+	
+
     vec3 spec = vec3(0.0);
     if( sDotN > 0.0 )
        spec = Light.Ls * Material.Ks *
