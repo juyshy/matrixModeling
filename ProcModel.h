@@ -43,28 +43,30 @@ public:
 	UINT getTriagleCount() { return triangleCount; };
 	void increaseTriagleCount();
 	void decreaseTriagleCount();
+	void rotaLimit(float &value);
+
 	void ProcModel::TallennaTiedosto(std::string tinimi, std::string sisalto);
 
-	float transZoffset =-3  ;
-	float transYoffset  = -6 ; // translation in world coordinates
+	float transZoffset    ;
+	float transYoffset    ; // translation in world coordinates
 	float transXoffset;
 
 	glm::vec3	extrudeScale; // (1.1, 1, 0.95); // translation for extrudes	
 	UINT extrudes  ; // num of extrudes
 	float extrudeRotationAngleStart  ; // agle for first extrude
 	//float extrRotaAngleCounterMult = 0.01; // multiplier for updating angle in successive extrudes
-	float undulatingRateX = 0.285f; // extrudeScale
-	float undulatingRateZ = 0.285f;
-	float undulatingAmountX = 0.15f;
-	float undulatingAmountZ = 0.14f;
+	float undulatingRateX ; // extrudeScale
+	float undulatingRateZ;
+	float undulatingAmountX;
+	float undulatingAmountZ ;
 
-	float rotaUndulatingRate = 0.285f;
-	float rotaUndulatingAmount = 0.07f;//0.15;
-	glm::vec4	extrudetranslate1 = glm::vec4(0.0f, 0.2f, 0.0f, 1.0f); // translation for extrudes
+	float rotaUndulatingRate;
+	float rotaUndulatingAmount ;//0.15;
+	glm::vec4	extrudetranslate1; // // translation for extrudes
 
-	bool rotaFirst =false ; // rotation before translation in extrusion
-	bool firstCap = true; // render firs cap
-	bool lastCap = true; // render last cap
+	bool rotaFirst ; // rotation before translation in extrusion
+	bool firstCap; // render firs cap
+	bool lastCap ; // render last cap
 	std::vector<glm::vec3> verteksit2r; // collection of vertexes 2 render
 	std::vector<glm::vec3> normals2r; // collection of normals 2 render
 	glm::mat4 model_mat = glm::mat4();
@@ -73,15 +75,19 @@ public:
 	glm::mat4 proj_mat;
 	int model_mat_location;
 	//void setViewMat(glm::mat4 view);
+	// mouse control:
 	glm::vec3 translateAmount = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec2 rotationAmount = glm::vec2(0.0f, 0.0f);
-	void rotaLimit(float &value);
 	bool lmouseActive = false;
-	bool calcAverageNormas = false;
 	glm::vec3 translateVec = glm::vec3(0.0f, 0.0f, 0.0f);
+
+	bool calcAverageNormas ;
 	bool debugtxtsave = false;
-	bool done = false;
+
+	bool ready2render = false; // flag indicating when model is ready for render
+	
 private:
+	
 	UINT triangleCount; // triangles in the base
 	float elapsedTime;
 	GLuint vao;

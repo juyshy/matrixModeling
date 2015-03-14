@@ -73,10 +73,10 @@ MyWidget::MyWidget()
 
 	QHBoxLayout* extrScaleLayout;
 	controlsLayout->addLayout(extrScaleLayout = new QHBoxLayout);
-	extrScaleLayout->addWidget(scaleUndlAmountX = new DebugSlider("Extr Scale Undul. X", -1.05f, 1));
-	extrScaleLayout->addWidget(scaleUndlAmountY = new DebugSlider("Extr Scale Undul. Y", -1.05f, 1));
-	extrScaleLayout->addWidget(scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", -1.05f, 1));
-	extrScaleLayout->addWidget(scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", -1.05f, 1));
+	extrScaleLayout->addWidget(scaleUndlAmountX = new DebugSlider("Extr Scale Undul. X", -0.15f, 0.15));
+	extrScaleLayout->addWidget(scaleUndlAmountY = new DebugSlider("Extr Scale Undul. Y", -0.15f, 0.15));
+	extrScaleLayout->addWidget(scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", -0.15f, 0.15));
+	extrScaleLayout->addWidget(scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", -0.15f, 0.15));
 
 
 	QHBoxLayout* extrTransLayout;
@@ -152,7 +152,7 @@ MyWidget::MyWidget()
 }
 void MyWidget::exsTrliderValueChanged()
 {
-	if (myGlWindow->pModel.done) {
+	if (myGlWindow->pModel.ready2render) {
 		myGlWindow->pModel.extrudetranslate1.x = extrTransXSlider->value();
 		myGlWindow->pModel.extrudetranslate1.y = extrTransYSlider->value();
 		myGlWindow->pModel.extrudetranslate1.z = extrTransZSlider->value();
@@ -161,7 +161,7 @@ void MyWidget::exsTrliderValueChanged()
 }
 void MyWidget::exsliderValueChanged()
 {
-	if (myGlWindow->pModel.done) {
+	if (myGlWindow->pModel.ready2render) {
 	myGlWindow->pModel.undulatingAmountX = scaleUndlAmountX->value();
 	myGlWindow->pModel.undulatingAmountZ = scaleUndlAmountY->value();
 	myGlWindow->pModel.undulatingRateX = scaleUndlRateX->value();

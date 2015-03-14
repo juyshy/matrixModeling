@@ -12,15 +12,35 @@ glm::vec3 computeNormal(glm::vec3 const & a, glm::vec3 const & b, glm::vec3 cons
 	return glm::normalize(glm::cross(c - a, b - a));
 }
 
-ProcModel::ProcModel() : transZoffset(-7), transYoffset(-4), triangleCount(5),
-extrudes(40), extrudeRotationAngleStart(0.2f) 
+ProcModel::ProcModel()
 {
+	transZoffset = -7;
+	transYoffset = -4;
+
+	triangleCount = 5; 
+	extrudes = 40; 
+	
+	extrudeRotationAngleStart = 0.2f;
+	undulatingRateX = 0.285f; // extrudeScale
+	undulatingRateZ = 0.285f;
+	undulatingAmountX = 0.15f;
+	undulatingAmountZ = 0.14f;
+
+	rotaUndulatingRate = 0.285f;
+	rotaUndulatingAmount = 0.07f;//0.15;
+	extrudetranslate1 = glm::vec4(0.0f, 0.2f, 0.0f, 1.0f); // translation for extrudes
+
+	rotaFirst = false; // rotation before translation in extrusion
+	firstCap = true; // render firs cap
+	lastCap = true; // render last cap
+	calcAverageNormas = false;
+
 	// initialize
 	initialize();
 }
 
 void ProcModel::initialize() {
-	done = false;
+	ready2render = false;
 	translateAmount = glm::vec3(0.0f, 0.0f, 0.0f);
 	firstcaptriangleNums = firstCap ? (triangleCount * 3) : 0;
 	lastcaptriangleNums = lastCap ? ((triangleCount - 2) * 3) : 0;
@@ -39,7 +59,7 @@ void ProcModel::createModel() {
 	doExtrusions();
 	prapareVertexes();
 	createVbos();
-	done = true;
+	ready2render = true;
 
 }
 void ProcModel::createBase() {
