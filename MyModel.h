@@ -12,13 +12,13 @@ class MyModel
 		uint	triangleCount = 5;
 		uint	extrudes = 40;
 
-		float	extrudeRotationAngleStart = 0.2f;
+		
 		float	undulatingAmountX = 0.15f;// extrudeScale
 		float	undulatingAmountZ = 0.14f;
 		float	undulatingRateX = 0.285f; // extrudeScale
 		float	undulatingRateZ = 0.285f;
 
-
+		float	extrudeRotationAngleStart = 0.2f;
 		float	rotaUndulatingRate = 0.285f;
 		float	rotaUndulatingAmount = 0.07f;//0.15;
 		glm::vec4	extrudetranslate1 = glm::vec4(0.0f, 0.2f, 0.0f, 1.0f); // translation for extrudes
@@ -30,6 +30,9 @@ class MyModel
 		glm::vec3	color = glm::vec3(0.9f, 0.5f, 0.3f);
 
 		glm::vec2 scaleUndlAmountXSliderRange = glm::vec2(0.0f, 0.5f);
+		glm::vec2 scaleUndlAmountZSliderRange = glm::vec2(0.0f, 0.5f);
+		glm::vec2 scaleUndlRateXSliderRange = glm::vec2(0.0f, 0.5f);
+		glm::vec2 scaleUndlRateZSliderRange = glm::vec2(0.0f, 0.5f);
 
 			
 

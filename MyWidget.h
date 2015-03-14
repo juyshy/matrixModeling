@@ -19,8 +19,11 @@ class MyWidget : public  QMainWindow
 	DebugSlider * translateYSlider;
 	DebugSlider * translateZSlider;
 
+	
+	DebugSlider * extrudeRotationAngleStartSlider;
+
 	DebugSlider * scaleUndlAmountX;
-	DebugSlider * scaleUndlAmountY;
+	DebugSlider * scaleUndlAmountZ;
 	DebugSlider * scaleUndlRateX;
 	DebugSlider * scaleUndlRateZ;
 

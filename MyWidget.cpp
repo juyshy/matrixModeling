@@ -51,6 +51,7 @@ MyWidget::MyWidget()
 	color.setRgbF((qreal)theModel.color.r, (qreal)theModel.color.g, (qreal)theModel.color.b);
 	colorLabel->setPalette(QPalette(color));
 	colorLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
 	spinBox = new QSpinBox;
 	spinBox->setRange(3, 130);
 	spinBox->setMaximumWidth(100);
@@ -86,13 +87,17 @@ MyWidget::MyWidget()
 
 	QHBoxLayout* extrScaleLayout;
 	controlsLayout->addLayout(extrScaleLayout = new QHBoxLayout);
+
+	extrudeRotationAngleStartSlider = new DebugSlider("Extr.RotaAngle Start", 0,10 );
+	extrScaleLayout->addWidget(extrudeRotationAngleStartSlider);
+
 	scaleUndlAmountX = new DebugSlider("Extr Scale Undul. X", theModel.scaleUndlAmountXSliderRange.x, theModel.scaleUndlAmountXSliderRange.y);
 	extrScaleLayout->addWidget(scaleUndlAmountX);
-	scaleUndlAmountY = new DebugSlider("Extr Scale Undul. Y", 0.0f, 0.35f);
-	extrScaleLayout->addWidget(scaleUndlAmountY);
-	scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", 0.0f, 0.35f);
+	scaleUndlAmountZ = new DebugSlider("Extr Scale Undul. Z", theModel.scaleUndlAmountZSliderRange.x, theModel.scaleUndlAmountZSliderRange.y);
+	extrScaleLayout->addWidget(scaleUndlAmountZ);
+	scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", theModel.scaleUndlRateXSliderRange.x, theModel.scaleUndlRateXSliderRange.y);
 	extrScaleLayout->addWidget(scaleUndlRateX);
-	scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", 0.0f, 0.35f);
+	scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", theModel.scaleUndlRateZSliderRange.x, theModel.scaleUndlRateZSliderRange.y);
 	extrScaleLayout->addWidget(scaleUndlRateZ);
 
 
@@ -118,7 +123,7 @@ MyWidget::MyWidget()
 	translateZSlider->setValue(0);
 	saved = false;
 	connect(scaleUndlAmountX, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
-	connect(scaleUndlAmountY, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
+	connect(scaleUndlAmountZ, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
 	connect(scaleUndlRateX, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
 	connect(scaleUndlRateZ, SIGNAL(valueChanged(float)), this, SLOT(exsliderValueChanged()));
 
@@ -127,7 +132,7 @@ MyWidget::MyWidget()
 	connect(extrTransZSlider, SIGNAL(valueChanged(float)), this, SLOT(exsTrliderValueChanged()));
 
 	scaleUndlAmountX->setValue(theModel.undulatingAmountX);
-	scaleUndlAmountY->setValue(theModel.undulatingAmountZ);
+	scaleUndlAmountZ->setValue(theModel.undulatingAmountZ);
 	scaleUndlRateX->setValue(theModel.undulatingRateX);
 	scaleUndlRateZ->setValue(theModel.undulatingRateZ);
 
@@ -181,7 +186,7 @@ void MyWidget::exsliderValueChanged()
 {
 	if (myGlWindow->pModel->ready2render) {
 	myGlWindow->pModel->undulatingAmountX = scaleUndlAmountX->value();
-	myGlWindow->pModel->undulatingAmountZ = scaleUndlAmountY->value();
+	myGlWindow->pModel->undulatingAmountZ = scaleUndlAmountZ->value();
 	myGlWindow->pModel->undulatingRateX = scaleUndlRateX->value();
 	myGlWindow->pModel->undulatingRateZ = scaleUndlRateZ->value();
 	myGlWindow->pModel->rebuid();
