@@ -31,6 +31,7 @@ public:
 	void initialize();
 	void createBase();
 	void createSquareBase();
+	void createCube();
 	void  doExtrusions();
 	void  prapareVertexes();
 	void createVbos();
@@ -108,6 +109,7 @@ private:
 	double rotaz;
 	std::vector<glm::vec4> verteksit;
 	std::vector<glm::vec4> verteksit2;
+	uint extrStartIndex;
 	std::vector<UINT> indeksit;
 	std::vector<UINT> indeksit2;
 	glm::vec3 suunta;

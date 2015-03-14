@@ -54,7 +54,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	/////////////////// Create the VBO ////////////////////
 
 	
-	pModel->createModel();
+	pModel->createCube();
 
 	//torus = new VBOTorus(0.7f, 0.3f, 50,50);
 	//model = mat4(1.0f);

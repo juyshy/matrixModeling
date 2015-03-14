@@ -8,6 +8,9 @@
 #include <QtGui\QVBoxLayout>
 #include <QtGui\qspinbox.h>
 #include <QtGui\QDialog>
+
+#include <QtCore\QString>
+
 #include <MyModel.h>
 #include <sstream>
 class DebugSlider;
@@ -34,10 +37,12 @@ class MyWidget : public  QMainWindow
 
 	QLabel *label;
 	QLabel *sblabel;
-
+	QLabel *cameraPositionLabel;
 	QSpinBox * spinBox;
 	QSpinBox * numExtrSpinBox;
 	QLabel *numExtrLabel;
+
+	QString cameraposInfo;
 
 	MyGLWindow * myGlWindow;
 	MyModel theModel;

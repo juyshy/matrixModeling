@@ -50,15 +50,9 @@ void ProcModel::initialize() {
 	lastcaptriangleNums = lastCap ? ((triangleCount - 2) * 3) : 0;
 	vertexCount = firstcaptriangleNums + triangleCount * 3 * extrudes * 2 + lastcaptriangleNums;
 
-	// first two vertexes
-	origo = glm::vec4(0, 0, 0, 1);
-	
-	verteksit.push_back(origo);
 
-	vrtx1 = glm::vec4(1, 0, 0, 1);
-	verteksit.push_back(vrtx1);
 
-	translatedVertex = vrtx1;
+
 }
 void ProcModel::createModel() {
 	createBase();
@@ -69,13 +63,60 @@ void ProcModel::createModel() {
 
 }
 
-void ProcModel::createSquareBase(){
-
+void ProcModel::createCube() {
+	extrudes = 1;
+	createSquareBase();
+	extrudetranslate1 = glm::vec4(0, 2, 0, 1);
+	
+	doExtrusions();
+	prapareVertexes();
+	createVbos();
+	ready2render = true;
 
 }
 
-void ProcModel::createBase() {
 
+void ProcModel::createSquareBase(){
+	firstcaptriangleNums = firstCap ? (4 * 3) : 0;
+	lastcaptriangleNums = lastCap ? (2 * 3) : 0;
+	triangleCount = 4;
+	vertexCount = firstcaptriangleNums + triangleCount * 3 * extrudes * 2 + lastcaptriangleNums;
+	origo = glm::vec4(0, 0, 0, 1);
+
+	verteksit.push_back(origo);
+
+	vrtx1 = glm::vec4(1, 0, 1, 1);
+	verteksit.push_back(vrtx1);
+	verteksit.push_back(glm::vec4(1, 0, -1, 1));
+	verteksit.push_back(glm::vec4(-1, 0, -1, 1));
+	verteksit.push_back(glm::vec4(-1, 0, 1, 1));
+
+	indeksit.push_back(0);
+	indeksit.push_back(1);
+	indeksit.push_back(2);
+
+	indeksit.push_back(0);
+	indeksit.push_back(2);
+	indeksit.push_back(3);
+
+	indeksit.push_back(0);
+	indeksit.push_back(3);
+	indeksit.push_back(4);
+
+	indeksit.push_back(0);
+	indeksit.push_back(4);
+	indeksit.push_back(1);
+}
+
+void ProcModel::createBase() {
+	// first two vertexes
+	origo = glm::vec4(0, 0, 0, 1);
+
+	verteksit.push_back(origo);
+	vrtx1 = glm::vec4(1, 0, 0, 1);
+	verteksit.push_back(vrtx1);
+
+	translatedVertex = vrtx1;
 	// base vertexes:
 	for (UINT i = 1; i < triangleCount; ++i) { // starting from the second vertex
 		if (firstCap) {
@@ -98,7 +139,7 @@ void ProcModel::createBase() {
 
 void ProcModel::doExtrusions() { 	// extrusions
 	glm::vec4	extrudetranslate = extrudetranslate1;
-	UINT xtrudestapes = 2;
+	//UINT xtrudestapes = 2;
 	for (UINT j = 0; j < extrudes; ++j) {
 
 		for (UINT i = 1; i < triangleCount + 1; ++i) {
@@ -224,8 +265,6 @@ void ProcModel::rebuid(){
 	deleteModel();
 	initialize();
 	createModel();
- 
-
 
 }
 void ProcModel::draw(){

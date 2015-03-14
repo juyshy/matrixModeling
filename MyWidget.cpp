@@ -52,6 +52,14 @@ MyWidget::MyWidget()
 	colorLabel->setPalette(QPalette(color));
 	colorLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
 
+
+	cameraPositionLabel = new QLabel(tr("Camera: "));
+	cameraposInfo = "Camera: " +
+		QString::number(myGlWindow->camera.position.x) + ", " +
+		QString::number(myGlWindow->camera.position.y) + ", " +
+		QString::number(myGlWindow->camera.position.z); 
+	cameraPositionLabel->setText(cameraposInfo);
+
 	spinBox = new QSpinBox;
 	spinBox->setRange(3, 130);
 	spinBox->setMaximumWidth(100);
@@ -72,7 +80,7 @@ MyWidget::MyWidget()
 	mainLayout->addLayout(labelLayout = new QHBoxLayout);
 	labelLayout->addWidget(label);
 	labelLayout->addStretch();
-
+	labelLayout->addWidget(cameraPositionLabel);
 	labelLayout->addWidget(colorLabel);
 		
 	labelLayout->addWidget(numExtrLabel);
@@ -215,7 +223,12 @@ void MyWidget::animate(){
 	double fps = 1000.0 / (elapsed - previousTime);
 	QString fpsstr = "FPS:" + QString::number(fps); 
 	label->setText(fpsstr);
-
+	cameraposInfo = "Camera: " + 
+		QString::number(myGlWindow->camera.position.x, 'f', 2) + ", " + 
+		QString::number(myGlWindow->camera.position.y, 'f', 2) + ", " +
+		QString::number(myGlWindow->camera.position.z, 'f', 2);
+	cameraPositionLabel->setText(cameraposInfo);
+ 
 	if (savefpsTracing){
 		if (elapsed <60000) { // get data for 60 secs
 			debugstr << elapsed << ":" << fps << "\n";
