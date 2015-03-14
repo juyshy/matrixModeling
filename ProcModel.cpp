@@ -38,6 +38,7 @@ ProcModel::ProcModel(MyModel * mainParameters) : mainParameters(mainParameters)
 	firstCap = true; // render first cap
 	lastCap = true; // render last cap
 	calcAverageNormas = false;
+	colorsInVbo = false;
 	color = glm::vec3(0.9f, 0.5f, 0.3f);
 	// initialize
 	initialize();
@@ -384,10 +385,11 @@ void ProcModel::createVbos(){
 	glBindBuffer(GL_ARRAY_BUFFER, normals_vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals2r.size(), &normals2r[0], GL_STATIC_DRAW);
 
-	glGenBuffers(1, &colors_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * colors2r.size(), &colors2r[0], GL_STATIC_DRAW);
-
+	if (colorsInVbo) {
+		glGenBuffers(1, &colors_vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * colors2r.size(), &colors2r[0], GL_STATIC_DRAW);
+	}
 	
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -397,9 +399,11 @@ void ProcModel::createVbos(){
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glEnableVertexAttribArray(2);
+	if (colorsInVbo) {
+		glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+		glEnableVertexAttribArray(2);
+	}
 
 }
 

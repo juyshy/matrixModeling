@@ -91,7 +91,7 @@ public:
 
 	bool ready2render = false; // flag indicating when model is ready for render
 	MyModel *mainParameters;
-
+	bool colorsInVbo;
 	void* operator new(size_t i)
 	{
 		return _mm_malloc(i, 16);

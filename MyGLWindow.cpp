@@ -54,8 +54,8 @@ void MyGLWindow::sendDataToOpenGL() {
 	/////////////////// Create the VBO ////////////////////
 
 	
-	pModel->createModel();
-	//pModel->createCube();
+	//pModel->createModel();
+	pModel->createCube();
 	//torus = new VBOTorus(0.7f, 0.3f, 50,50);
 	//model = mat4(1.0f);
 	//model *= glm::rotate(glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
@@ -104,14 +104,21 @@ void MyGLWindow::paintGL(){
 	view = camera.getWorldToViewMatrix();
  
 
-	for (uint i = 0; i < 10; i++) {
-		model = mat4(1.0f);
+	for (uint x = 0; x < numIntancesOnX; x++) {
+		for (uint y = 0; y < numIntancesOnY; y++) {
+			for (uint z = 0; z < numIntancesOnZ; z++) {
+				model = mat4(1.0f);
 
-		model *= glm::translate(pModel->translateVec);
-		model *= glm::translate(vec3(i * 5.0f - 20.0f, 0.0f, 0.0f));
-		model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
-		setMatrixes();
-		pModel->draw();
+				model *= glm::translate(pModel->translateVec);
+				model *= glm::translate(
+					vec3(x * instancesDistance + multInstancesTransOffsetX,
+					y * instancesDistance + multInstancesTransOffsetY,
+					z * instancesDistance + multInstancesTransOffsetZ));
+				model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
+				setMatrixes();
+				pModel->draw();
+			}
+		}
 	}
  
  
