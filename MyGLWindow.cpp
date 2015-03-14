@@ -55,7 +55,8 @@ void MyGLWindow::sendDataToOpenGL() {
 
 	
 	//pModel->createModel();
-	pModel->createCube();
+	//pModel->createCube();
+	pModel->createMultipleCubes();
 	//torus = new VBOTorus(0.7f, 0.3f, 50,50);
 	//model = mat4(1.0f);
 	//model *= glm::rotate(glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
@@ -103,23 +104,30 @@ void MyGLWindow::paintGL(){
 	
 	view = camera.getWorldToViewMatrix();
  
+	model = mat4(1.0f);
 
-	for (uint x = 0; x < numIntancesOnX; x++) {
-		for (uint y = 0; y < numIntancesOnY; y++) {
-			for (uint z = 0; z < numIntancesOnZ; z++) {
-				model = mat4(1.0f);
+	model *= glm::translate(pModel->translateVec);
+ 
+	model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
+	setMatrixes();
+	pModel->draw();
 
-				model *= glm::translate(pModel->translateVec);
-				model *= glm::translate(
-					vec3(x * instancesDistance + multInstancesTransOffsetX,
-					y * instancesDistance + multInstancesTransOffsetY,
-					z * instancesDistance + multInstancesTransOffsetZ));
-				model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
-				setMatrixes();
-				pModel->draw();
-			}
-		}
-	}
+	//for (uint x = 0; x < numIntancesOnX; x++) {
+	//	for (uint y = 0; y < numIntancesOnY; y++) {
+	//		for (uint z = 0; z < numIntancesOnZ; z++) {
+	//			model = mat4(1.0f);
+
+	//			model *= glm::translate(pModel->translateVec);
+	//			model *= glm::translate(
+	//				vec3(x * instancesDistance + multInstancesTransOffsetX,
+	//				y * instancesDistance + multInstancesTransOffsetY,
+	//				z * instancesDistance + multInstancesTransOffsetZ));
+	//			model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
+	//			setMatrixes();
+	//			pModel->draw();
+	//		}
+	//	}
+	//}
  
  
 	

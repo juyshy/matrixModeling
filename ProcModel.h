@@ -32,9 +32,11 @@ public:
 	void createBase();
 	void createSquareBase();
 	void createCube();
+	void createMultipleCubes();
 	void  doExtrusions();
 	void  prapareVertexes();
 	void createVbos();
+	void createMultiVbo();
 	void setShaders(/*glm::mat4 view, glm::mat4 proj*/);
 	void  draw();
 	void update(double current_seconds);

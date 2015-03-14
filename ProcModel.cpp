@@ -77,6 +77,17 @@ void ProcModel::createCube() {
 }
 
 
+void ProcModel::createMultipleCubes() {
+	extrudes = 1;
+	createSquareBase();
+	extrudetranslate1 = glm::vec4(0, 2, 0, 1);
+
+	doExtrusions();
+	prapareVertexes();
+	createMultiVbo();
+	ready2render = true;
+}
+
 void ProcModel::createSquareBase(){
 	firstcaptriangleNums = firstCap ? (4 * 3) : 0;
 	lastcaptriangleNums = lastCap ? (2 * 3) : 0;
@@ -403,6 +414,30 @@ void ProcModel::createVbos(){
 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 		glEnableVertexAttribArray(2);
 	}
+
+}
+
+
+void ProcModel::createMultiVbo(){
+	glGenBuffers(1, &points_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * verteksit2r.size(), &verteksit2r[0], GL_STATIC_DRAW);
+
+
+	glGenBuffers(1, &normals_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, normals_vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals2r.size(), &normals2r[0], GL_STATIC_DRAW);
+ 
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glBindBuffer(GL_ARRAY_BUFFER, normals_vbo);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+ 
 
 }
 
