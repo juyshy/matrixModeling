@@ -31,10 +31,10 @@ ProcModel::ProcModel()
 	extrudetranslate1 = glm::vec4(0.0f, 0.2f, 0.0f, 1.0f); // translation for extrudes
 
 	rotaFirst = false; // rotation before translation in extrusion
-	firstCap = true; // render firs cap
+	firstCap = true; // render first cap
 	lastCap = true; // render last cap
 	calcAverageNormas = false;
-
+	color = glm::vec3(0.9f, 0.5f, 0.3f);
 	// initialize
 	initialize();
 }

@@ -80,7 +80,7 @@ public:
 	glm::vec2 rotationAmount = glm::vec2(0.0f, 0.0f);
 	bool lmouseActive = false;
 	glm::vec3 translateVec = glm::vec3(0.0f, 0.0f, 0.0f);
-
+	glm::vec3 color; 
 	bool calcAverageNormas ;
 	bool debugtxtsave = false;
 

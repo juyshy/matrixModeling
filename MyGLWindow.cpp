@@ -30,7 +30,7 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 }
 void MyGLWindow::updateColor()
 {
-	materialAmbient =materialDiffuse = theModel->color;
+	materialAmbient = materialDiffuse = pModel.color = theModel->color;
 	prog.setUniform("Material.Kd", materialDiffuse);
 	prog.setUniform("Material.Ka", materialAmbient);
 }
@@ -65,8 +65,8 @@ void MyGLWindow::sendDataToOpenGL() {
 	view =camera.getWorldToViewMatrix();
 	projection = mat4(1.0f);
 	vec4 worldLight = vec4(5.0f, 5.0f, 2.0f, 1.0f);
-	 materialDiffuse =  vec3(0.9f, 0.5f, 0.3f);
-	 materialAmbient = materialDiffuse;
+	materialDiffuse = pModel.color;
+	materialAmbient = materialDiffuse;
 	prog.setUniform("Material.Kd", materialDiffuse);
 	prog.setUniform("Light.Ld", 1.0f, 1.0f, 1.0f);
 	prog.setUniform("Light.Position", view * worldLight);

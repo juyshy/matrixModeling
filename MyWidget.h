@@ -33,6 +33,8 @@ class MyWidget : public  QMainWindow
 	QLabel *sblabel;
 
 	QSpinBox * spinBox;
+	QSpinBox * numExtrSpinBox;
+	QLabel *numExtrLabel;
 
 	MyGLWindow * myGlWindow;
 	MyModel theModel;
@@ -69,6 +71,7 @@ class MyWidget : public  QMainWindow
 	private slots:
 	void sliderValueChanged();
 	void spinBValueChanged(int);
+	void numExtrspinBValueChanged(int);
 	void exsliderValueChanged();
 	void exsTrliderValueChanged();
 	void  animate();

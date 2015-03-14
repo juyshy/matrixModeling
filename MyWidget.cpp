@@ -42,11 +42,15 @@ MyWidget::MyWidget()
 	
 	// labels:
 	label = new QLabel(tr("FPS:"));
-	sblabel = new QLabel("triangles: ");
+	sblabel = new QLabel(tr("triangles: "));
+	numExtrLabel  = new QLabel(tr("Num of Extrudes: "));
 	colorLabel = new QLabel( );
+
 	spinBox = new QSpinBox;
 	spinBox->setRange(3, 130);
 	spinBox->setMaximumWidth(100);
+	numExtrSpinBox = new QSpinBox;
+	numExtrSpinBox->setRange(0, 130);
 	
 
 	// layout
@@ -61,8 +65,11 @@ MyWidget::MyWidget()
 	mainLayout->addLayout(labelLayout = new QHBoxLayout);
 	labelLayout->addWidget(label);
 	labelLayout->addStretch();
- 
+
 	labelLayout->addWidget(colorLabel);
+		
+	labelLayout->addWidget(numExtrLabel);
+	labelLayout->addWidget(numExtrSpinBox);
 	labelLayout->addWidget(sblabel);
 	labelLayout->addWidget(spinBox);
 	controlsLayout = new QVBoxLayout;
@@ -73,10 +80,10 @@ MyWidget::MyWidget()
 
 	QHBoxLayout* extrScaleLayout;
 	controlsLayout->addLayout(extrScaleLayout = new QHBoxLayout);
-	extrScaleLayout->addWidget(scaleUndlAmountX = new DebugSlider("Extr Scale Undul. X", -0.15f, 0.15));
-	extrScaleLayout->addWidget(scaleUndlAmountY = new DebugSlider("Extr Scale Undul. Y", -0.15f, 0.15));
-	extrScaleLayout->addWidget(scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", -0.15f, 0.15));
-	extrScaleLayout->addWidget(scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", -0.15f, 0.15));
+	extrScaleLayout->addWidget(scaleUndlAmountX = new DebugSlider("Extr Scale Undul. X", -0.15f, 0.15f));
+	extrScaleLayout->addWidget(scaleUndlAmountY = new DebugSlider("Extr Scale Undul. Y", -0.15f, 0.15f));
+	extrScaleLayout->addWidget(scaleUndlRateX = new DebugSlider("Extr scale Undl RateX", -0.15f, 0.15f));
+	extrScaleLayout->addWidget(scaleUndlRateZ = new DebugSlider("Extr scale Undl RateZ", -0.15f, 0.15f));
 
 
 	QHBoxLayout* extrTransLayout;
@@ -122,6 +129,7 @@ MyWidget::MyWidget()
 	connect(translateYSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(translateZSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(spinBValueChanged(int)));
+	connect(numExtrSpinBox, SIGNAL(valueChanged(int)), this, SLOT(numExtrspinBValueChanged(int)));
 	theModel.sliderPosition.x = translateXSlider->value();
 	theModel.sliderPosition.y = translateYSlider->value();
 	theModel.sliderPosition.z = translateZSlider->value();
@@ -170,6 +178,15 @@ void MyWidget::exsliderValueChanged()
 	}
 	std::cout << scaleUndlAmountX->value() << std::endl;
 }
+
+void MyWidget::numExtrspinBValueChanged(int newValue)
+{
+	myGlWindow->pModel.extrudes = newValue;
+	myGlWindow->pModel.rebuid();
+	myGlWindow->setFocus();
+	std::cout << numExtrSpinBox->value() << std::endl;
+}
+
 void MyWidget::spinBValueChanged(int newValue)
 {
 	myGlWindow->pModel.setTriagleCount(newValue);
