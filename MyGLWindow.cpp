@@ -44,7 +44,7 @@ void MyGLWindow::update(int elapsed) {
 }
 void MyGLWindow::resizeGL(int width, int height)
 {
-	projection = glm::perspective(glm::radians(70.0f), (float)width  / height , 0.3f, 100.0f);
+	projection = glm::perspective(glm::radians(70.0f), (float)width  / height , 0.3f, 300.0f);
 	glViewport(0, 0, width , height );
 }
 
