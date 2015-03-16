@@ -97,7 +97,10 @@ public:
 	bool colorsInVbo;
 
 	uint num_cubes;
+	uint num_cubesx  ;
 
+	uint num_cubesy ;
+	uint num_cubesz  ;
 	void* operator new(size_t i)
 	{
 		return _mm_malloc(i, 16);

@@ -42,7 +42,9 @@ ProcModel::ProcModel(MyModel * mainParameters) : mainParameters(mainParameters)
 	color = glm::vec3(0.9f, 0.5f, 0.3f);
 
 	num_cubes = 2;
-
+	num_cubesx = num_cubesy = num_cubesz = 16;// 64;
+	//num_cubesy = 32;// 64;
+	//num_cubesz = 32; // 64;
 	// initialize
 	initialize();
 }
@@ -106,7 +108,9 @@ void ProcModel::createSquareBase(){
 	verteksit.push_back(glm::vec4(-1, 0, -1, 1));
 	verteksit.push_back(glm::vec4(-1, 0, 1, 1));
 
-	indeksit.push_back(0);
+	indeksit = { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 1 };
+
+	/*indeksit.push_back(0);
 	indeksit.push_back(1);
 	indeksit.push_back(2);
 
@@ -120,7 +124,7 @@ void ProcModel::createSquareBase(){
 
 	indeksit.push_back(0);
 	indeksit.push_back(4);
-	indeksit.push_back(1);
+	indeksit.push_back(1);*/
 }
 
 void ProcModel::createBase() {
@@ -291,7 +295,7 @@ void ProcModel::draw(){
  
 	glBindVertexArray(vao);
 	// draw points 0-3 from the currently bound VAO with current in-use shader
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount*num_cubes);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount*num_cubesx*num_cubesy* num_cubesz);
 }
 
 void ProcModel::update(double current_seconds){
@@ -425,30 +429,53 @@ void ProcModel::createMultiVbo(){
 	uint cubeByteSize = sizeof(glm::vec3) * verteksit2r.size();
 	uint cubeNormByteSize = sizeof(glm::vec3) * normals2r.size();
 
-	num_cubes = 5;
+
 
 	glGenBuffers(1, &points_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
-	glBufferData(GL_ARRAY_BUFFER, cubeByteSize*num_cubes, NULL, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, cubeByteSize*num_cubesx*num_cubesy*num_cubesz, NULL, GL_STATIC_DRAW);
 
-	float instanceDistance = 5.0f;
-	for (uint cubeIndex = 0; cubeIndex< num_cubes; ++cubeIndex) {
+	int instanceDistance = 5 ;
+	std::cout << "cubeIndex ";
+	float transX;
+	float transY;
+	float transZ;
+
+	std::string debugsisalto;
+	std::ostringstream n;
+
+	for (uint cubeIndex = 0; cubeIndex< num_cubesx*num_cubesy*num_cubesz; ++cubeIndex) {
 		std::vector<glm::vec3> translatedVerts;
+		if (cubeIndex % 1000 == 0)
+			std::cout << cubeIndex << " ";
+
+		  transX = static_cast<float>( instanceDistance* (cubeIndex % num_cubesx));
+		  transY = static_cast<float>(instanceDistance* (cubeIndex / num_cubesy %  num_cubesz));
+		  transZ = static_cast<float>(cubeIndex / (num_cubesx* num_cubesy) * instanceDistance);
 		for (glm::vec3 vert : verteksit2r) {
-			glm::vec3 vert2(glm::translate(glm::mat4(), glm::vec3(instanceDistance*cubeIndex, 0.0f, 0.0f)) * glm::vec4(vert, 1));
-			translatedVerts.push_back(vert2);
+			glm::vec3 vert2(glm::translate(glm::mat4(),
+				glm::vec3(transX,
+				transY, transZ)) * glm::vec4(vert, 1));
+				translatedVerts.push_back(vert2);
+				if (debugtxtsave)	
+					n << vert2.x << ", " << vert2.y << ", " << vert2.z << "\n";
 		}
 		glBufferSubData(GL_ARRAY_BUFFER,
 		cubeIndex*cubeByteSize, cubeByteSize, &translatedVerts[0]);
 	}
  
 
-
+ 
+		
+	if (debugtxtsave){
+		debugsisalto += n.str();
+		TallennaTiedosto("kuutioverts.txt", debugsisalto);
+	}
 
 	glGenBuffers(1, &normals_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, normals_vbo);
-	glBufferData(GL_ARRAY_BUFFER, cubeNormByteSize*num_cubes, NULL, GL_STATIC_DRAW);
-	for (uint cubeIndex = 0; cubeIndex < num_cubes; ++cubeIndex) {
+	glBufferData(GL_ARRAY_BUFFER, cubeNormByteSize*num_cubesx*num_cubesy*num_cubesz, NULL, GL_STATIC_DRAW);
+	for (uint cubeIndex = 0; cubeIndex < num_cubesx*num_cubesy*num_cubesz; ++cubeIndex) {
 
 		glBufferSubData(GL_ARRAY_BUFFER,
 			cubeIndex*cubeByteSize, cubeByteSize, &normals2r[0]);
