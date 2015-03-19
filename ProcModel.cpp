@@ -63,7 +63,7 @@ void ProcModel::initialize() {
 void ProcModel::createModel() {
 	createBase();
 	doExtrusions();
-	prapareVertexes();
+	prepareVertexes();
 	createVbos();
 	ready2render = true;
 
@@ -75,7 +75,7 @@ void ProcModel::createCube() {
 	extrudetranslate1 = glm::vec4(0, 2, 0, 1);
 	
 	doExtrusions();
-	prapareVertexes();
+	prepareVertexes();
 	createVbos();
 	ready2render = true;
 
@@ -88,7 +88,7 @@ void ProcModel::createMultipleCubes() {
 	extrudetranslate1 = glm::vec4(0, 2, 0, 1);
 
 	doExtrusions();
-	prapareVertexes();
+	prepareVertexes();
 	createMultiVbo();
 	ready2render = true;
 }
@@ -212,7 +212,7 @@ void ProcModel::doExtrusions() { 	// extrusions
 
 
 }
-void ProcModel::prapareVertexes() {
+void ProcModel::prepareVertexes() {
 
 	// prepare drawing vertexes and normals from indexes
 	glm::vec3 norml;

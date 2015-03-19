@@ -31,14 +31,14 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 }
 void MyGLWindow::updateColor()
 {
-	materialAmbient = materialDiffuse = pModel->color = theModel->color;
+	materialAmbient = materialDiffuse /* = pModel->color*/ = theModel->color;
 	prog.setUniform("Material.Kd", materialDiffuse);
 	prog.setUniform("Material.Ka", materialAmbient);
 }
 void MyGLWindow::update(int elapsed) {
 	angle += 0.01f * theModel->sliderPosition.x;
 	if (angle >= 360.0f) angle -= 360.0f;
-	pModel->translateVec = vec3(pModel->transXoffset, theModel->sliderPosition.y + pModel->transYoffset, theModel->sliderPosition.z + pModel->transZoffset);
+	//pModel->translateVec = vec3(pModel->transXoffset, theModel->sliderPosition.y + pModel->transYoffset, theModel->sliderPosition.z + pModel->transZoffset);
 	////arrow.rotation.angle = elapsed / 20.0f;
 	//std::cout << angle << std::endl;
 }
@@ -50,13 +50,14 @@ void MyGLWindow::resizeGL(int width, int height)
 
 void MyGLWindow::sendDataToOpenGL() {
  
-	triangle.Init("cube");
+	//triangle.Init("cube");
 	/////////////////// Create the VBO ////////////////////
 
-	
+	cube.createCube();
 	//pModel->createModel();
 	//pModel->createCube();
-	pModel->createMultipleCubes();
+	//pModel->createMultipleCubes();
+
 	//torus = new VBOTorus(0.7f, 0.3f, 50,50);
 	//model = mat4(1.0f);
 	//model *= glm::rotate(glm::radians(-35.0f), vec3(1.0f, 0.0f, 0.0f));
@@ -110,7 +111,8 @@ void MyGLWindow::paintGL(){
  
 	model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
 	setMatrixes();
-	pModel->draw();
+	//pModel->draw();
+	cube.Draw();
 
 	//for (uint x = 0; x < numIntancesOnX; x++) {
 	//	for (uint y = 0; y < numIntancesOnY; y++) {

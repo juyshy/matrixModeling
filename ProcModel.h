@@ -35,7 +35,7 @@ public:
 	void createCube();
 	void createMultipleCubes();
 	void  doExtrusions();
-	void  prapareVertexes();
+	void  prepareVertexes();
 	void createVbos();
 	void createMultiVbo();
 	void setShaders(/*glm::mat4 view, glm::mat4 proj*/);

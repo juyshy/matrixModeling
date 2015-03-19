@@ -10,6 +10,8 @@
 #include <extra\vbotorus.h>
 
 #include <ProcModel.h>
+#include <Cube.h>
+
 class MyModel;
 
 __declspec(align(16))  class MyGLWindow : public QGLWidget
@@ -47,30 +49,30 @@ protected:
 
 
 public:
-	Camera camera;
+
 	MyGLWindow(MyModel * theModel); 
- 
 	~MyGLWindow();
 
 	void updateColor();
-
 	void update(int elapsed);
- 
-	VBOTorus * torus;
-	ShapeModel triangle;
 
+	Camera camera;
 	float fps;
-	
+
+	//VBOTorus * torus;
+	//ShapeModel triangle;
 	ProcModel * pModel;
-	uint numIntancesOnX = 5;
-	float instancesDistance = 7.0f;
-	float multInstancesTransOffsetX = - (numIntancesOnX *  instancesDistance / 2);
+	Cube cube;
 
-	uint numIntancesOnY = 10;
-	float multInstancesTransOffsetY = - (numIntancesOnY *  instancesDistance / 2);
+	//uint numIntancesOnX = 5;
+	//float instancesDistance = 7.0f;
+	//float multInstancesTransOffsetX = - (numIntancesOnX *  instancesDistance / 2);
 
-	uint numIntancesOnZ = 10;
-	float multInstancesTransOffsetZ = - (numIntancesOnZ *  instancesDistance / 2);
+	//uint numIntancesOnY = 10;
+	//float multInstancesTransOffsetY = - (numIntancesOnY *  instancesDistance / 2);
+
+	//uint numIntancesOnZ = 10;
+	//float multInstancesTransOffsetZ = - (numIntancesOnZ *  instancesDistance / 2);
 
 	// fix for warning http://stackoverflow.com/questions/20104815/warning-c4316-object-allocated-on-the-heap-may-not-be-aligned-16
 	void* operator new(size_t i)

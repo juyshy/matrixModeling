@@ -17,6 +17,7 @@
     <ClCompile Include="extra\drawable.cpp" />
     <ClCompile Include="extra\vbotorus.cpp" />
     <ClCompile Include="ProcModel.cpp" />
+    <ClCompile Include="Cube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGLWindow.h" />
@@ -40,6 +41,7 @@
     <ClInclude Include="extra\drawable.h" />
     <ClInclude Include="extra\vbotorus.h" />
     <ClInclude Include="ProcModel.h" />
+    <ClInclude Include="Cube.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\FragmentShaderCode.glsl">

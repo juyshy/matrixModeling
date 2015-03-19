@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DebugSlider.cpp" />
     <ClCompile Include="DebugSlider_moc.cpp" />
     <ClCompile Include="extra\drawable.cpp" />
@@ -97,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="DebugSlider.h" />
     <ClInclude Include="extra\defines.h" />
     <ClInclude Include="extra\drawable.h" />
