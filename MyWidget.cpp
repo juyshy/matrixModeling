@@ -183,37 +183,37 @@ MyWidget::MyWidget()
 }
 void MyWidget::exsTrliderValueChanged()
 {
-	if (myGlWindow->pModel->ready2render) {
-		myGlWindow->pModel->extrudetranslate1.x = extrTransXSlider->value();
-		myGlWindow->pModel->extrudetranslate1.y = extrTransYSlider->value();
-		myGlWindow->pModel->extrudetranslate1.z = extrTransZSlider->value();
-		myGlWindow->pModel->rebuid();
-	}
+	//if (myGlWindow->pModel->ready2render) {
+	//	myGlWindow->pModel->extrudetranslate1.x = extrTransXSlider->value();
+	//	myGlWindow->pModel->extrudetranslate1.y = extrTransYSlider->value();
+	//	myGlWindow->pModel->extrudetranslate1.z = extrTransZSlider->value();
+	//	myGlWindow->pModel->rebuid();
+	//}
 }
 void MyWidget::exsliderValueChanged()
 {
-	if (myGlWindow->pModel->ready2render) {
-	myGlWindow->pModel->undulatingAmountX = scaleUndlAmountX->value();
-	myGlWindow->pModel->undulatingAmountZ = scaleUndlAmountZ->value();
-	myGlWindow->pModel->undulatingRateX = scaleUndlRateX->value();
-	myGlWindow->pModel->undulatingRateZ = scaleUndlRateZ->value();
-	myGlWindow->pModel->rebuid();
-	}
+	//if (myGlWindow->pModel->ready2render) {
+	//myGlWindow->pModel->undulatingAmountX = scaleUndlAmountX->value();
+	//myGlWindow->pModel->undulatingAmountZ = scaleUndlAmountZ->value();
+	//myGlWindow->pModel->undulatingRateX = scaleUndlRateX->value();
+	//myGlWindow->pModel->undulatingRateZ = scaleUndlRateZ->value();
+	//myGlWindow->pModel->rebuid();
+	//}
 	std::cout << scaleUndlAmountX->value() << std::endl;
 }
 
 void MyWidget::numExtrspinBValueChanged(int newValue)
 {
-	myGlWindow->pModel->extrudes = newValue;
-	myGlWindow->pModel->rebuid();
+	//myGlWindow->pModel->extrudes = newValue;
+	//myGlWindow->pModel->rebuid();
 	myGlWindow->setFocus();
 	std::cout << numExtrSpinBox->value() << std::endl;
 }
 
 void MyWidget::spinBValueChanged(int newValue)
 {
-	myGlWindow->pModel->setTriagleCount(newValue);
-	myGlWindow->pModel->rebuid();
+	//myGlWindow->pModel->setTriagleCount(newValue);
+	//myGlWindow->pModel->rebuid();
 	myGlWindow->setFocus();
 	std::cout << spinBox->value()   << std::endl;
 }

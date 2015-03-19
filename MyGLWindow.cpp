@@ -26,7 +26,7 @@ bool mouseDown = false;
 
 MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 {
-	pModel = new ProcModel(theModel);
+	//pModel = new ProcModel(theModel);
 	angle = 0;
 }
 void MyGLWindow::updateColor()
@@ -66,7 +66,7 @@ void MyGLWindow::sendDataToOpenGL() {
 	view =camera.getWorldToViewMatrix();
 	projection = mat4(1.0f);
 	vec4 worldLight = vec4(5.0f, 5.0f, 2.0f, 1.0f);
-	materialDiffuse = pModel->color;
+	materialDiffuse = theModel->color;
 	materialAmbient = materialDiffuse;
 	prog.setUniform("Material.Kd", materialDiffuse);
 	prog.setUniform("Light.Ld", 1.0f, 1.0f, 1.0f);

@@ -61,7 +61,7 @@ public:
 
 	//VBOTorus * torus;
 	//ShapeModel triangle;
-	ProcModel * pModel;
+	//ProcModel * pModel;
 	Cube cube;
 
 	//uint numIntancesOnX = 5;
