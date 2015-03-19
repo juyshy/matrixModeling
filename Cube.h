@@ -28,7 +28,7 @@ public:
 	float cubeSize = 2;
 	void  createCube();
 	void  Draw();
-
+	glm::vec3 translateVec = glm::vec3(0.0f, -2.0f, -3.0f);
 	Cube();
 	~Cube();
 };

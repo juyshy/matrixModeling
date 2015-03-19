@@ -107,7 +107,7 @@ void MyGLWindow::paintGL(){
  
 	model = mat4(1.0f);
 
-	model *= glm::translate(pModel->translateVec);
+	model *= glm::translate(cube.translateVec);
  
 	model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
 	setMatrixes();
