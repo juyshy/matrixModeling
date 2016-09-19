@@ -28,6 +28,7 @@ MyGLWindow::MyGLWindow(MyModel * theModel) : theModel(theModel)
 {
 	pModel = new ProcModel(theModel);
 	angle = 0;
+    numOfModels = 3;
 }
 void MyGLWindow::updateColor()
 {
@@ -104,11 +105,11 @@ void MyGLWindow::paintGL(){
 	view = camera.getWorldToViewMatrix();
  
 
-	for (uint i = 0; i < 10; i++) {
+    for (uint i = 0; i < numOfModels; i++) {
 		model = mat4(1.0f);
 
 		model *= glm::translate(pModel->translateVec);
-		model *= glm::translate(vec3(i * 5.0f - 20.0f, 0.0f, 0.0f));
+        model *= glm::translate(vec3(i * 5.0f - (numOfModels * 2), 0.0f, 0.0f));
 		model *= glm::rotate(glm::radians(angle), vec3(0.0f, 1.0f, 0.0f));
 		setMatrixes();
 		pModel->draw();

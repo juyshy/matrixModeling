@@ -61,6 +61,7 @@ MyWidget::MyWidget()
 	cameraPositionLabel->setText(cameraposInfo);
 
 	spinBox = new QSpinBox;
+    
 	spinBox->setRange(3, 130);
 	spinBox->setMaximumWidth(100);
 	spinBox->setValue(theModel.triangleCount);
@@ -68,6 +69,11 @@ MyWidget::MyWidget()
 	numExtrSpinBox->setRange(0, 130);
 	numExtrSpinBox->setValue(theModel.extrudes);
 
+
+    numModelsSpinBox = new QSpinBox;
+    numModelsSpinBox->setRange(1, 30);
+    numModelsSpinBox->setMaximumWidth(100);
+    numModelsSpinBox->setValue(myGlWindow->numOfModels);
 	// layout
 	centralWidget = new QWidget;
 	setCentralWidget(centralWidget);
@@ -87,6 +93,8 @@ MyWidget::MyWidget()
 	labelLayout->addWidget(numExtrSpinBox);
 	labelLayout->addWidget(sblabel);
 	labelLayout->addWidget(spinBox);
+    labelLayout->addWidget(numModelsSpinBox);
+    
 	controlsLayout = new QVBoxLayout;
 	//mainLayout->addLayout(controlsLayout  );
 	
@@ -153,6 +161,7 @@ MyWidget::MyWidget()
 	connect(translateZSlider, SIGNAL(valueChanged(float)), this, SLOT(sliderValueChanged()));
 	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(spinBValueChanged(int)));
 	connect(numExtrSpinBox, SIGNAL(valueChanged(int)), this, SLOT(numExtrspinBValueChanged(int)));
+    connect(numModelsSpinBox, SIGNAL(valueChanged(int)), this, SLOT(numModelsSpinBValueChanged(int)));
 	theModel.sliderPosition.x = translateXSlider->value();
 	theModel.sliderPosition.y = translateYSlider->value();
 	theModel.sliderPosition.z = translateZSlider->value();
@@ -209,6 +218,15 @@ void MyWidget::numExtrspinBValueChanged(int newValue)
 	myGlWindow->setFocus();
 	std::cout << numExtrSpinBox->value() << std::endl;
 }
+
+void MyWidget::numModelsSpinBValueChanged(int newValue)
+{
+  myGlWindow->numOfModels = newValue;
+
+  std::cout << "numOfModels " << newValue << std::endl;
+  numModelsSpinBox->clearFocus();
+}
+
 
 void MyWidget::spinBValueChanged(int newValue)
 {

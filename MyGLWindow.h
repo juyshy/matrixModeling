@@ -62,6 +62,7 @@ public:
 	float fps;
 	
 	ProcModel * pModel;
+    uint numOfModels;
 
 	// fix for warning http://stackoverflow.com/questions/20104815/warning-c4316-object-allocated-on-the-heap-may-not-be-aligned-16
 	void* operator new(size_t i)

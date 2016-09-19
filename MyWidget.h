@@ -39,6 +39,7 @@ class MyWidget : public  QMainWindow
 	QLabel *sblabel;
 	QLabel *cameraPositionLabel;
 	QSpinBox * spinBox;
+    QSpinBox * numModelsSpinBox;
 	QSpinBox * numExtrSpinBox;
 	QLabel *numExtrLabel;
 
@@ -80,6 +81,8 @@ class MyWidget : public  QMainWindow
 	void sliderValueChanged();
 	void spinBValueChanged(int);
 	void numExtrspinBValueChanged(int);
+    void numModelsSpinBValueChanged(int);
+    
 	void exsliderValueChanged();
 	void exsTrliderValueChanged();
 	void  animate();
