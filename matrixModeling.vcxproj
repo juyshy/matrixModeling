@@ -113,6 +113,7 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="shader\diffuse.frag" />
     <None Include="shader\diffuse.vert" />
     <None Include="shader\FragmentShaderCode.glsl" />

@@ -3,6 +3,7 @@
 
 *.bat
 *.html
+*.mp4
 
 fpstrace*
 *.txt

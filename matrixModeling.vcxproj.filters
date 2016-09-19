@@ -60,6 +60,7 @@
     <None Include="shader\phong.vert">
       <Filter>shader</Filter>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Primitives">
