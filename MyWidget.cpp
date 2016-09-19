@@ -46,6 +46,7 @@ MyWidget::MyWidget()
 	label = new QLabel(tr("FPS:"));
 	sblabel = new QLabel(tr("triangles: "));
 	numExtrLabel  = new QLabel(tr("Num of Extrudes: "));
+    numModelsLabel = new QLabel(tr("Num of Models: "));
 	colorLabel = new QLabel( );
 	colorLabel->setText("Color : " + QString::number(theModel.color.r) + ", " + QString::number(theModel.color.g) + ", " + QString::number(theModel.color.b));
 	color.setRgbF((qreal)theModel.color.r, (qreal)theModel.color.g, (qreal)theModel.color.b);
@@ -93,6 +94,8 @@ MyWidget::MyWidget()
 	labelLayout->addWidget(numExtrSpinBox);
 	labelLayout->addWidget(sblabel);
 	labelLayout->addWidget(spinBox);
+    
+    labelLayout->addWidget(numModelsLabel);
     labelLayout->addWidget(numModelsSpinBox);
     
 	controlsLayout = new QVBoxLayout;

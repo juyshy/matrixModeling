@@ -42,6 +42,7 @@ class MyWidget : public  QMainWindow
     QSpinBox * numModelsSpinBox;
 	QSpinBox * numExtrSpinBox;
 	QLabel *numExtrLabel;
+    QLabel *numModelsLabel;
 
 	QString cameraposInfo;
 
