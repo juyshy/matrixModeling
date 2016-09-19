@@ -5,4 +5,4 @@ experimenting with c++ / Qt / opengl & matrix transformations for modeling simpl
 
 Modeling is done in ProcModel class (createBase and doExtrusions methods).
 
-[https://youtu.be/RFlvPodBElc] ( Video demo)
+[Video demo] (https://youtu.be/RFlvPodBElc)
